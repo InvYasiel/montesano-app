@@ -158,3 +158,20 @@ function incidenciasCrear() {
 }
 
 
+var TOKEN = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
+var KEY = "151bcd104f1742fdcf0b8c2f4a4c8764";
+var CARD = "5aaf6422caeb39da694e7dc1";
+
+function upload() {
+  var formData = new FormData();
+
+  formData.append("token", TOKEN);
+  formData.append("key", KEY);
+
+  // HTML file input, chosen by user
+  formData.append("file", document.getElementById('chooser').files[0]);
+
+  var request = new XMLHttpRequest();
+  request.open("POST", "https://api.trello.com/1/cards/" + CARD + "/attachments");
+  request.send(formData);
+}
