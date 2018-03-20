@@ -11,3 +11,8 @@
 .icono{
     width: 15%;
 }
+#papelera{
+    color:red;
+    font-size: 25px;
+    cursor: pointer;
+}
