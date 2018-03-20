@@ -4,43 +4,25 @@ let nombre = document.getElementById("incidenciasNombre");
 let apellido = document.getElementById("incidenciasApellido");
 let titulo = document.getElementById("incidenciasTitulo");
 let descripcion = document.getElementById("incidenciasDescripcion").value;
-//Fecha actual
-var fecha = new Date();
-var s = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
-console.log(s);
 
-// function agragarimagen(){
-//     function handleFileSelect(evt) {
-//         var files = evt.target.files; // FileList object
+var KEY = "151bcd104f1742fdcf0b8c2f4a4c8764";
+            var TOKEN = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
+            var CARD = "5aaf6422caeb39da694e7dc1";
 
-//         // Loop through the FileList and render image files as thumbnails.
-//         for (var i = 0, f; f = files[i]; i++) {
-
-//           // Only process image files.
-//           if (!f.type.match('image.*')) {
-//             continue;
-//           }
-
-//           var reader = new FileReader();
-
-//           // Closure to capture the file information.
-//           reader.onload = (function(theFile) {
-//             return function(e) {
-//               // Render thumbnail.
-//               var span = document.createElement('span');
-//               span.innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
-//               document.getElementById('list').insertBefore(span, null);
-//             };
-//           })(f);
-
-//           // Read in the image file as a data URL.
-//           reader.readAsDataURL(f);
-//         }
-//       }
-
-//       document.getElementById('files').addEventListener('change', handleFileSelect, false);
-// }
-// agragarimagen();
+function upload() {
+    var formData = new FormData();
+  
+    formData.append("token", TOKEN);
+    formData.append("key", KEY);
+  
+    // HTML file input, chosen by user
+    formData.append("file", document.getElementById('chooser').files[0]);
+  
+    var request = new XMLHttpRequest();
+    request.open("POST", "https://api.trello.com/1/cards/" + CARD + "/attachments");
+    request.send(formData);
+  }
+  
 
 ///Función para limpiar los campos del formulario
 function incidenciasLimpiar() {
@@ -80,7 +62,10 @@ function incidenciasCrear() {
     var OSName = "Desconocido";
     if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
     if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
-
+    //Fecha actual
+    var fecha = new Date();
+    var s = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
+    console.log(s);
     /// averiguamos la ip 
     window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;//compatibility for Firefox and chrome
     var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { };
@@ -155,23 +140,4 @@ function incidenciasCrear() {
         };
 
     }
-}
-
-
-var TOKEN = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
-var KEY = "151bcd104f1742fdcf0b8c2f4a4c8764";
-var CARD = "5aaf6422caeb39da694e7dc1";
-
-function upload() {
-  var formData = new FormData();
-
-  formData.append("token", TOKEN);
-  formData.append("key", KEY);
-
-  // HTML file input, chosen by user
-  formData.append("file", document.getElementById('chooser').files[0]);
-
-  var request = new XMLHttpRequest();
-  request.open("POST", "https://api.trello.com/1/cards/" + CARD + "/attachments");
-  request.send(formData);
 }
