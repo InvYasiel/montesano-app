@@ -187,7 +187,7 @@ function adjuntar(data) {
     var t = 1;
     // HTML file input, chosen by user
     var ch = document.querySelectorAll(".chooser");
-    for (let i = 0; i < ch.length; i++) {
+    for (let i = 0; i < ch.length-t; i++) {
         if (document.getElementById('chooser' + i) == null) {
             t--;
         } else {
@@ -199,6 +199,14 @@ function adjuntar(data) {
         }
 
     }
+    var spiner = document.getElementById('spiner');
+        spiner.style = 'display:block'
+    setTimeout(function(){
+        
+        location.reload();
+     }, 3000);
+     
+     
 }
 
 function eliminar(e) {
@@ -212,19 +220,3 @@ function eliminar(e) {
 
     eliminado.remove(eliminado);
 }
-// function eliminarAll() {
-//     var ch = document.querySelectorAll(".chooser");
-//     for (let i = 0; i < ch.length; i++) {
-//         if (document.getElementById('chooser' + i) == null || document.getElementById('chooser1') == null ) {
-
-//         } else {
-
-//             var eliminado = document.getElementById('chooser' + i);
-//             eliminado.remove(eliminado);
-//             var inp = document.createElement('input');
-
-//         }
-
-//     }
-
-// }
