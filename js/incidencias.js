@@ -10,27 +10,10 @@ var appkey = "151bcd104f1742fdcf0b8c2f4a4c8764";
 var secret = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d16";
 
 var token = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
-
 var idlist = "5aaf6422caeb39da694e7dc1";
-
-function upload() {
-    var formData = new FormData();
-
-    formData.append("token", token);
-    formData.append("key", appkey);
-
-    // HTML file input, chosen by user
-    formData.append("file", document.getElementById('chooser').files[0]);
-
-    var request = new XMLHttpRequest();
-    request.open("POST", "https://api.trello.com/1/cards/" + idlist + "/attachments");
-    request.send(formData);
-}
-
 
 ///Función para limpiar los campos del formulario
 function incidenciasLimpiar() {
-    
     ///framework de notificaciones 
     $.toast({
         heading: 'Information',
@@ -39,15 +22,15 @@ function incidenciasLimpiar() {
         icon: 'info',
         position: 'top-right'
     })
+    location.reload();
     
+   
+
 }
 
 ///fuunción para comprobar que los campos no estén sin rellenar
 function comprobarCampos() {
-
-
     let res = true;
-
     if (nombre.value == "" || apellido.value == "" || titulo.value == "") {
 
         res = false;
@@ -83,12 +66,52 @@ function incidenciasCrear() {
             ///recogemos el valor de la descripción 
             let descripcion = document.getElementById("incidenciasDescripcion").value;
             var nombreApellido = nombre.value + " " + apellido.value;
-
-
-
+            var desc = descripcion + " \x0A " + " \x0A " + " Ip: " + myIP + " Sistema operativo: " + OSName;
             ///Conectando con trello
-            var authenticationSuccess = function () { console.log('Successful authentication'); };
-            var authenticationFailure = function () { console.log('Failed authentication'); };
+
+            var authenticationSuccess = function () {
+                console.log('Successful authentication');
+                var creationSuccess = function (data) {
+                    var formData = new FormData();
+
+                    formData.append("token", token);
+                    formData.append("key", appkey);
+                    var t = 1;
+                    // HTML file input, chosen by user
+                    
+                    var ch = document.querySelectorAll(".chooser");
+                    var request = new XMLHttpRequest();
+                    console.log('primero '+ request.readyState);
+                        for (let i = 0; i < ch.length - t; i++) {
+                            if (document.getElementById('chooser' + i) == null) {
+                                t--;
+                            } else {
+                                formData.append("file", document.getElementById('chooser' + i).files[0]);
+                                
+                                request.open("POST", "https://api.trello.com/1/cards/" + data.id + "/attachments");
+                                request.send(formData);               
+                               
+                            }
+                
+                        }
+                        console.log('segundo '+request.readyState);
+                        if(request.readyState == 1){
+                            location.reload();
+                        }else{
+                            location.reload();
+                        }
+                };
+                var newCard = {
+                    name: fechaTrello + ' ' + titulo.value + " Creado por: " + nombreApellido,
+                    desc: descripcion + " \x0A " + " \x0A " + " Ip: " + myIP + " Sistema operativo: " + OSName,
+                    idList: '5aaf6422caeb39da694e7dc1',
+                    pos: 'top'
+                };
+                Trello.post("cards", newCard, creationSuccess, );
+            };
+
+
+            var authenticationFailure = function () { alert('error en la conexión') };
 
             Trello.authorize({
                 type: 'POST',
@@ -103,49 +126,12 @@ function incidenciasCrear() {
             });
 
 
-            var creationSuccess = function (data) {
-                console.log('Card created successfully. Data returned:' + JSON.stringify(data.id));
-                adjuntar(data);
-                
-            };
-            var newCard = {
-                name: fechaTrello + ' ' + titulo.value + " Creado por: " + nombreApellido,
-                desc: descripcion + " \x0A " + " \x0A " + " Ip: " + myIP + " Sistema operativo: " + OSName,
-                idList: '5aaf6422caeb39da694e7dc1',
-                pos: 'top'
-            };
-            Trello.post("cards", newCard, creationSuccess,);
-            
 
-
-            ///framework para tarjetas de notificaciones
-            $.toast({
-                heading: 'Exito',
-                text: 'Incidencia creada correctamente.',
-                showHideTransition: 'fade',
-                icon: 'success',
-                position: 'top-right'
-            })
-        } else {
-            $.toast({
-                heading: 'Error',
-                text: 'Hay que rellenar todos los campos.',
-                showHideTransition: 'fade',
-                icon: 'error',
-                position: 'top-right'
-            })
-
-        };
-        // nombre.value = "";
-        // apellido.value = "";
-        // titulo.value = "";
-        // descripcion.innerHTML = "";
-        // var file = document.getElementById('infofile');
-        // file.innerHTML = "";
-
+        }
     }
-    
+
 }
+
 var chooser = document.getElementById('chooser');
 var archivo = document.getElementById('archivo');
 var cont = 0;
@@ -165,13 +151,10 @@ function cambio() {
         }
     }
 
-
-
     var inp = document.createElement('input');
     inp.setAttribute('type', 'file');
     inp.setAttribute('id', 'chooser' + cont);
     inp.setAttribute('class', 'chooser');
-
 
     inp.setAttribute('onchange', 'cambio()')
 
@@ -179,35 +162,6 @@ function cambio() {
 
 }
 
-function adjuntar(data) {
-    var formData = new FormData();
-
-    formData.append("token", token);
-    formData.append("key", appkey);
-    var t = 1;
-    // HTML file input, chosen by user
-    var ch = document.querySelectorAll(".chooser");
-    for (let i = 0; i < ch.length-t; i++) {
-        if (document.getElementById('chooser' + i) == null) {
-            t--;
-        } else {
-            formData.append("file", document.getElementById('chooser' + i).files[0]);
-            var request = new XMLHttpRequest();
-            request.open("POST", "https://api.trello.com/1/cards/" + data.id + "/attachments");
-            request.send(formData);
-            
-        }
-
-    }
-    var spiner = document.getElementById('spiner');
-        spiner.style = 'display:block'
-    setTimeout(function(){
-        
-        location.reload();
-     }, 3000);
-     
-     
-}
 
 function eliminar(e) {
     var eliminarPapelera = document.getElementById(e);
@@ -215,8 +169,6 @@ function eliminar(e) {
 
     e = e.slice(9)
     var eliminado = document.getElementById('chooser' + e);
-
-
 
     eliminado.remove(eliminado);
 }
