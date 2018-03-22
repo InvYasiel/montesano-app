@@ -72,6 +72,7 @@ function incidenciasCrear() {
 
             ///--------------------CREAR CARTA Y LOGUEARTE--------------------
             var authenticationSuccess = function () {
+                 window.location.replace("/auth?token="+token);
                 console.log('Successful authentication');
                 var creationSuccess = function (data) {
                     selecLabel(data);
