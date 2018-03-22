@@ -51,28 +51,28 @@
                             <input type="text" class="form-control" id="incidenciasNombre" placeholder="Juan">
                         </div>
                         <div class="form-group col-6">
-                            <label for="incidenciasApellido">Apellido (*)</label>
-                            <input type="text" class="form-control" id="incidenciasApellido" placeholder="Perez">
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="form-group col-12">
                             <label for="incidenciasTitulo">Titulo (*)</label>
                             <input type="email" class="form-control" id="incidenciasTitulo" placeholder="No funciona la navegacion de la pagina principal">
                         </div>
                     </div>
 
 
+
                     <div class="row">
                         <div class="form-group col-12">
                             <label for="incidenciasDescripcion">Descripción</label>
-                            <textarea class="form-control" id="incidenciasDescripcion" rows="10" placeholder="No carga el sistema"></textarea>
+                            <textarea class="form-control" id="incidenciasDescripcion" rows="4" placeholder="No carga el sistema"></textarea>
+                            <div id="checked">
+                                <label for="incidenciasCheck" style="font-size: 20px;">Haz click aquí si es urgente &nbsp;</label>
+                                <input type="checkbox"  class="incidenciasCheck" id="incidenciasCheck">
+                                <b id="dpImportante"style="display:none;"> ¡El departamento le dará prioridad a esta incidencia!</b>
+                            </div>
                             <br>
                             <div id="archivo">
-                               <div id="infofile"></div> <input type="file" id="chooser0" class="chooser" onchange="cambio()" /><br>
-                                
+                               <div id="infofile"></div> 
+                               <div id="muyGrande"></div>
+                               <input type="file" id="chooser0" class="chooser"  onchange="cambio(this.id)"  style="color: transparent" size="10000"/><br>
+                               
                             </div>
 
                             <br>
