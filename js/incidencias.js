@@ -41,8 +41,8 @@ function comprobarCampos() {
 
     return res;
 }
-function SO(){
-    
+function SO() {
+
 }
 ///--------------------CREAR INCIDENDIA--------------------
 function incidenciasCrear() {
@@ -95,16 +95,6 @@ function incidenciasCrear() {
                 Trello.post("cards", newCard, creationSuccess, );
             };
 
-                var newCard = {
-                    name: fechaTrello + ' ' + titulo.value + " Creado por: " + nombre.value,
-                    desc: descripcion + " \x0A " + " \x0A " + " Ip: " + myIP + " Sistema operativo: " + OSName,
-                    idList: '5aaf6422caeb39da694e7dc1',
-                    pos: 'top'
-                };
-                Trello.post("cards", newCard, creationSuccess, );
-            };
-
-
             var authenticationFailure = function () { alert('error en la conexión') };
 
             Trello.authorize({
@@ -114,7 +104,7 @@ function incidenciasCrear() {
                     read: true,
                     write: true
                 },
-                interactive:true,
+                interactive: true,
                 expiration: 'never',
                 success: authenticationSuccess,
                 error: authenticationFailure
