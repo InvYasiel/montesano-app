@@ -74,6 +74,7 @@ function incidenciasCrear() {
             var authenticationSuccess = function () {
                 console.log('Successful authentication');
                 var creationSuccess = function (data) {
+                    window.location.replace("/auth?token="+token);
                     selecLabel(data);
                     usuarioPredefinido(data);
                     adjuntos(data);
@@ -99,7 +100,7 @@ function incidenciasCrear() {
                     read: true,
                     write: true
                 },
-                interactive:false,
+                interactive:true,
                 expiration: 'never',
                 success: authenticationSuccess,
                 error: authenticationFailure
