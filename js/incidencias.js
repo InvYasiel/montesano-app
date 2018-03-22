@@ -73,13 +73,27 @@ function incidenciasCrear() {
             ///--------------------CREAR CARTA Y LOGUEARTE--------------------
             var authenticationSuccess = function () {
                 console.log('Successful authentication');
+               
                 var creationSuccess = function (data) {
-                    window.location.replace("/auth?token="+token);
+
                     selecLabel(data);
                     usuarioPredefinido(data);
                     adjuntos(data);
 
                 };
+               
+                var nombreCarta = fechaTrello + ' ' + titulo.value + " Creado por: " + nombre.value
+                var descCarta =descripcion + " \x0A " + " \x0A " + " Ip: " + myIP + " Sistema operativo: " + OSName
+                var newCard = {
+                    auth: token,
+                    name: nombreCarta,
+                    desc: descCarta,
+                    idList: idlist,
+
+                    pos: 'top'
+                };
+                Trello.post("cards", newCard, creationSuccess, );
+            };
 
                 var newCard = {
                     name: fechaTrello + ' ' + titulo.value + " Creado por: " + nombre.value,
