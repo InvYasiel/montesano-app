@@ -41,18 +41,20 @@ function comprobarCampos() {
 
     return res;
 }
-
-/// función para crear la incidencia
+function SO(){
+    
+}
+///--------------------CREAR INCIDENDIA--------------------
 function incidenciasCrear() {
-    /// sitema operativo del cliente 
+    ///--------------------OBTENER SO--------------------
     var OSName = "Desconocido";
     if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
     if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
-    //Fecha actual
+    ///--------------------OTENER FECHA ACTUAL--------------------
     var fecha = new Date();
     var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
 
-    /// averiguamos la ip 
+    ///--------------------OBTENER IP--------------------
     window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;//compatibility for Firefox and chrome
     var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { };
     pc.createDataChannel('');//create a bogus data channel
@@ -64,12 +66,13 @@ function incidenciasCrear() {
                 console.log('my IP: ', myIP);
                 pc.onicecandidate = noop;
             }
-            ///recogemos el valor de la descripción 
+            ///--------------------VALORES DE LA DESCRIPCIÓN--------------------
             let descripcion = document.getElementById("incidenciasDescripcion").value;
             var desc = descripcion + " \x0A " + " \x0A " + " Ip: " + myIP + " Sistema operativo: " + OSName;
 
-            ///--------------------Conecciones TRello--------------------
+            ///--------------------CREAR CARTA Y LOGUEARTE--------------------
             var authenticationSuccess = function () {
+                // window.location.replace("/auth?token="+token);
                 console.log('Successful authentication');
                 var creationSuccess = function (data) {
                     selecLabel(data);
@@ -97,6 +100,7 @@ function incidenciasCrear() {
                     read: true,
                     write: true
                 },
+                interactive:true,
                 expiration: 'never',
                 success: authenticationSuccess,
                 error: authenticationFailure
@@ -107,23 +111,26 @@ function incidenciasCrear() {
 }
 var importante = document.getElementById('incidenciasCheck');
 var dpImportante = document.getElementById('dpImportante');
-importante.addEventListener('click', function(){
-if(importante.checked == true){
-    dpImportante.style='display:true';
-}else{
-    dpImportante.style='display:none';
-}
-},false)
+importante.addEventListener('click', function () {
+    if (importante.checked == true) {
+        dpImportante.style = 'display:true';
+    } else {
+        dpImportante.style = 'display:none';
+    }
+}, false)
+
+///--------------------CREAR LABEL IMPORTANTE--------------------
 function selecLabel(data) {
-    ///--------------------ESIMPORTANTE??--------------------
+
     var datas = null;
-    
+
     if (importante.checked == true) {
         var checkRQ = new XMLHttpRequest();
         checkRQ.open("POST", "https://api.trello.com/1/cards/" + data.id + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkey + "&token=" + token);
         checkRQ.send(datas);
     }
 }
+///--------------------CREAR ADJUNTOS--------------------
 function adjuntos(data) {
     var formData = new FormData();
     formData.append("token", token);
@@ -150,20 +157,30 @@ function adjuntos(data) {
                             finalizado = false;
                         }
                     }
-                    if (finalizado == true) { 
+                    if (finalizado == true) {
                         spiner.style = 'display:none';
                         $("#mensajeModal").modal();
                         var close = document.getElementById('close');
-                        close.addEventListener('click',function(){
+                        close.addEventListener('click', function () {
                             location.reload();
-                        },false)
-                        
+                        }, false)
+
                     }
                 }
             });
         }
     }
 
+}
+///--------------------ELIMINAR ADJUNTOS--------------------
+function eliminar(e) {
+    var eliminarPapelera = document.getElementById(e);
+    eliminarPapelera.parentElement.remove();
+
+    e = e.slice(9)
+    var eliminado = document.getElementById('chooser' + e);
+
+    eliminado.remove(eliminado);
 }
 function usuarioPredefinido(data) {
     ///--------------------USUARIOS ASOCIADOS--------------------
@@ -188,10 +205,10 @@ function usuarioPredefinido(data) {
             if (finalizado == true) {
                 spiner.style = 'display:none';
                 $("#mensajeModal").modal();
-                        var close = document.getElementById('close');
-                        close.addEventListener('click',function(){
-                            location.reload();
-                        },false)
+                var close = document.getElementById('close');
+                close.addEventListener('click', function () {
+                    location.reload();
+                }, false)
             }
         }
     });
@@ -199,21 +216,15 @@ function usuarioPredefinido(data) {
 
 
 var cont = 0;
-function seleccionado(e) {
-    var nn = true;
-
-    cambio(nn);
-
-}
 function cambio(e) {
 
-    var fileSize = $('#'+e)[0].files[0].size;
+    var fileSize = $('#' + e)[0].files[0].size;
     var siezekiloByte = parseInt(fileSize / 1024);
-    if (siezekiloByte >  $('#'+e).attr('size')) {
+    if (siezekiloByte > $('#' + e).attr('size')) {
         alert("Imagen muy grande");
         return false;
-    }{
-cont++;
+    } {
+        cont++;
 
         var n = document.querySelectorAll(".chooser");
 
@@ -238,22 +249,4 @@ cont++;
 
         archivo.appendChild(inp);
     }
-
-        
-    
-
-}
-
-
-
-
-
-function eliminar(e) {
-    var eliminarPapelera = document.getElementById(e);
-    eliminarPapelera.parentElement.remove();
-
-    e = e.slice(9)
-    var eliminado = document.getElementById('chooser' + e);
-
-    eliminado.remove(eliminado);
 }
