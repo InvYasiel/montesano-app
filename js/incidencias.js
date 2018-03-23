@@ -1,9 +1,9 @@
-
 //Variables donde recogemos los elementos del formulario
 let nombre = document.getElementById("incidenciasNombre");
 let incidenCheck = document.getElementById("incidenCheck");
 let titulo = document.getElementById("incidenciasTitulo");
 let descripcion = document.getElementById("incidenciasDescripcion").value;
+
 let spiner = document.getElementById('spiner');
 let chooser = document.getElementById('chooser');
 let archivo = document.getElementById('archivo');
@@ -18,7 +18,7 @@ var usuario1 = "5891c93eb1cfa471ee1fe47c";
 var usuario2 = "59a68c4e314350c790512ae9";
 
 
-///Función para limpiar los campos del formulario
+///--------------------LIMPIAR CAMPOS DE LA SOLICITUD DE LA INCIDENCIA--------------------
 function incidenciasLimpiar() {
     ///framework de notificaciones 
     $.toast({
@@ -31,84 +31,102 @@ function incidenciasLimpiar() {
     location.reload();
 }
 
-///fuunción para comprobar que los campos no estén sin rellenar
+///--------------------COMPROBAR CAMPOS OBLIGATORIOS--------------------
 function comprobarCampos() {
     let res = true;
     if (nombre.value == "" || titulo.value == "") {
-
+        alert('Rellena los campos obligatorios (*)')
         res = false;
     }
 
     return res;
 }
-function SO(){
-    
-}
+///--------------------IDENTIFAR EL NAVEGADOR--------------------
+function getBrowserInfo() {
+    var ua = navigator.userAgent,
+        tem,
+        M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+    if (/trident/i.test(M[1])) {
+        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
+        return 'IE ' + (tem[1] || '');
+    }
+    if (M[1] === 'Chrome') {
+        tem = ua.match(/\b(OPR|Edge)\/(\d+)/);
+        if (tem != null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+    }
+    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
+    if ((tem = ua.match(/version\/(\d+)/i)) != null) M.splice(1, 1, tem[1]);
+    return M.join(' ');
+};
+
 ///--------------------CREAR INCIDENDIA--------------------
 function incidenciasCrear() {
-    ///--------------------OBTENER SO--------------------
+    //--------------------OBTENER SO--------------------
     var OSName = "Desconocido";
     if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
     if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
-    ///--------------------OTENER FECHA ACTUAL--------------------
+    //--------------------OTENER FECHA ACTUAL--------------------
     var fecha = new Date();
     var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
+    //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
+    var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
+    if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
+        let descripcion = document.getElementById("incidenciasDescripcion").value;
+        var desc = descripcion + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
+        crearCarta(desc, OSName, fechaTrello);
+    } else { ///--------------------DEMAS NAVEGADORES--------------------
+        //--------------------OBTENER IP--------------------
+        window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
+        var pc = new RTCPeerConnection({
+                iceServers: []
+            }),
+            noop = function () {};
+        pc.createDataChannel('');
+        pc.createOffer(pc.setLocalDescription.bind(pc), noop);
+        pc.onicecandidate = function (ice) {
+            if (comprobarCampos()) {
+                if (ice && ice.candidate && ice.candidate.candidate) {
+                    var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+                    console.log('my IP: ', myIP);
+                    pc.onicecandidate = noop;
+                }
 
-    ///--------------------OBTENER IP--------------------
-    window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;//compatibility for Firefox and chrome
-    var pc = new RTCPeerConnection({ iceServers: [] }), noop = function () { };
-    pc.createDataChannel('');//create a bogus data channel
-    pc.createOffer(pc.setLocalDescription.bind(pc), noop);// create offer and set local description
-    pc.onicecandidate = function (ice) {
-        if (comprobarCampos()) {
-            if (ice && ice.candidate && ice.candidate.candidate) {
-                var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
-                console.log('my IP: ', myIP);
-                pc.onicecandidate = noop;
+                //--------------------VALORES DE LA DESCRIPCIÓN--------------------
+                let descripcion = document.getElementById("incidenciasDescripcion").value;
+                var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
+                ///--------------------LLAMADA A CREAR CARTA--------------------
+                crearCarta(desc, myIP, OSName, fechaTrello);
             }
-            ///--------------------VALORES DE LA DESCRIPCIÓN--------------------
-            let descripcion = document.getElementById("incidenciasDescripcion").value;
-            var desc = descripcion + " \x0A " + " \x0A " + " Ip: " + myIP + " Sistema operativo: " + OSName;
-
-            ///--------------------CREAR CARTA Y LOGUEARTE--------------------
-            var authenticationSuccess = function () {
-                // window.location.replace("/auth?token="+token);
-                console.log('Successful authentication');
-                var creationSuccess = function (data) {
-                    selecLabel(data);
-                    usuarioPredefinido(data);
-                    adjuntos(data);
-
-                };
-
-                var newCard = {
-                    name: fechaTrello + ' ' + titulo.value + " Creado por: " + nombre.value,
-                    desc: descripcion + " \x0A " + " \x0A " + " Ip: " + myIP + " Sistema operativo: " + OSName,
-                    idList: '5aaf6422caeb39da694e7dc1',
-                    pos: 'top'
-                };
-                Trello.post("cards", newCard, creationSuccess, );
-            };
-
-
-            var authenticationFailure = function () { alert('error en la conexión') };
-
-            Trello.authorize({
-                type: 'POST',
-                name: titulo.value,
-                scope: {
-                    read: true,
-                    write: true
-                },
-                interactive:true,
-                expiration: 'never',
-                success: authenticationSuccess,
-                error: authenticationFailure
-            });
         }
     }
-
 }
+
+///--------------------CREAR CARTA--------------------
+function crearCarta(desc, myIP, OSName, fechaTrello) {
+    var h = "";
+    var data = null;
+    var name = fechaTrello + ' ' + titulo.value + " Creado por: " + nombre.value;
+    var xhr = new XMLHttpRequest();
+    desc = desc.replace(/\n/g, '%0A');
+    xhr.open("POST", "https://api.trello.com/1/cards?name=" + name + "&desc=" + desc + "&pos=top&idList=" + idlist + "&keepFromSource=all&key=" + appkey + "&token=" + token);
+    xhr.send(data);
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === this.DONE) {
+            console.log(this.responseText);
+            var dt = this.responseText;
+            h = JSON.parse(dt).id;
+            spiner.style = 'display:block';
+            //------------LLAMADA A FUNCIONES PARA RELLENAR LA CARTA -------------
+            selecLabel(h);
+            if (archivos.length > 0) {
+                adjuntos(h);
+            }
+            // usuarioPredefinido(h);
+        }
+    });
+}
+
+///--------------------MOSTRAR MENSAJE EN CASO DE QUE ESTÉ MARCADO EL CHECKBOX--------------------
 var importante = document.getElementById('incidenciasCheck');
 var dpImportante = document.getElementById('dpImportante');
 importante.addEventListener('click', function () {
@@ -121,56 +139,47 @@ importante.addEventListener('click', function () {
 
 ///--------------------CREAR LABEL IMPORTANTE--------------------
 function selecLabel(data) {
-
     var datas = null;
-
     if (importante.checked == true) {
         var checkRQ = new XMLHttpRequest();
-        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data.id + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkey + "&token=" + token);
+        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkey + "&token=" + token);
         checkRQ.send(datas);
     }
+
 }
-///--------------------CREAR ADJUNTOS--------------------
+
 function adjuntos(data) {
+    var arrData = [];
     var formData = new FormData();
     formData.append("token", token);
     formData.append("key", appkey);
-    var t = 1;
-    var ch = document.querySelectorAll(".chooser");
-    var arrData = []
-    for (let i = 0; i < ch.length - t; i++) {
-        if (document.getElementById('chooser' + i) == null) {
-            t--;
-        } else {
-            formData.append("file", document.getElementById('chooser' + i).files[0]);
-            var request = new XMLHttpRequest();
-            request.open("POST", "https://api.trello.com/1/cards/" + data.id + "/attachments");
-            request.send(formData);
-            arrData.push(request);
-            spiner.style = 'display:block;';
-            request.addEventListener("readystatechange", function () {
-                if (this.readyState === this.DONE) {
-                    var finalizado = true;
+    for (let i = 0; i < archivos.length; i++) {
+        formData.append("file", archivos[i]);
+        var request = new XMLHttpRequest();
+        request.open("POST", "https://api.trello.com/1/cards/" + data + "/attachments?key=" + appkey + "&token=" + token);
+        request.send(formData);
+        request.addEventListener("readystatechange", function () {
+            
+            if (this.readyState === this.DONE) {
+                var finalizado = true;
 
-                    for (let i = 0; i < arrData.length; i++) {
-                        if (arrData[i].readyState !== this.DONE) {
-                            finalizado = false;
-                        }
-                    }
-                    if (finalizado == true) {
-                        spiner.style = 'display:none';
-                        $("#mensajeModal").modal();
-                        var close = document.getElementById('close');
-                        close.addEventListener('click', function () {
-                            location.reload();
-                        }, false)
-
+                for (let i = 0; i < arrData.length; i++) {
+                    if (arrData[i].readyState !== this.DONE) {
+                        finalizado = false;
+                        
                     }
                 }
-            });
-        }
+                if (finalizado == true) {
+                    spiner.style = 'display:none';
+                    $("#mensajeModal").modal();
+                    var close = document.getElementById('close');
+                    close.addEventListener('click', function () {
+                        location.reload();
+                    }, false)
+                }
+            }
+        });
     }
-
 }
 ///--------------------ELIMINAR ADJUNTOS--------------------
 function eliminar(e) {
@@ -178,22 +187,23 @@ function eliminar(e) {
     eliminarPapelera.parentElement.remove();
 
     e = e.slice(9)
-    var eliminado = document.getElementById('chooser' + e);
+    archivos.splice(e, 1);
 
-    eliminado.remove(eliminado);
 }
+
 function usuarioPredefinido(data) {
     ///--------------------USUARIOS ASOCIADOS--------------------
+    
     var arrRQ = [];
     var datas = null;
     var usuRQ1 = new XMLHttpRequest();
-    usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data.id + "/idMembers?value=" + usuario1 + "&key=" + appkey + "&token=" + token);
+    usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario1 + "&key=" + appkey + "&token=" + token);
     usuRQ1.send(datas);
     var usuRQ2 = new XMLHttpRequest();
-    usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data.id + "/idMembers?value=" + usuario2 + "&key=" + appkey + "&token=" + token);
+    usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario2 + "&key=" + appkey + "&token=" + token);
     usuRQ2.send(datas);
     arrRQ.push(usuRQ1);
-    spiner.style = 'display:block;';
+    
     usuRQ1.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
             var finalizado = true;
@@ -202,7 +212,7 @@ function usuarioPredefinido(data) {
                     finalizado = false;
                 }
             }
-            if (finalizado == true) {
+            if (finalizado == true && archivos.length == 0) {
                 spiner.style = 'display:none';
                 $("#mensajeModal").modal();
                 var close = document.getElementById('close');
@@ -214,39 +224,47 @@ function usuarioPredefinido(data) {
     });
 }
 
-
+var archivos = []
+var rutas = []
 var cont = 0;
-function cambio(e) {
 
-    var fileSize = $('#' + e)[0].files[0].size;
+function cambio(e) {
+    var chooser = document.getElementById("" + e)
+    var fileSize = chooser.files[0].size;
     var siezekiloByte = parseInt(fileSize / 1024);
-    if (siezekiloByte > $('#' + e).attr('size')) {
+    if (siezekiloByte > chooser.getAttribute('size')) {
         alert("Imagen muy grande");
         return false;
-    } {
-        cont++;
+    } else {
+        console.log(e);
+        chooser.files[0];
 
-        var n = document.querySelectorAll(".chooser");
-
-        var info = document.getElementById('infofile');
-
-        for (let i = 0; i < n.length; i++) {
-            if (n[i].style.display == "none") {
-
-            } else {
-                n[i].style = 'display:none';
-                info.innerHTML += '<b> | ' + n[i].value + '  <i class="fas fa-trash" id="papelera ' + i + '" style="color:red" onclick="eliminar(id)"></i><b>';
+        var path = document.getElementById("" + e).value;
+        rutas.push(path)
+        var archivoCorrecto = true;
+        if (archivos.length == 0) {
+            archivos.push(chooser.files[0]);
+            var info = document.getElementById('infofile');
+            info.innerHTML += '<b> | ' + path + '  <i class="fas fa-trash" id="papelera ' + cont + '" style="color:red" onclick="eliminar(id)"></i><b>';
+            cont++;
+        } else if (archivos.length > 0) {
+            for (let i = 0; i < archivos.length; i++) {
+                if (chooser.files[0].name == archivos[i].name) {
+                    archivoCorrecto = false;
+                } 
             }
+            if(archivoCorrecto == true){
+                archivos.push(chooser.files[0]);
+                var info = document.getElementById('infofile');
+                info.innerHTML += '<b> | ' + path + '  <i class="fas fa-trash" id="papelera ' + cont + '" style="color:red" onclick="eliminar(id)"></i><b>';
+                cont++;
+            }else{
+
+                alert('No puedes agregar otro archivo con el mismo nombre');
+            }
+            
         }
 
-        var inp = document.createElement('input');
-        inp.setAttribute('type', 'file');
-        inp.setAttribute('id', 'chooser' + cont);
-        inp.setAttribute('class', 'chooser');
-        inp.style = 'color: transparent';
-        inp.setAttribute('onchange', 'cambio(this.id)')
-        inp.setAttribute('size', '10000')
-
-        archivo.appendChild(inp);
     }
+    document.getElementsByClassName('chooser')[0].value='';
 }
