@@ -73,7 +73,7 @@
                                 <div id="muyGrande"></div>
                                 <input type="file" id="chooser0" class="chooser" onchange="cambio(this.id)" style="color: transparent" size="10000" />
                                 <br>
-
+                                
                             </div>
 
                             <br>
@@ -148,7 +148,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <script src="js/jquery.toast.min.js"></script>
 <script src="https://api.trello.com/1/client.js?key=151bcd104f1742fdcf0b8c2f4a4c8764"></script>
-
+<script type="application/javascript">
+    jQuery('input[type=file]').change(function(){
+     var filename = jQuery(this).val().split('\\').pop();
+     var idname = jQuery(this).attr('id');
+     console.log(jQuery(this));
+     console.log(filename);
+     console.log(idname);
+     jQuery('span.'+idname).next().find('span').html(filename);
+    });
+    </script>
 
 <script src="js/incidencias.js"></script>
 

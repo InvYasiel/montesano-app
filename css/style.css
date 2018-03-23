@@ -2,40 +2,60 @@
     float: right;
     border-bottom: 0px;
 }
-.right-tabs .nav li { float: left }
+
+.right-tabs .nav li {
+    float: left
+}
+
 .right-tabs .tab-content {
     float: left;
     border-top: 1px solid #ddd;
     margin-top: -1px;
 }
-.icono{
+
+.icono {
     width: 15%;
 }
-#papelera{
-    color:red;
+
+#papelera {
+    color: red;
     font-size: 25px;
     cursor: pointer;
 }
-#dpImportante{
+
+#dpImportante {
     background-color: rgba(128, 128, 128, 0.26);
 }
-input[type=checkbox]
-{
-  /* Double-sized Checkboxes */
-  -ms-transform: scale(2); /* IE */
-  -moz-transform: scale(2); /* FF */
-  -webkit-transform: scale(2); /* Safari and Chrome */
-  -o-transform: scale(2); /* Opera */
-  padding: 10px;
+
+input[type=checkbox] {
+    /* Double-sized Checkboxes */
+    -ms-transform: scale(2);
+    /* IE */
+    -moz-transform: scale(2);
+    /* FF */
+    -webkit-transform: scale(2);
+    /* Safari and Chrome */
+    -o-transform: scale(2);
+    /* Opera */
+    padding: 10px;
 }
 
-#incidenciasCheck{
+.chooser::-ms-value {
+    display: none !important;
+    width: 100px !important;
+    font-style: italic !important;
+  }
+.chooser{
+   
+ } 
+
+#incidenciasCheck {
     /* Checkbox text */
-  font-size: 110%;
-  display: inline;
-  
+    font-size: 110%;
+    display: inline;
 }
-#dpImportante{
+
+#dpImportante {
     position: absolute;
     right: 15px;
     margin-top: 3px;
