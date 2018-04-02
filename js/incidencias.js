@@ -8,6 +8,7 @@ let spiner = document.getElementById('spiner');
 let chooser = document.getElementById('chooser');
 let archivo = document.getElementById('archivo');
 let grande = document.getElementById('muyGrande');
+
 ///KEYS para conectar con trello
 var appkey = "151bcd104f1742fdcf0b8c2f4a4c8764";
 var secret = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d16";
@@ -18,19 +19,6 @@ var usuario1 = "5891c93eb1cfa471ee1fe47c";
 var usuario2 = "59a68c4e314350c790512ae9";
 
 
-///--------------------LIMPIAR CAMPOS DE LA SOLICITUD DE LA INCIDENCIA--------------------
-function incidenciasLimpiar() {
-    ///framework de notificaciones 
-    $.toast({
-        heading: 'Information',
-        text: 'Campos vaciados correctamente.',
-        showHideTransition: 'fade',
-        icon: 'info',
-        position: 'top-right'
-    })
-    location.reload();
-}
-
 ///--------------------COMPROBAR CAMPOS OBLIGATORIOS--------------------
 function comprobarCampos() {
     let res = true;
@@ -40,6 +28,10 @@ function comprobarCampos() {
     }
 
     return res;
+}
+///--------------------LIMPIAR CAMPOS DE LA SOLICITUD DE LA INCIDENCIA--------------------
+function incidenciasLimpiar() {
+    location.reload();
 }
 ///--------------------IDENTIFAR EL NAVEGADOR--------------------
 function getBrowserInfo() {
@@ -121,7 +113,7 @@ function crearCarta(desc, myIP, OSName, fechaTrello) {
             if (archivos.length > 0) {
                 adjuntos(h);
             }
-            // usuarioPredefinido(h);
+                usuarioPredefinido(h);
         }
     });
 }
@@ -147,7 +139,7 @@ function selecLabel(data) {
     }
 
 }
-
+///--------------------CREAR Y ENVIAR LOS ARCHIVOS ADJUNTOS--------------------
 function adjuntos(data) {
     var arrData = [];
     var formData = new FormData();
@@ -185,15 +177,13 @@ function adjuntos(data) {
 function eliminar(e) {
     var eliminarPapelera = document.getElementById(e);
     eliminarPapelera.parentElement.remove();
-
     e = e.slice(9)
     archivos.splice(e, 1);
 
 }
 
+///--------------------CREAR LOS USUARIOS PREDEFINIDOS--------------------
 function usuarioPredefinido(data) {
-    ///--------------------USUARIOS ASOCIADOS--------------------
-    
     var arrRQ = [];
     var datas = null;
     var usuRQ1 = new XMLHttpRequest();
@@ -224,6 +214,7 @@ function usuarioPredefinido(data) {
     });
 }
 
+///--------------------CREAR ARCHIVOS ADJUNTOS DE MANERA VISIBLE--------------------
 var archivos = []
 var rutas = []
 var cont = 0;

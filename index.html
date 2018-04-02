@@ -24,12 +24,12 @@
                     aria-selected="true">Incidencias</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile"
-                    aria-selected="false">Profile</a>
+                <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" aria-controls="pills-Agenda"
+                    aria-selected="false">Agenda</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact"
-                    aria-selected="false">Contact</a>
+                <a class="nav-link" id="pills-Reserva-tab" data-toggle="pill" href="#pills-Reserva" role="tab" aria-controls="pills-Reserva"
+                    aria-selected="false">Reserva de salas</a>
             </li>
         </ul>
         <div class="tab-content" id="pills-tabContent" style="width: 100%">
@@ -40,7 +40,6 @@
                         <div class="col-12 text-center">
                             <h1 class="display-4">Incidencias</h1>
                             <p class="lead">Utilice el siguiente formulario para crear una incidencia.</p>
-                            <!-- <hr class="my-4"> -->
                             <br>
                         </div>
                     </div>
@@ -73,7 +72,7 @@
                                 <div id="muyGrande"></div>
                                 <input type="file" id="chooser0" class="chooser" onchange="cambio(this.id)" style="color: transparent" size="10000" />
                                 <br>
-                                
+
                             </div>
 
                             <br>
@@ -109,16 +108,34 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">Eu dolore ea ullamco dolore Lorem id cupidatat excepteur reprehenderit consectetur elit id dolor proident in
-                cupidatat officia. Voluptate excepteur commodo labore nisi cillum duis aliqua do. Aliqua amet qui mollit
-                consectetur nulla mollit velit aliqua veniam nisi id do Lorem deserunt amet. Culpa ullamco sit adipisicing
-                labore officia magna elit nisi in aute tempor commodo eiusmod.</div>
-            <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">Eu dolore ea ullamco dolore Lorem id cupidatat excepteur reprehenderit consectetur elit id dolor proident in
-                cupidatat officia. Voluptate excepteur commodo labore nisi cillum duis aliqua do. Aliqua amet qui mollit
-                consectetur nulla mollit velit aliqua veniam nisi id do Lorem deserunt amet. Culpa ullamco sit adipisicing
-                labore officia magna elit nisi in aute tempor commodo eiusmod.</div>
-        </div>
+            <div class="tab-pane fade" id="pills-Agenda" role="tabpanel" aria-labelledby="pills-Agenda-tab">
+                En proceso
+            </div>
+            <div class="tab-pane fade" id="pills-Reserva" role="tabpanel" aria-labelledby="pills-Reserva-tab">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <h1 class="display-4">Reservas de salas</h1>
+                            <p class="lead">Seleccione Fecha y hora del calendario para la reserva de la sala</p>
+                            <br>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-secondary">Juntas</button>
+                                <button type="button" class="btn btn-secondary">Convites</button>
+                        </div>
+                              
 
+                    </div>
+                    <div class="row ">
+                        <div class="col-12" style="text-align: right">
+                            <button type="button" class="btn btn-warning" onclick="incidenciasLimpiar()">Limpiar</button>
+                            <button type="button" class="btn btn-primary" onclick="incidenciasCrear()">Crear</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <div class="modal fade mensajeModal" id="mensajeModal" tabindex="-1" role="dialog">
@@ -126,7 +143,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close"  data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -149,15 +166,15 @@
 <script src="js/jquery.toast.min.js"></script>
 <script src="https://api.trello.com/1/client.js?key=151bcd104f1742fdcf0b8c2f4a4c8764"></script>
 <script type="application/javascript">
-    jQuery('input[type=file]').change(function(){
-     var filename = jQuery(this).val().split('\\').pop();
-     var idname = jQuery(this).attr('id');
-     console.log(jQuery(this));
-     console.log(filename);
-     console.log(idname);
-     jQuery('span.'+idname).next().find('span').html(filename);
+    jQuery('input[type=file]').change(function () {
+        var filename = jQuery(this).val().split('\\').pop();
+        var idname = jQuery(this).attr('id');
+        console.log(jQuery(this));
+        console.log(filename);
+        console.log(idname);
+        jQuery('span.' + idname).next().find('span').html(filename);
     });
-    </script>
+</script>
 
 <script src="js/incidencias.js"></script>
 
