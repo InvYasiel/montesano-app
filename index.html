@@ -87,7 +87,6 @@
                         <div class="col-12" style="text-align: right">
                             <button type="button" class="btn btn-warning" onclick="incidenciasLimpiar()">Limpiar</button>
                             <button type="button" class="btn btn-primary" onclick="incidenciasCrear()">Crear</button>
-
                         </div>
 
                     </div>
@@ -116,15 +115,19 @@
                     <div class="row">
                         <div class="col-12 text-center">
                             <h1 class="display-4">Reservas de salas</h1>
-                            <p class="lead">Seleccione Fecha y hora del calendario para la reserva de la sala</p>
                             <br>
                         </div>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-secondary">Juntas</button>
-                                <button type="button" class="btn btn-secondary">Convites</button>
-                        </div>
+                        <div class="input-group mb-3" style="width: 200px;">
+                                <div class="input-group-prepend">
+                                  <button class="btn btn-outline-secondary" type="button">Salas</button>
+                                </div>
+                                <select class="custom-select" id="inputGroupSelect03">
+                                  <option selected>...</option>
+                                  <option value="1">Juntas</option>
+                                  <option value="2">Convites</option>
+                                </select>
+                              </div>
                               
-
                     </div>
                     <div class="row ">
                         <div class="col-12" style="text-align: right">

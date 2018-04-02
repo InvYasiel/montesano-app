@@ -128,7 +128,6 @@ importante.addEventListener('click', function () {
         dpImportante.style = 'display:none';
     }
 }, false)
-
 ///--------------------CREAR LABEL IMPORTANTE--------------------
 function selecLabel(data) {
     var datas = null;
