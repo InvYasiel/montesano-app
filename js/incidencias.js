@@ -60,12 +60,16 @@ function incidenciasCrear() {
     //--------------------OTENER FECHA ACTUAL--------------------
     var fecha = new Date();
     var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
+    var hora=fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds(); 
+    var FechaIncidencia = document.getElementById('FechaIncidencia');
+    FechaIncidencia.innerHTML = 'La creación '+fechaTrello+' '+ hora +' Se aejecutado correctamente';
+                
     //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
     var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
     if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
         let descripcion = document.getElementById("incidenciasDescripcion").value;
         var desc = descripcion + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
-        crearCarta(desc, OSName, fechaTrello);
+        crearCarta(desc, OSName, fechaTrello, hora);
     } else { ///--------------------DEMAS NAVEGADORES--------------------
         //--------------------OBTENER IP--------------------
         window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
@@ -87,17 +91,17 @@ function incidenciasCrear() {
                 let descripcion = document.getElementById("incidenciasDescripcion").value;
                 var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
                 ///--------------------LLAMADA A CREAR CARTA--------------------
-                crearCarta(desc, myIP, OSName, fechaTrello);
+                crearCarta(desc, myIP, OSName, fechaTrello, hora);
             }
         }
     }
 }
 
 ///--------------------CREAR CARTA--------------------
-function crearCarta(desc, myIP, OSName, fechaTrello) {
+function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
     var h = "";
     var data = null;
-    var name = fechaTrello + ' ' + titulo.value + " Creado por: " + nombre.value;
+    var name = fechaTrello + ' ' +hora +' '+ titulo.value + " Creado por: " + nombre.value;
     var xhr = new XMLHttpRequest();
     desc = desc.replace(/\n/g, '%0A');
     xhr.open("POST", "https://api.trello.com/1/cards?name=" + name + "&desc=" + desc + "&pos=top&idList=" + idlist + "&keepFromSource=all&key=" + appkey + "&token=" + token);
@@ -113,7 +117,7 @@ function crearCarta(desc, myIP, OSName, fechaTrello) {
             if (archivos.length > 0) {
                 adjuntos(h);
             }
-                usuarioPredefinido(h);
+               // usuarioPredefinido(h);
         }
     });
 }
@@ -217,7 +221,7 @@ function usuarioPredefinido(data) {
 var archivos = []
 var rutas = []
 var cont = 0;
-
+//https://es.stackoverflow.com/questions/24583/enviar-post-a-php-por-medio-de-ajax
 function cambio(e) {
     var chooser = document.getElementById("" + e)
     var fileSize = chooser.files[0].size;

@@ -13,7 +13,6 @@
 </head>
 <div class="container">
     <br>
-
     <div class="right-tabs clearfix">
         <div class="navbar-brand">
             Montesano
@@ -126,6 +125,14 @@
                                   <option value="1">Juntas</option>
                                   <option value="2">Convites</option>
                                 </select>
+                                <br>
+                                
+                                    <input type="datetime" name="fechaEntrada" id="fechaEntrada">
+                                    <input type="datetime" name="fechaSalida" id="fechaSalida">
+                                    <input type="button" id="btn-ingresar" value="Ingresar" />
+                                
+                                <div id="resp"></div>
+                                
                               </div>
                               
                     </div>
@@ -152,13 +159,14 @@
             </div>
             <div class="modal-body">
                 <h1>Incidencia creada.</h1>
+                    <b id="FechaIncidencia" ></b>
                 <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-
+<p id="demo">h</p>
 
 </body>
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"></script>
@@ -178,7 +186,7 @@
         jQuery('span.' + idname).next().find('span').html(filename);
     });
 </script>
-
 <script src="js/incidencias.js"></script>
+<script src="js/calendario.js"></script>
 
 </html>
