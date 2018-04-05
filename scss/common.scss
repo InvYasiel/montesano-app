@@ -1,0 +1,53 @@
+$margen:10px;
+$anchoInput: 50px;
+$gris: slategrey;
+$bordeRoyal: royalblue;
+$fondo: rgba(43, 43, 43, 0.86);
+$fuente: Segoe UI;
+//--------------
+* {
+    box-sizing: border-box;
+    font-family: $fuente;
+}
+
+h1 {
+    text-align: center;
+}
+
+.seleccion {
+    margin-bottom: $margen;
+}
+
+.calendar {
+    margin: auto;
+    border: 1px solid $bordeRoyal;
+    background-color: $fondo;
+    color: white;
+    width: 50%;
+    font-size: 3vw;
+    padding: 1vw;
+}
+
+div {
+    text-align: center;
+}
+
+.month {
+    width: 100% !important;
+    font-weight: bold;
+    padding: 10px;
+}
+
+input[type="number"] {
+    width: $anchoInput;
+}
+
+o {
+    color: $gris;
+}
+
+@media print {
+    .seleccion {
+        display: none;
+    }
+}

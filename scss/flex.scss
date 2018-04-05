@@ -1,0 +1,20 @@
+@import "common.scss";
+.calendar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    @extend .calendar;
+}
+
+.dw,
+.week {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.dayweek,
+.days {
+    width: 5vw;
+    height: 5.6vw;
+}

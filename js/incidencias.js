@@ -26,7 +26,6 @@ function comprobarCampos() {
         alert('Rellena los campos obligatorios (*)')
         res = false;
     }
-
     return res;
 }
 ///--------------------LIMPIAR CAMPOS DE LA SOLICITUD DE LA INCIDENCIA--------------------
@@ -60,10 +59,10 @@ function incidenciasCrear() {
     //--------------------OTENER FECHA ACTUAL--------------------
     var fecha = new Date();
     var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
-    var hora=fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds(); 
+    var hora = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
     var FechaIncidencia = document.getElementById('FechaIncidencia');
-    FechaIncidencia.innerHTML = 'La creación '+fechaTrello+' '+ hora +' Se aejecutado correctamente';
-                
+    FechaIncidencia.innerHTML = 'La creación ' + fechaTrello + ' ' + hora + ' Se aejecutado correctamente';
+
     //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
     var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
     if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
@@ -101,7 +100,7 @@ function incidenciasCrear() {
 function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
     var h = "";
     var data = null;
-    var name = fechaTrello + ' ' +hora +' '+ titulo.value + " Creado por: " + nombre.value;
+    var name = fechaTrello + ' ' + hora + ' ' + titulo.value + " Creado por: " + nombre.value;
     var xhr = new XMLHttpRequest();
     desc = desc.replace(/\n/g, '%0A');
     xhr.open("POST", "https://api.trello.com/1/cards?name=" + name + "&desc=" + desc + "&pos=top&idList=" + idlist + "&keepFromSource=all&key=" + appkey + "&token=" + token);
@@ -117,7 +116,7 @@ function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
             if (archivos.length > 0) {
                 adjuntos(h);
             }
-               // usuarioPredefinido(h);
+            // usuarioPredefinido(h);
         }
     });
 }
@@ -154,14 +153,13 @@ function adjuntos(data) {
         request.open("POST", "https://api.trello.com/1/cards/" + data + "/attachments?key=" + appkey + "&token=" + token);
         request.send(formData);
         request.addEventListener("readystatechange", function () {
-            
+
             if (this.readyState === this.DONE) {
                 var finalizado = true;
 
                 for (let i = 0; i < arrData.length; i++) {
                     if (arrData[i].readyState !== this.DONE) {
                         finalizado = false;
-                        
                     }
                 }
                 if (finalizado == true) {
@@ -196,7 +194,7 @@ function usuarioPredefinido(data) {
     usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario2 + "&key=" + appkey + "&token=" + token);
     usuRQ2.send(datas);
     arrRQ.push(usuRQ1);
-    
+
     usuRQ1.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
             var finalizado = true;
@@ -221,7 +219,7 @@ function usuarioPredefinido(data) {
 var archivos = []
 var rutas = []
 var cont = 0;
-//https://es.stackoverflow.com/questions/24583/enviar-post-a-php-por-medio-de-ajax
+
 function cambio(e) {
     var chooser = document.getElementById("" + e)
     var fileSize = chooser.files[0].size;
@@ -245,20 +243,20 @@ function cambio(e) {
             for (let i = 0; i < archivos.length; i++) {
                 if (chooser.files[0].name == archivos[i].name) {
                     archivoCorrecto = false;
-                } 
+                }
             }
-            if(archivoCorrecto == true){
+            if (archivoCorrecto == true) {
                 archivos.push(chooser.files[0]);
                 var info = document.getElementById('infofile');
                 info.innerHTML += '<b> | ' + path + '  <i class="fas fa-trash" id="papelera ' + cont + '" style="color:red" onclick="eliminar(id)"></i><b>';
                 cont++;
-            }else{
+            } else {
 
                 alert('No puedes agregar otro archivo con el mismo nombre');
             }
-            
+
         }
 
     }
-    document.getElementsByClassName('chooser')[0].value='';
+    document.getElementsByClassName('chooser')[0].value = '';
 }

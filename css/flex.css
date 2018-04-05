@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+    font-family: Segoe UI;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  .seleccion {
+    margin-bottom: 10px;
+  }
+  
+  .calendar {
+    margin: auto;
+    border: 1px solid royalblue;
+    background-color: rgba(43, 43, 43, 0.86);
+    color: white;
+    width: 50%;
+    font-size: 3vw;
+    padding: 1vw;
+  }
+  
+  .seleccion {
+    text-align: center;
+  }
+  
+  .month {
+    width: 100% !important;
+    border-bottom: solid 1px bisque;
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  input[type="number"] {
+    width: 50px;
+  }
+  
+  o {
+    color: slategrey;
+  }
+  
+  @media print {
+    .seleccion {
+      display: none;
+    }
+  }
+  
+  .calendar {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  
+  .dw,
+  .week {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .dayweek,
+  .days {
+   
+    text-align: center;
+    cursor: pointer;
+    width: 5vw;
+    height: 5.6vw;
+    padding: 3px;
+  }
+  .days{
+    border:solid 1px bisque;
+    
+  }
+  
