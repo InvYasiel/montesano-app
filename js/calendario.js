@@ -21,20 +21,15 @@ xmlhttp.open("GET", "php/master.php", true);
 console.log(xmlhttp)
 xmlhttp.send();
 
-
-
-
-
 //-----------------------------------------------------------------------------
-
-
-
+function generarlista(){
+    
+}
 function abrirmodal(dia) {
     var diaModal = document.getElementById('diaCC');
     var ss = document.getElementById('actual');
     var mes = document.getElementById('month').value;
     var year = document.getElementById('year').value;
-
 
     diaModal.innerHTML = "";
     if (dia.length == 1) {
@@ -70,11 +65,7 @@ function abrirmodal(dia) {
                 v = false;
                 break;
             }
-            // if(new Date(fechaEntrada)>=new Date(registro[i].entrada)&&new Date(fechaSalida)>=new Date(registro[i].salida)){
-            //     alert('Error esa hora está ocupada');
-            //     v = false;
-            //     break;
-            // }
+            
             if(new Date(fechaEntrada)<=new Date(registro[i].entrada)&&new Date(fechaSalida)>=new Date(registro[i].entrada)){
                 alert('Error esa hora está ocupada');
                 v = false;
@@ -108,6 +99,5 @@ function abrirmodal(dia) {
     });
 
     $("#calendarioModal").modal();
-
 
 }
