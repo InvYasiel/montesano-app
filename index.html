@@ -11,9 +11,10 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/spiner.css">
     <link rel="stylesheet" type="text/css" href="css/flex.css">
+    
 </head>
 
-<body onload="currDate()">
+<body onload="recogerDatos()">
     <div class="container">
         <br>
         <div class="right-tabs clearfix">
@@ -30,7 +31,7 @@
                         aria-selected="false">Agenda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-Reserva-tab" data-toggle="pill" href="#pills-Reserva" role="tab" aria-controls="pills-Reserva"
+                    <a class="nav-link" id="pills-Reserva-tab" onclick="cargarsipinner()" data-toggle="pill" href="#pills-Reserva" role="tab" aria-controls="pills-Reserva"
                         aria-selected="false">Reserva de salas</a>
                 </li>
             </ul>
@@ -131,7 +132,7 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <h1 class="display-4">Calendario</h1>
+                                <h1 class="display-4">Calendario de Reservas</h1>
                                 <br>
                             </div>
 
@@ -159,58 +160,58 @@
                                         <div class="dayweek">dw</div>
                                     </div>
                                     <div class="week">
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
                                     </div>
                                     <div class="week">
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
                                     </div>
                                     <div class="week">
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
-                                        <div class="days" data-toggle="tooltip"data-placement="top"> dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="top" > dd</div>
                                     </div>
                                     <div class="week">
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
                                     </div>
                                     <div class="week">
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
                                     </div>
                                     <div class="week">
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
-                                        <div class="days" data-toggle="tooltip" data-placement="bottom"> dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
+                                        <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom" > dd</div>
                                     </div>
                                 </div>
                             </div>
@@ -267,7 +268,12 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.toast.min.js"></script>
+<script>$(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();   
+    });</script>
 <script src="https://api.trello.com/1/client.js?key=151bcd104f1742fdcf0b8c2f4a4c8764"></script>
 <script src="js/crearCalendario.js" type="text/javascript"></script>
 <script type="application/javascript">

@@ -1,7 +1,15 @@
+var texto = ""
+
+$(document).ready(function(){
+    $('.days').tooltip();   
+});
+
 function calendar() {
     var month = document.getElementById('month').value - 1;
     var year = document.getElementById('year').value;
-    var formatter = new Intl.DateTimeFormat("sp", { month: "long" }),
+    var formatter = new Intl.DateTimeFormat("sp", {
+            month: "long"
+        }),
         monthName = formatter.format(new Date(year, month, 1))
     var askedDate = new Date(year, month, 1);
     if (month == 0) {
@@ -13,7 +21,15 @@ function calendar() {
     }
 
     var daysOfWeek = ['L', 'M', 'X', 'J', 'V', 'S', 'D']
-    var numDaysOfWeek = { "Mon": 1, "Tue": 2, "Wed": 3, "Thu": 4, "Fri": 5, "Sat": 6, "Sun": 7 };
+    var numDaysOfWeek = {
+        "Mon": 1,
+        "Tue": 2,
+        "Wed": 3,
+        "Thu": 4,
+        "Fri": 5,
+        "Sat": 6,
+        "Sun": 7
+    };
 
     var daysInMonth = new Date(year, month + 1, 0).getDate();
     var fdw = askedDate.toDateString().substr(0, 3);
@@ -31,25 +47,55 @@ function calendar() {
         if (i >= FirstdayOfWeek - 1)
             if (j <= daysInMonth) {
                 divDays[i].innerHTML = j;
+                var dc = String (j)
+                divDays[i].setAttribute('id', ''+j+' '+(month+1));
+                if (dc.length == 1) {
+                    divDays[i].setAttribute('id', '0' + j + ' '+(month+1))
+                }
+                divDays[i].setAttribute('onclick', 'abrirmodal(this.id)');
                 j++;
             } else {
                 divDays[i].innerHTML = '<o>' + dd + '</o>';
+                var db = String (dd)
+                divDays[i].setAttribute('class', 'days posteriores');
+                divDays[i].setAttribute('id', ''+dd+' '+(month+2));
+                if (db.length == 1) {
+                    divDays[i].setAttribute('id', '0' + dd + ' '+(month+2));
+                }
+                divDays[i].setAttribute('onclick', 'abrirmodal(this.id)');
+                
                 dd++;
             }
         else {
             divDays[i].innerHTML = '<o>' + da + '</o>';
+            var de = String(da)
+            divDays[i].setAttribute('class', 'days anteriores');
+            divDays[i].setAttribute('id', ''+da+' '+month);
+                if (de.length == 1) {
+                    divDays[i].setAttribute('id', '0' + da + ' '+month)
+                }
+                divDays[i].setAttribute('onclick', 'abrirmodal(this.id)');
             da++;
         }
     }
     var diasClick = document.getElementsByClassName('days');
-for (let i = 0; i < diasClick.length; i++) {
-    diasClick[i].setAttribute('onclick', 'abrirmodal(this.id)');
-    diasClick[i].setAttribute('id', ''+diasClick[i].textContent);
-    
-}
+    var ss = document.getElementById('actual');
+    var mes = document.getElementById('month').value;
+    var year = document.getElementById('year').value;
+    for (let i = 0; i < diasClick.length; i++) {
+        texto = "";
+        
+        for (let j = 0; j < registro.length; j++) {
+            if (registro[j].entrada.substring(10, 8) == diasClick[i].id.substring(2,0)&& String(parseInt(registro[j].entrada.substring(5,7)))==diasClick[i].id.substring(3)) {
+                texto += ' Hora entrada: ' + registro[j].entrada.substring(11,16)+'</br>' + ' Hora salida: ' + registro[j].salida.substring(11,16)+'</br>';
+                diasClick[i].style = 'background-color: rgba(199, 31, 31, 0.411)'
+            }
+        }
+        diasClick[i].setAttribute('data-original-title', texto);
+    }
 }
 
-function currDate(params) {
+function currDate() {
     var currDate = new Date();
     document.getElementById('month').value = currDate.getMonth() + 1;
     document.getElementById('year').value = currDate.getFullYear();
