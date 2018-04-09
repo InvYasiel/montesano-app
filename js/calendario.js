@@ -1,8 +1,6 @@
 var registro = [];
-$(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();   
-});
-function recogerDatos(){
+
+function recogerDatos() {
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
         xmlhttp = new XMLHttpRequest();
@@ -16,42 +14,67 @@ function recogerDatos(){
             console.log(fechas);
             for (let i = 0; i < fechas.length; i++) {
                 registro.push(fechas[i]);
-    
+
             }
-            console.log(registro[0].entrada.substring(10,8));
             currDate()
         }
     };
     xmlhttp.open("GET", "php/master.php", true);
     console.log(xmlhttp)
     xmlhttp.send();
-    
+
 }
 
 
-//-----------------------------------------------------------------------------    
+//-----------------------------------------------------------------------------  
+
 
 function abrirmodal(dia) {
-    diaSolo = dia.substring(2,0);
+    diaSolo = dia.substring(2, 0);
     var mes = dia.substring(3)
-    var diaModal = document.getElementById('diaCC');
+    var diaModal = document.getElementsByClassName('hs');
     var ss = document.getElementById('actual');
-    if(mes.length == 1)
-    {
-        mes = '0'+mes
+    if (mes.length == 1) {
+        mes = '0' + mes
     }
     var year = document.getElementById('year').value;
-
-    diaModal.innerHTML = "";
+    for (let i = 0; i < diaModal.length; i++) {
+        diaModal[i].innerHTML = "";
+        
+    }
     
+    
+    var hh = document.getElementsByClassName('hh');
     var seleccionado = year + '-' + mes + '-' + diaSolo;
+    for (let i = 0; i < hh.length; i++) {
+        hh[i].style = 'margin: 0; height:8px;width: 200px;position:relative;float:right;'
+        
+    }
 
     ss.innerHTML = 'Reservas para ' + year + '-' + mes + '-' + diaSolo;
     for (let i = 0; i < registro.length; i++) {
         if (registro[i].entrada.substring(10, -1) == seleccionado) {
-            diaModal.innerHTML += 'Reservado de: ' + registro[i].entrada.substring(11) + ' salida a las: ' + registro[i].salida.substring(11) + '</br>';
+            diaModal[i].innerHTML =  registro[i].entrada.substring(11, 16) + ' || ' + registro[i].salida.substring(11, 16) ;
+            for (let t = 0; t < hh.length; t++) {
+                if(hh[t].id == registro[i].entrada.substring(11, 16)){
+                    hh[t].style = 'background-color:red;margin: 0; height:8px;width: 200px;position:relative;float:right;border:solid 1px;'
+                }
+                if(hh[t].id > registro[i].entrada.substring(11, 16) && hh[t].id < registro[i].salida.substring(11, 16)){
+                    hh[t].style = 'background-color:red;margin: 0; height:8px;width: 200px;position:relative;float:right;border:solid 1px;'
+                }
+                if(hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].entrada.substring(11, 16)){
+                    hh[t].style = 'background-color:red;margin: 0; height:8px;width: 200px;position:relative;float:right;border:solid 1px;'
+                }
+                if(hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].salida.substring(11, 16)){
+                    hh[t].style = 'background-color:red;margin: 0; height:8px;width: 200px;position:relative;float:right;border:solid 1px;'
+                }
+                
+                
+            }
         }
     }
+    $("#calendarioModal").modal();
+
     $("#btn-ingresar").click(function () {
 
         var horaEntrada = document.getElementById('horaEntrada').value;
@@ -102,8 +125,5 @@ function abrirmodal(dia) {
         }
     });
 
-    $("#calendarioModal").modal();
+
 }
-
-
-
