@@ -23,15 +23,15 @@
             </div>
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" onclick="limpiar()" aria-controls="pills-home"
                         aria-selected="true">Incidencias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" aria-controls="pills-Agenda"
+                    <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" onclick="generarCartas()" aria-controls="pills-Agenda"
                         aria-selected="false">Agenda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-Reserva-tab" data-toggle="pill" href="#pills-Reserva" role="tab" aria-controls="pills-Reserva"
+                    <a class="nav-link" id="pills-Reserva-tab" data-toggle="pill" href="#pills-Reserva" role="tab" onclick="limpiar()" aria-controls="pills-Reserva"
                         aria-selected="false">Reserva de salas</a>
                 </li>
             </ul>
@@ -125,7 +125,36 @@
 
                 <!-- AGENDA -->
                 <div class="tab-pane fade" id="pills-Agenda" role="tabpanel" aria-labelledby="pills-Agenda-tab">
-                    En proceso
+                    <div class="input-group mb-3" id="seleccion">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button">Empresa</button>
+                        </div>
+                        <select class="custom-select" id="empresas" onchange="selEmpresa(this)">
+                            <option selected value="1">TODAS</option>
+                            <option value="2">MONTESANO CANARIAS SA</option>
+                            <option value="3">MONTESANO EXTREMADURA SA</option>
+                            <option value="4">DIACA SL</option>
+                            <option value="5">DIACA DOS SA</option>
+                            <option value="6">DIACA CINCO SA</option>
+                            <option value="7">DIACA CUATRO SA</option>
+                            <option value="8">ECOFRESH ALIMENTACION SA</option>
+                            <option value="9">ZUMOS BANITA SL</option>
+                            <option value="10">IBARICOS SIERRA SEVILLA</option>
+                            <option value="11">GARCIA PASCUAL CANARIAS</option>
+                            <option value="12">LOGISTICA MONTESANO SL</option>
+                            <option value="13">INDISCAN CEE SL</option>
+                            <option value="14">AGROPECUARIOA MONJE S.L</option>
+                            <option value="15">PROINCA CANARIAS SL</option>
+                            <option value="16">Guaica SL</option>
+                        </select>
+                    </div>
+                    <label for="buscador" style="font-size: 1.3em;">Nombre a buscar</label>
+                        <input class="form-control mr-sm-2" type="search" placeholder="Enter para buscar" id="buscador" onkeydown="if(event.keyCode == 13) search();"
+                            aria-label="Search">
+                    <div id="contagenda">
+
+                    </div>
+
                 </div>
                 <!-- RESERVAS -->
                 <div class="tab-pane fade" id="pills-Reserva" role="tabpanel" aria-labelledby="pills-Reserva-tab">
@@ -235,137 +264,133 @@
                                             <div class="modalCC" id="modalCC">
                                                 <b id="actual"></b>
                                                 <br>
-                                                <b id="diaCC1"></b>
-
-
+                                                <br>
                                                 <div id="horario">
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">08:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="08:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="08:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="08:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="08:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">08:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="08:00" class="hh"></div>
+                                                        <div id="08:15" class="hh"></div>
+                                                        <div id="08:30" class="hh"></div>
+                                                        <div id="08:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">09:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="09:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="09:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="09:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="09:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">09:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="09:00" class="hh"></div>
+                                                        <div id="09:15" class="hh"></div>
+                                                        <div id="09:30" class="hh"></div>
+                                                        <div id="09:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">10:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="10:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="10:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="10:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="10:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">10:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="10:00" class="hh"></div>
+                                                        <div id="10:15" class="hh"></div>
+                                                        <div id="10:30" class="hh"></div>
+                                                        <div id="10:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">11:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="11:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="11:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="11:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="11:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">11:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="11:00" class="hh"></div>
+                                                        <div id="11:15" class="hh"></div>
+                                                        <div id="11:30" class="hh"></div>
+                                                        <div id="11:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">12:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="12:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="12:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="12:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="12:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">12:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="12:00" class="hh"></div>
+                                                        <div id="12:15" class="hh"></div>
+                                                        <div id="12:30" class="hh"></div>
+                                                        <div id="12:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">13:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="13:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="13:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="13:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="13:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">13:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="13:00" class="hh"></div>
+                                                        <div id="13:15" class="hh"></div>
+                                                        <div id="13:30" class="hh"></div>
+                                                        <div id="13:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">14:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="14:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="14:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="14:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="14:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">14:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="14:00" class="hh"></div>
+                                                        <div id="14:15" class="hh"></div>
+                                                        <div id="14:30" class="hh"></div>
+                                                        <div id="14:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">15:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="15:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="15:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="15:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="15:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">15:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="15:00" class="hh"></div>
+                                                        <div id="15:15" class="hh"></div>
+                                                        <div id="15:30" class="hh"></div>
+                                                        <div id="15:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">16:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="16:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="16:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="16:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="16:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">16:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="16:00" class="hh"></div>
+                                                        <div id="16:15" class="hh"></div>
+                                                        <div id="16:30" class="hh"></div>
+                                                        <div id="16:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">17:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="17:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="17:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="17:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="17:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">17:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="17:00" class="hh"></div>
+                                                        <div id="17:15" class="hh"></div>
+                                                        <div id="17:30" class="hh"></div>
+                                                        <div id="17:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">18:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="18:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="18:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="18:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="18:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">18:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="18:00" class="hh"></div>
+                                                        <div id="18:15" class="hh"></div>
+                                                        <div id="18:30" class="hh"></div>
+                                                        <div id="18:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">19:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="19:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="19:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="19:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="19:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">19:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="19:00" class="hh"></div>
+                                                        <div id="19:15" class="hh"></div>
+                                                        <div id="19:30" class="hh"></div>
+                                                        <div id="19:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">20:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="20:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="20:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="20:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="20:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">20:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="20:00" class="hh"></div>
+                                                        <div id="20:15" class="hh"></div>
+                                                        <div id="20:30" class="hh"></div>
+                                                        <div id="20:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">21:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="21:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="21:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="21:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="21:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">21:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="21:00" class="hh"></div>
+                                                        <div id="21:15" class="hh"></div>
+                                                        <div id="21:30" class="hh"></div>
+                                                        <div id="21:45" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                     </div>
-                                                    <div id="enpunto" style="position:absolute;font-size:15px; margin-left:10px;">22:00</div>
-                                                    <div id="hora" class="hora" style="width: 260px; height: 55px;border:solid black 1px;">
-                                                        <div id="22:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="22:15" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="22:30" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="22:45" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div id="23:00" class="hh" style="margin: 0; height:8px;width: 200px;position:relative;float:right; "></div>
-                                                        <div class="hs" style="position:relative; margin: 0; top: 0%;width: 100px; font-size:15px;right: -272px;"> </div>
+                                                    <div id="enpunto">22:00</div>
+                                                    <div id="hora" class="hora">
+                                                        <div id="22:00" class="hh"></div>
+                                                        <div id="22:15" class="hh"></div>
+                                                        <div id="22:30" class="hh"></div>
+                                                        <div id="22:45" class="hh"></div>
+                                                        <div id="23:00" class="hh"></div>
+                                                        <div class="hs"> </div>
                                                         <br>
                                                     </div>
                                                 </div>
                                                 <br>
-                                                <br>
+
                                                 <b>Hora a la que deceas ingresar:</b>
                                                 <br>
                                                 <label for="horaEntrada">Hora de entrada</label>

@@ -54,19 +54,20 @@ function abrirmodal(dia) {
     ss.innerHTML = 'Reservas para ' + year + '-' + mes + '-' + diaSolo;
     for (let i = 0; i < registro.length; i++) {
         if (registro[i].entrada.substring(10, -1) == seleccionado) {
-            diaModal[i].innerHTML =  registro[i].entrada.substring(11, 16) + ' || ' + registro[i].salida.substring(11, 16) ;
+            
             for (let t = 0; t < hh.length; t++) {
                 if(hh[t].id == registro[i].entrada.substring(11, 16)){
-                    hh[t].style = 'background-color:red;margin: 0; height:8px;width: 200px;position:relative;float:right;border:solid 1px;'
-                }
+                    hh[t].style = 'background-color:rgba(165, 140, 21, 0.68);margin: 0; height:8px;width: 200px;position:relative;float:right;border-bottom:solid 1px;'
+                   }
                 if(hh[t].id > registro[i].entrada.substring(11, 16) && hh[t].id < registro[i].salida.substring(11, 16)){
-                    hh[t].style = 'background-color:red;margin: 0; height:8px;width: 200px;position:relative;float:right;border:solid 1px;'
-                }
+                    hh[t].style = 'background-color:rgba(165, 140, 21, 0.68);margin: 0; height:8px;width: 200px;position:relative;float:right;border-bottom:solid 1px;'
+                   }
                 if(hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].entrada.substring(11, 16)){
-                    hh[t].style = 'background-color:red;margin: 0; height:8px;width: 200px;position:relative;float:right;border:solid 1px;'
-                }
+                    hh[t].style = 'background-color:rgba(165, 140, 21, 0.68);margin: 0; height:8px;width: 200px;position:relative;float:right;border-bottom:solid 1px;'
+                   }
                 if(hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].salida.substring(11, 16)){
-                    hh[t].style = 'background-color:red;margin: 0; height:8px;width: 200px;position:relative;float:right;border:solid 1px;'
+                    hh[t].style = 'background-color:rgba(165, 140, 21, 0.68);margin: 0; height:8px;width: 200px;position:relative;float:right;border-bottom:solid 1px;'
+                    // diaModal[i].innerHTML =  registro[i].entrada.substring(11, 16) + ' || ' + registro[i].salida.substring(11, 16) ;
                 }
                 
                 

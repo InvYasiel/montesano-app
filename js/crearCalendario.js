@@ -104,7 +104,7 @@ function calendar(e) {
         
         for (let j = 0; j < registro.length; j++) {
             if (registro[j].entrada.substring(10, 8) == diasClick[i].id.substring(2,0)&& String(parseInt(registro[j].entrada.substring(5,7)))==diasClick[i].id.substring(3)) {
-                texto += ' Hora entrada: ' + registro[j].entrada.substring(11,16)+'</br>' + ' Hora salida: ' + registro[j].salida.substring(11,16)+'</br>';
+                texto += ' (Nombre) ' + registro[j].entrada.substring(11,16) + ' || ' + registro[j].salida.substring(11,16)+'</br>';
                 
             }
         }

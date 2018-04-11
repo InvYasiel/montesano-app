@@ -1,17 +1,17 @@
 * {
     box-sizing: border-box;
     font-family: Segoe UI;
-  }
-  
-  h1 {
+}
+
+h1 {
     text-align: center;
-  }
-  
-  .seleccion {
+}
+
+.seleccion {
     margin-bottom: 10px;
-  }
-  
-  .calendar {
+}
+
+.calendar {
     margin: auto;
     border: 1px solid royalblue;
     background-color: rgba(43, 43, 43, 0.86);
@@ -19,65 +19,114 @@
     width: 50%;
     font-size: 2vw;
     padding: 1vw;
-  }
-  
-  .seleccion {
+}
+
+.seleccion {
     text-align: center;
-  }
-  
-  .month {
+}
+
+.month {
     width: 78% !important;
     border-bottom: solid 1px bisque;
     font-weight: bold;
     font-size: 1.5em;
     padding: 10px;
     text-align: center;
-  }
-  
+}
 
-  
-  o {
+o {
     color: slategrey;
-  }
-  
-  @media print {
+}
+
+@media print {
     .seleccion {
-      display: none;
+        display: none;
     }
-  }
-  
-  .calendar {
+}
+
+.calendar {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-  }
-  
-  .dw,
-  .week {
+}
+
+.dw,
+.week {
     width: 80%;
     display: flex;
     justify-content: space-around;
-  }
-  
-  .dayweek,
-  .days {
-   
+}
+
+.dayweek,
+.days {
     text-align: center;
     cursor: pointer;
     width: 5vw;
     height: 4.3vw;
     padding: 3px;
-  }
-  .days{
-    border:solid 1px bisque;
-    
-  }
-  .modalCC{
-    margin-left: 25px;
-    
-  }
-#horario{
-  
-  width: 70%;
+}
 
+.days {
+    border: solid 1px bisque;
+}
+
+.modalCC {
+    margin-left: 25px;
+}
+
+#horario {
+    width: 70%;
+}
+
+#enpunto {
+    position: absolute;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.hh {
+    margin: 0;
+    height: 8px;
+    width: 200px;
+    position: relative;
+    float: right;
+}
+
+.hora {
+    width: 260px;
+    height: 34px;
+}
+
+.hs {
+  position: absolute;
+  right: 70px;
+   
+}
+#contagenda{
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+}
+#pills-Agenda{
+    display:flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+}
+.carta{
+
+}
+#contenidoCarta{
+    /* display: flex; */
+}
+#datos{
+
+}   
+#buscador{
+    width: 300px;
+    height: 40px;
+}
+#seleccion{
+    width: 500px;
 }
