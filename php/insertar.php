@@ -1,4 +1,5 @@
 <?php
+//---------------------------------Insertar una reserva---------------------------------  
 $fechaEntrada=$_POST['entrada'];
 $fechaSalida=$_POST['salida'];
 

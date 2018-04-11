@@ -1,4 +1,5 @@
-<?php 
+<?php
+//---------------------------------Consulta Agenda---------------------------------   
 $pdo=new PDO("sqlsrv:Server=172.26.7.192;Database=A3LABORAL", "consulta", "Monte00!");
 $statement=$pdo->prepare("SELECT  a.[EmployeeID] 
 ,[DirectPhoneNumber]
