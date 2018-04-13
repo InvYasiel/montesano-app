@@ -1,7 +1,7 @@
 <?php
 //---------------------------------Consulta Agenda---------------------------------   
 $pdo=new PDO("sqlsrv:Server=172.26.7.192;Database=A3LABORAL", "consulta", "Monte00!");
-$statement=$pdo->prepare("SELECT  a.[EmployeeID] 
+$statement=$pdo->prepare("SELECT TOP (1000) a.[EmployeeID] 
 ,[DirectPhoneNumber]
 ,[CompanyMobilePhoneNumber]
 ,[Extension]
@@ -18,7 +18,9 @@ $statement=$pdo->prepare("SELECT  a.[EmployeeID]
 ,[CompleteName]
 FROM [A3LABORAL].[dbo].[Employee_Locations] as a
     INNER JOIN [A3LABORAL].[dbo].[A3VEmployees] as b
-    ON b.[EmployeeID] = a.[EmployeeID]");
+    ON b.[EmployeeID] = a.[EmployeeID]
+WHERE [CompanyCode] = '1011'");
+
 $statement->execute();
 if (!$statement){
     echo 'Error al ejecutar la consulta';

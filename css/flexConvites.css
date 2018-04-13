@@ -11,7 +11,7 @@ h1 {
     margin-bottom: 10px;
 }
 
-.calendar {
+.calendarConvites {
     margin: auto;
     border: 1px solid royalblue;
     background-color: rgba(43, 43, 43, 0.86);
@@ -25,7 +25,7 @@ h1 {
     text-align: center;
 }
 
-.month {
+.mes {
     width: 78% !important;
     border-bottom: solid 1px bisque;
     font-weight: bold;
@@ -44,7 +44,7 @@ o {
     }
 }
 
-.calendar {
+.calendarConvites {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
@@ -58,8 +58,8 @@ o {
     justify-content: space-around;
 }
 
-.dayweek,
-.days {
+.diaSemana,
+.day {
     text-align: center;
     cursor: pointer;
     width: 5vw;
@@ -67,7 +67,7 @@ o {
     padding: 3px;
 }
 
-.days {
+.day {
     border: solid 1px bisque;
 }
 
@@ -102,52 +102,4 @@ o {
   position: absolute;
   right: 70px;
    
-}
-#contagenda{
-    display:flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-
-}
-.containerCalendario{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-}
-#pills-Agenda{
-    display:flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-
-}
-.carta{
-
-}
-#contenidoCarta{
-    /* display: flex; */
-}
-#datos{
-
-}   
-#buscador{
-    width: 300px;
-    height: 40px;
-}
-#seleccion{
-    width: 500px;
-}
-#btnJuntas{
-    cursor: pointer;
-    margin: 20px;
-    width: 45%;
-}
-#btnConvites{
-    cursor: pointer;
-    margin: 20px;
-    width: 45%;
-}
-.display-4 {
-    font-size: 2.5rem;
-    font-weight: 300;
-    line-height: 1.2;
 }

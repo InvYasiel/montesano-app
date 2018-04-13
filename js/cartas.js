@@ -22,8 +22,9 @@ xmlhttp.send();
 var contAgenda = document.getElementById('contagenda');
 var buscador = document.getElementById('buscador')
 function generarCartas() {
+    pill.style='display:flex;'
     contAgenda.innerHTML = '';
-    for (let i = 0; i < 400; i++) {
+    for (let i = 0; i < registroCC.length; i++) {
         carta(i);
     }
 }
@@ -38,7 +39,7 @@ function search() {
     if (palabra == "") {
         generarCartas();
     } else {
-        for (let i = 0; i < 400; i++) {
+        for (let i = 0; i < registroCC.length; i++) {
             if (registroCC[i].CompleteName.indexOf(palabra) >= 0) {
                 carta(i);
             } else if (palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1)) {
@@ -76,7 +77,7 @@ function search() {
     }
 }
 
-//--------------------------------- ---------------------------------  
+//---------------------------------CREACIÓN DE LOS ELEMENTOS ---------------------------------  
 function carta(i) {
     var card = document.createElement('div');
     card.setAttribute('class', 'card text-black border-dark bg-info  mb-3 carta');
@@ -105,7 +106,7 @@ function carta(i) {
     contAgenda.appendChild(card);
 }
 
-//--------------------------------- ---------------------------------  
+//---------------------------------CAMBIAR DE EMPRESA ---------------------------------  
 function selEmpresa() {
     contAgenda.innerHTML = '';
     var selIndex = document.getElementById("empresas").selectedIndex;
@@ -113,14 +114,14 @@ function selEmpresa() {
     getDom(selValue);
 }
 
-//--------------------------------- ---------------------------------  
+//---------------------------------BUSCADOR POR EMPRESA ---------------------------------  
 function getDom(valSelect) {
     var palabra = buscador.value.toUpperCase();
     empresa = valSelect;
     if (empresa === 'TODAS' && palabra == "") {
         generarCartas();
     }
-    for (let i = 0; i < 400; i++) {
+    for (let i = 0; i < registroCC.length; i++) {
         if (empresa == registroCC[i].CompanyName && palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1)) {
             carta(i);
         } else if (empresa == registroCC[i].CompanyName && palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName2)) {
@@ -153,7 +154,8 @@ function getDom(valSelect) {
     }
 }
 
-//--------------------------------- ---------------------------------  
+//---------------------------------LIMPIAR EL CONTENEDOR DE LA AGENDA ---------------------------------  
+var pill = document.getElementById('pills-Agenda')
 function limpiar() {
-    contAgenda.innerHTML = '';
+    pill.style='display:none;'
 }
