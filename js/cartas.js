@@ -11,18 +11,64 @@ xmlhttp.onreadystatechange = function () {
         console.log(fechas);
         for (let i = 0; i < fechas.length; i++) {
             registroCC.push(fechas[i]);
+
         }
+        ag();
+
+        var contenedordatalistagenda = document.getElementById("personasagenda");
+        var contenedordatalistincidencias = document.getElementById("personasincidencias");
+
+        registroCC.forEach(e => {
+            var name = e.CompleteName;
+
+            var option = document.createElement("option");
+            option.value = name;
+            option.innerText = name;
+
+            contenedordatalistagenda.appendChild(option);
+        });
+
+        registroCC.forEach(e => {
+            var name = e.CompleteName;
+
+            var option = document.createElement("option");
+            option.value = name;
+            option.innerText = name;
+
+            contenedordatalistincidencias.appendChild(option);
+        });
+
+        var filteredEmpresas = [];
+
+        registroCC.forEach(element => {
+            if (filteredEmpresas.indexOf(element.CompanyName) == -1) {
+                filteredEmpresas.push(element.CompanyName);
+            }
+        });
+
+        var conentedorempresas = document.getElementById('empresas');
+
+        filteredEmpresas.forEach(e => {
+            var option = document.createElement("option");
+            option.value = e;
+            option.innerText = e;
+
+            conentedorempresas.appendChild(option);
+        });
     }
 };
 xmlhttp.open("GET", "php/cartas.php", true);
 console.log(xmlhttp)
 xmlhttp.send();
 
+
+
 //---------------------------------GENERAR TODAS LA AGENDA COMO CARTAS---------------------------------  
 var contAgenda = document.getElementById('contagenda');
-var buscador = document.getElementById('buscador')
+var buscador = document.getElementById('buscador');
+
 function generarCartas() {
-    pill.style='display:flex;'
+    pill.style = 'display:flex;'
     contAgenda.innerHTML = '';
     for (let i = 0; i < registroCC.length; i++) {
         carta(i);
@@ -156,6 +202,9 @@ function getDom(valSelect) {
 
 //---------------------------------LIMPIAR EL CONTENEDOR DE LA AGENDA ---------------------------------  
 var pill = document.getElementById('pills-Agenda')
+
 function limpiar() {
-    pill.style='display:none;'
+    pill.style = 'display:none;'
 }
+
+
