@@ -1,6 +1,6 @@
 var registro = [];
 
-function recogerDatos() {
+function recogerDatos(idSala) {
     if (window.XMLHttpRequest) {
         xmlhttp = new XMLHttpRequest();
     } else {
@@ -13,7 +13,13 @@ function recogerDatos() {
             for (let i = 0; i < fechas.length; i++) {
                 registro.push(fechas[i]);
             }
-            crearBtns();
+            if(idSala == undefined){
+
+            }else{
+                document.getElementById('sala'+idSala).click(idSala);
+            }
+            
+            
         }
     };
     xmlhttp.open("GET", "php/reservas.php", true);
@@ -21,7 +27,7 @@ function recogerDatos() {
     xmlhttp.send();
 }
 
-var salas = ['Juntas', 'Convites'];
+
 
 var ContReservas = document.getElementById('containerReservas');
 //----Crea Botones según el numero de salas----
@@ -38,7 +44,7 @@ function crearBtns() {
         cbtn.setAttribute('class', 'btn btn-outline-primary salas btn-salas');
         cbtn.setAttribute('id', 'sala' + i);
         cbtn.setAttribute('onclick', 'crearCalendarioGlobal("' + i + '")');
-        cbtn.innerHTML = 'Salas ' + salas[i - 1]
+        cbtn.innerHTML = 'Salas ' + salas[i - 1].nombre
         contenedorbotones.appendChild(cbtn);
         
     }
@@ -49,7 +55,6 @@ function crearCalendarioGlobal(e) {
     document.getElementById("selectedSala").value = e;
     var titulo = document.getElementById('tituloSala');
 
-    
 }
 
 

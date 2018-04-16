@@ -36,6 +36,7 @@
                         aria-controls="pills-Reserva" aria-selected="false">Reserva de salas</a>
                 </li>
             </ul>
+
             <!-- INCIDENDCIAS -->
             <div class="tab-content" id="pills-tabContent" style="width: 100%">
                 <br>
@@ -118,14 +119,40 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h1>Incidencia creada.</h1>
+                                <h1 id='titleC'>Incidencia creada.</h1>
                                 <b id="FechaIncidencia"></b>
-                                <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary cerrate" id="close" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <!-- Modal admin -->
+                <div class="modal fade" id="ModalAdmin" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Solo administradores</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="usu" class="sr-only">Usuario</label>
+                                    <input type="text" class="form-control" id="usu" placeholder="Usuario">
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="pass" class="sr-only">Contraseña</label>
+                                    <input type="password" class="form-control" id="pass" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id='cerrarAdmin' data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id='borrarAdmin'>Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- AGENDA -->
                 <div class="tab-pane fade" id="pills-Agenda" role="tabpanel" aria-labelledby="pills-Agenda-tab">
                     <div class="input-group mb-3" id="seleccion">
@@ -237,7 +264,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Reserva confirmada</h5>
-                    
+
                 </div>
                 <div class="modal-body ">
                     <h1 class="text-center">Reserva creada.</h1>
@@ -267,12 +294,14 @@
         jQuery('span.' + idname).next().find('span').html(filename);
     });
 </script>
+
 <script src="js/incidencias.js"></script>
 <script src="js/crearCalendarios.js"></script>
 <script src="js/cartas.js"></script>
 <script src="js/CC.js"></script>
 <script src="js/datosCalendar.js"></script>
 <script src="js/modalCalendar.js"></script>
+<script src="js/admin.js"></script>
 
 
 

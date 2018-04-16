@@ -43,37 +43,47 @@ function abrirmodal(dia) {
 
             for (let t = 0; t < hh.length; t++) {
 
-
-
                 if (hh[t].id == registro[i].entrada.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;'
-                    hh[t].setAttribute('data-toggle', "popover");
+                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;cursor:pointer;'
+                    hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('data-placement', "top");
-                    hh[t].setAttribute('data-original-title', employeeName);
-
+                    hh[t].setAttribute('data-original-title', employeeName+ '<br> <b>Click para eliminar</br>');
+                    hh[t].setAttribute('data-target','#ModalAdmin');
+                    hh[t].setAttribute('onclick','eliminarReserva(this)')
+                    hh[t].setAttribute('reserva', registro[i].ID);
                 }
                 if (hh[t].id > registro[i].entrada.substring(11, 16) && hh[t].id < registro[i].salida.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:350px;position:relative;float:right;border-bottom:solid 1px;'
-                    hh[t].setAttribute('data-toggle', "tooltip");
+                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:350px;position:relative;float:right;border-bottom:solid 1px;cursor:pointer;'
+                    hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('data-placement', "top");
-                    hh[t].setAttribute('data-original-title', employeeName);
-
+                    hh[t].setAttribute('data-original-title', employeeName+ '<br> <b>Click para eliminar</br>');
+                    hh[t].setAttribute('data-target','#ModalAdmin');
+                    hh[t].setAttribute('onclick','eliminarReserva(this)')
+                    hh[t].setAttribute('reserva', registro[i].ID);
                 }
                 if (hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].entrada.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;'
-                    hh[t].setAttribute('data-toggle', "tooltip");
+                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;cursor:pointer;'
+                    hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('data-placement', "top");
-                    hh[t].setAttribute('data-original-title', employeeName);
+                    hh[t].setAttribute('data-original-title', employeeName+ '<br> <b>Click para eliminar</br>');
+                    hh[t].setAttribute('data-target','#ModalAdmin');
+                    hh[t].setAttribute('onclick','eliminarReserva(this)')
+                    hh[t].setAttribute('reserva', registro[i].ID);
                 }
                 if (hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].salida.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;'
-                    hh[t].setAttribute('data-toggle', "tooltip");
+                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;cursor:pointer;'
+                    hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('data-placement', "top");
-                    hh[t].setAttribute('data-original-title', employeeName);
+                    hh[t].setAttribute('data-original-title', employeeName + '<br> <b>Click para eliminar</br>');
+                    hh[t].setAttribute('data-target','#ModalAdmin');
+                    hh[t].setAttribute('onclick','eliminarReserva(this)')
+                    hh[t].setAttribute('reserva', registro[i].ID);
+                    
+                   
                 }
             }
         }
@@ -164,9 +174,10 @@ $("#btn-ingresar").click(function () {
         var mensaje = "Reserva confirmada para <b>" + name + "</b> desde las <b>" + fechaEntrada.substring(11,16) + "</b> hasta las <b>" + fechaSalida.substring(11,16) + "</b> del día <b>"+fechaEntrada.substring(8,10)+'-'+fechaEntrada.substring(5,7)+"-"+fechaEntrada.substring(0,4)+"</b>"
 
         document.getElementById("reservaInformacion").innerHTML = mensaje;
-        var close = document.getElementById('closeReserva');
-        close.addEventListener('click', function () {
-            location.reload();
+        var close = document.getElementsByClassName('cerrate');
+        close[0].addEventListener('click', function () {
+            recogerDatos(idSala);
+            
         }, false)
     }
 });

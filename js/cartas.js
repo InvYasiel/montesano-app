@@ -13,7 +13,7 @@ xmlhttp.onreadystatechange = function () {
             registroCC.push(fechas[i]);
 
         }
-        ag();
+        
 
         var contenedordatalistagenda = document.getElementById("personasagenda");
         var contenedordatalistincidencias = document.getElementById("personasincidencias");
