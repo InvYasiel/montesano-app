@@ -85,6 +85,7 @@ function incidenciasCrear() {
                     console.log('my IP: ', myIP);
                     pc.onicecandidate = noop;
                 }
+
                 //--------------------VALORES DE LA DESCRIPCIÓN--------------------
                 let descripcion = document.getElementById("incidenciasDescripcion").value;
                 var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
@@ -94,6 +95,7 @@ function incidenciasCrear() {
         }
     }
 }
+
 ///--------------------CREAR CARTA--------------------
 function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
     var h = "";
@@ -118,6 +120,7 @@ function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
         }
     });
 }
+
 ///--------------------MOSTRAR MENSAJE EN CASO DE QUE ESTÉ MARCADO EL CHECKBOX--------------------
 var importante = document.getElementById('incidenciasCheck');
 var dpImportante = document.getElementById('dpImportante');
@@ -136,6 +139,7 @@ function selecLabel(data) {
         checkRQ.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkey + "&token=" + token);
         checkRQ.send(datas);
     }
+
 }
 ///--------------------CREAR Y ENVIAR LOS ARCHIVOS ADJUNTOS--------------------
 function adjuntos(data) {
@@ -210,6 +214,7 @@ function usuarioPredefinido(data) {
         }
     });
 }
+
 ///--------------------CREAR ARCHIVOS ADJUNTOS DE MANERA VISIBLE--------------------
 var archivos = []
 var rutas = []
@@ -249,7 +254,9 @@ function cambio(e) {
 
                 alert('No puedes agregar otro archivo con el mismo nombre');
             }
+
         }
+
     }
     document.getElementsByClassName('chooser')[0].value = '';
 }

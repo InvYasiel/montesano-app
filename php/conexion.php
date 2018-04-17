@@ -1,19 +1,18 @@
 <?php
+/* Nombre del servidor. */
+$serverName = "172.26.7.192";
+/* Usuario y clave.  */
+$uid = "consulta";
+$pwd = "Monte00!";
+/* Array asociativo con la información de la conexion */
+$connectionInfo = array("Database"=>"A3LABORAL","UID"=>$uid,"PWD"=>$pwd,"CharacterSet"=>"UTF-8");
 
-function Conectar (){
-    $conexion = null;
-    $host = '172.26.7.192';
-    $db = 'A3LABORAL';
-    $user = 'consulta';
-    $pwd = 'Monte00!';
-    try {
-    $conexion = new PDO('sqlsrv:host='.$host.';dbname='.$db, $user, $pwd);
-    }
-    catch (PDOException $e) {
-    echo '<p>No se puede conectar a la base de datos !!</p>';
-    exit;
-    }
-    return $conexion;
-   }
-
+/* Nos conectamos mediante la autenticación de SQL Server . */
+$conn = sqlsrv_connect( $serverName, $connectionInfo);
+if( $conn){
+    echo "conexión existosa";
+}else{
+    echo "fallo en la conxión";
+    die(print_r(sqlsrv_errors(), true));
+}
 ?>

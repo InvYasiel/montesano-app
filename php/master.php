@@ -1,5 +1,5 @@
 <?php 
-//---------------------------------Select de las reservas---------------------------------  
+
 $pdo=new PDO("mysql:dbname=reservas;host=127.0.0.1","root","");
 $statement=$pdo->prepare("SELECT * FROM registro");
 $statement->execute();

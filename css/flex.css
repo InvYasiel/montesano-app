@@ -48,7 +48,6 @@ o {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-   
 }
 
 .dw,
@@ -84,9 +83,7 @@ o {
     font-size: 15px;
     margin-left: 10px;
 }
-.popover{
-    max-width: 100%;
-}
+
 .hh {
     margin: 0;
     height: 8px;
@@ -94,12 +91,9 @@ o {
     position: relative;
     float: right;
 }
-.btn-salas{
-    margin-right: 10px;
-}
 
 .hora {
-    width: 430px;
+    width: 260px;
     height: 34px;
 }
 
@@ -107,48 +101,4 @@ o {
   position: absolute;
   right: 70px;
    
-}
-#contagenda{
-    display:flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-
-}
-.containerCalendario{
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-}
-#pills-Agenda{
-    display:flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-
-}
-
-#contenidoCarta{
-    /* display: flex; */
-}
-
-#buscador{
-    width: 300px;
-    height: 40px;
-}
-#seleccion{
-    width: 500px;
-}
-#btnJuntas{
-    cursor: pointer;
-    margin: 20px;
-    width: 45%;
-}
-#btnConvites{
-    cursor: pointer;
-    margin: 20px;
-    width: 45%;
-}
-.display-4 {
-    font-size: 2.5rem;
-    font-weight: 300;
-    line-height: 1.2;
 }
