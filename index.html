@@ -10,11 +10,12 @@
     <link rel="stylesheet" href="css/jquery.toast.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/spiner.css">
+    <link rel="stylesheet" href="css/flexConvites.css">
     <link rel="stylesheet" type="text/css" href="css/flex.css">
 
 </head>
 
-<body onload="recogerDatos()">
+<body onload="recogerDatos(), limpiar()">
     <div class="container">
         <br>
         <div class="right-tabs clearfix">
@@ -23,18 +24,19 @@
             </div>
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home"
+                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" onclick="limpiar()" aria-controls="pills-home"
                         aria-selected="true">Incidencias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" aria-controls="pills-Agenda"
+                    <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" onclick="generarCartas()" aria-controls="pills-Agenda"
                         aria-selected="false">Agenda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-Reserva-tab" data-toggle="pill" href="#pills-Reserva" role="tab" aria-controls="pills-Reserva"
-                        aria-selected="false">Reserva de salas</a>
+                    <a class="nav-link" id="pills-Reserva-tab" onclick="limpiar()" data-toggle="pill" href="#pills-Reserva" role="tab" onclick="limpiar()"
+                        aria-controls="pills-Reserva" aria-selected="false">Reserva de salas</a>
                 </li>
             </ul>
+
             <!-- INCIDENDCIAS -->
             <div class="tab-content" id="pills-tabContent" style="width: 100%">
                 <br>
@@ -51,7 +53,9 @@
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="incidenciasNombre">Nombre (*)</label>
-                                <input type="text" class="form-control" id="incidenciasNombre" placeholder="Juan">
+                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombre" placeholder="Juan">
+                                <datalist id="personasincidencias">
+                                </datalist>
                             </div>
                             <div class="form-group col-6">
                                 <label for="incidenciasTitulo">Titulo (*)</label>
@@ -88,19 +92,19 @@
                         </div>
                     </div>
                     <!-- Spinner Carga -->
-                    <div id="spiner">
-                        <div class="row">
-                            <div id="loader">
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="dot"></div>
-                                <div class="lading"></div>
-                            </div>
+                </div>
+                <div id="spiner">
+                    <div class="row">
+                        <div id="loader">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="lading"></div>
                         </div>
                     </div>
                 </div>
@@ -115,298 +119,176 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                <h1>Incidencia creada.</h1>
+                                <h1 id='titleC'>Incidencia creada.</h1>
                                 <b id="FechaIncidencia"></b>
-                                <button type="button" class="btn btn-secondary" id="close" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary cerrate" id="close" data-dismiss="modal">Close</button>
                             </div>
                         </div>
                     </div>
                 </div>
-
+                <!-- Modal admin -->
+                <div class="modal fade" id="ModalAdmin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Solo administradores</h5>
+                                <button type="button" class="close" data-dismiss="modal" id='cerrarAd' aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="usu" class="sr-only">Usuario</label>
+                                    <input type="text" class="form-control" id="usu" placeholder="Usuario">
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="pass" class="sr-only">Contraseña</label>
+                                    <input type="password" class="form-control" id="pass" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id='cerrarAdmin' data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" id='borrarAdmin'>Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- AGENDA -->
                 <div class="tab-pane fade" id="pills-Agenda" role="tabpanel" aria-labelledby="pills-Agenda-tab">
-                    En proceso
+                    <div class="input-group mb-3" id="seleccion">
+                        <div class="input-group-prepend">
+                            <button class="btn btn-outline-secondary" type="button">Empresa</button>
+                        </div>
+                        <select class="custom-select" id="empresas" onchange="selEmpresa()">
+                            <option selected value="1">TODAS</option>
+                        </select>
+                    </div>
+                    <label for="buscador" style="font-size: 1.3em;">Nombre a buscar</label>
+                    <input list="personasagenda" class="form-control mr-sm-2" type="text" placeholder="Enter para buscar" id="buscador" onkeydown="if(event.keyCode == 13) search(this);"
+                        aria-label="Search">
+                    <datalist id="personasagenda">
+                    </datalist>
+                    <div id="contagenda">
+
+                    </div>
                 </div>
+
                 <!-- RESERVAS -->
                 <div class="tab-pane fade" id="pills-Reserva" role="tabpanel" aria-labelledby="pills-Reserva-tab">
-                    <div class="container">
+                    <div class="container" id="containerReservas">
+                        <div class="row" id="titleCC">
+                            <div class="col-12 text-left">
+                                <h2 class="display-4" id="tituloSala">Seleccione Sala</h2>
+                            </div>
+                        </div>
                         <div class="row">
-                            <div class="col-12 text-center">
-                                <h1 class="display-4">Calendario de Reservas</h1>
-                                <br>
+                            <div class="col-12 text-center" id="contendorbotones">
+
                             </div>
-
-                            <div class="containerCalendario">
-
-                                <div class="calendar">
-                                    <div class="seleccion" style="margin: 0 auto;display:none;">
-                                        <label for="month">
-                                            <span>Mes</span>
-                                            <input type="number" name="month" id="month" style="width: 60px;background-color:slategrey;color:white; display:none" min="1"
-                                                max="12" onchange="calendar()">
-                                        </label>
-                                        <label for="year">
-                                            <span>Año</span>
-                                            <input type="number" name="year" id="year" style="width: 82px;background-color:slategrey;color:white;display:none" onchange="calendar()">
-                                        </label>
-                                    </div>
-                                    <div id="-1" style="cursor: pointer;font-size: 2em;" onclick="calendar(this.id)">
-                                        <</div>
-                                            <div class="month">mmm</div>
-                                            <div id="+1" style="cursor: pointer;font-size: 2em;" onclick="calendar(this.id)">></div>
-                                            <div class="dw">
-                                                <div class="dayweek">dw</div>
-                                                <div class="dayweek">dw</div>
-                                                <div class="dayweek">dw</div>
-                                                <div class="dayweek">dw</div>
-                                                <div class="dayweek">dw</div>
-                                                <div class="dayweek">dw</div>
-                                                <div class="dayweek">dw</div>
-                                            </div>
-                                            <div class="week">
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                            </div>
-                                            <div class="week">
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                            </div>
-                                            <div class="week">
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="top"> dd</div>
-                                            </div>
-                                            <div class="week">
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                            </div>
-                                            <div class="week">
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                            </div>
-                                            <div class="week">
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                                <div class="days" data-toggle="tooltip" data-html="true" data-placement="bottom"> dd</div>
-                                            </div>
-                                    </div>
-                                </div>
-
-                                <br>
-                                <!-- Modal para dias -->
-                                <div class="modal fade" id="calendarioModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="calendarioModalLabel"
-                                    aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="calendarioModalLabel">Reservas</h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modalCC" id="modalCC">
-                                                <b id="actual"></b>
-                                                <br>
-                                                <br>
-                                                <div id="horario">
-                                                    <div id="enpunto">08:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="08:00" class="hh"></div>
-                                                        <div id="08:15" class="hh"></div>
-                                                        <div id="08:30" class="hh"></div>
-                                                        <div id="08:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">09:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="09:00" class="hh"></div>
-                                                        <div id="09:15" class="hh"></div>
-                                                        <div id="09:30" class="hh"></div>
-                                                        <div id="09:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">10:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="10:00" class="hh"></div>
-                                                        <div id="10:15" class="hh"></div>
-                                                        <div id="10:30" class="hh"></div>
-                                                        <div id="10:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">11:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="11:00" class="hh"></div>
-                                                        <div id="11:15" class="hh"></div>
-                                                        <div id="11:30" class="hh"></div>
-                                                        <div id="11:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">12:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="12:00" class="hh"></div>
-                                                        <div id="12:15" class="hh"></div>
-                                                        <div id="12:30" class="hh"></div>
-                                                        <div id="12:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">13:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="13:00" class="hh"></div>
-                                                        <div id="13:15" class="hh"></div>
-                                                        <div id="13:30" class="hh"></div>
-                                                        <div id="13:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">14:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="14:00" class="hh"></div>
-                                                        <div id="14:15" class="hh"></div>
-                                                        <div id="14:30" class="hh"></div>
-                                                        <div id="14:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">15:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="15:00" class="hh"></div>
-                                                        <div id="15:15" class="hh"></div>
-                                                        <div id="15:30" class="hh"></div>
-                                                        <div id="15:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">16:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="16:00" class="hh"></div>
-                                                        <div id="16:15" class="hh"></div>
-                                                        <div id="16:30" class="hh"></div>
-                                                        <div id="16:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">17:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="17:00" class="hh"></div>
-                                                        <div id="17:15" class="hh"></div>
-                                                        <div id="17:30" class="hh"></div>
-                                                        <div id="17:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">18:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="18:00" class="hh"></div>
-                                                        <div id="18:15" class="hh"></div>
-                                                        <div id="18:30" class="hh"></div>
-                                                        <div id="18:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">19:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="19:00" class="hh"></div>
-                                                        <div id="19:15" class="hh"></div>
-                                                        <div id="19:30" class="hh"></div>
-                                                        <div id="19:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">20:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="20:00" class="hh"></div>
-                                                        <div id="20:15" class="hh"></div>
-                                                        <div id="20:30" class="hh"></div>
-                                                        <div id="20:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">21:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="21:00" class="hh"></div>
-                                                        <div id="21:15" class="hh"></div>
-                                                        <div id="21:30" class="hh"></div>
-                                                        <div id="21:45" class="hh"></div>
-                                                    <div class="hs"> </div>
-                                                    </div>
-                                                    <div id="enpunto">22:00</div>
-                                                    <div id="hora" class="hora">
-                                                        <div id="22:00" class="hh"></div>
-                                                        <div id="22:15" class="hh"></div>
-                                                        <div id="22:30" class="hh"></div>
-                                                        <div id="22:45" class="hh"></div>
-                                                        <div id="23:00" class="hh"></div>
-                                                        <div class="hs"> </div>
-                                                        <br>
-                                                    </div>
-                                                </div>
-                                                <br>
-                                                
-                                                <b>Hora a la que deceas ingresar:</b>
-                                                <br>
-                                                <label for="horaEntrada">Hora de entrada</label>
-                                                <input type="time" name="horaEntrada" id="horaEntrada" value="00:00" min="08:00" max="22:00" step="900">
-                                                <label for="horaEntrada">Hora de salida</label>
-                                                <input type="time" name="horaSalida" id="horaSalida" value="00:00" min="08:00" max="23:00" step="900">
-                                                <br>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                                <button type="button" class="btn btn-primary" id="btn-ingresar" value="Ingresar">Reservar</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="resp"></div>
-                            </div>
+                        </div>
+                        <br>
+                        <!-- <button type="button" class="btn btn-outline-primary salas" id="sala1" onclick="juntas()">JUNTAS</button>
+                            <button type="button" class="btn btn-outline-primary salas" id="sala2" onclick="convites()">CONVITES</button> -->
+                        <input type="hidden" id="selectedSala" />
+                        <div class="calendarConvites" style="display:none" id="calendar">
 
                         </div>
                     </div>
                 </div>
-                <!-- Reservas Fin -->
+                <br>
+                <!-- Modal para dias -->
+                <div class="modal fade" id="calendarioModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="calendarioModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog CC" role="document">
+                        <div class="modal-content" id="modalDD">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="calendarioModalLabel">Reservas</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="container" id="containerCC">
+                                <div class="modalCC" id="modalCC">
+                                    <br>
+
+                                    <b id="actual"></b>
+                                    <br>
+                                    <br>
+                                    <div id="horario">
+
+                                    </div>
+                                    <div class="row" id='Dform'>
+                                        <div class="form-group col-12">
+                                            <label for="usuarioElegido">Nombre de persona (*)</label>
+                                            <input type="text" class="form-control" id="usuarioElegido" list="personas">
+                                            <datalist id="personas">
+                                            </datalist>
+                                        </div>
+                                        <div class="col-12">
+                                            <label for="motivoReserva">Motivo de la Reserva</label>
+                                            <input type="text" class="form-control" id="motivoReserva" placeholder="Motivo...">
+                                        </div>
+                                        
+                                        <div class="col-12">
+                                                <br>
+                                            <b>Hora a la que deseas ingresar:</b>
+                                            <br>
+                                        </div>
+
+
+                                        <div class="form-group col-6">
+                                            <label for="horaEntrada">Hora de entrada (*)</label>
+                                            <input type="time" class="form-control" id="horaEntrada" style="width: 105px;" list="personas" value="00:00" min="08:00" max="21:00" step="900">
+                                        </div>
+                                        <div class="form-group col-6">
+                                            <label for="horaSalida">Hora de salida (*)</label>
+                                            <input type="time" class="form-control" id="horaSalida" style="width: 105px;" list="personas" value="00:00" min="08:00" max="22:00" step="900">
+                                        </div>
+                                    </div>
+
+
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="modal-footer" id="footCC">
+                                <button type="button" class="btn btn-secondary" onclick="cerrar()" data-dismiss="modal" >Cerrar</button>
+                                <button type="button" class="btn btn-primary" id="btn-ingresar" value="Ingresar">Reservar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal confirmar reserva  -->
+
+                <div id="resp"></div>
             </div>
         </div>
     </div>
+    <div class="modal fade" id="modalreservas" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Reserva confirmada</h5>
 
-    <p id="demo"></p>
-
+                </div>
+                <div class="modal-body ">
+                    <h1 class="text-center">Reserva creada.</h1>
+                    <p id="reservaInformacion"></p>
+                    <button type="button" class="btn btn-secondary" id="closeReserva" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js"></script>
 <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 <script src="js/jquery.toast.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
 <script src="https://api.trello.com/1/client.js?key=151bcd104f1742fdcf0b8c2f4a4c8764"></script>
-<script src="js/crearCalendario.js" type="text/javascript"></script>
+
 <script type="application/javascript">
     jQuery('input[type=file]').change(function () {
         var filename = jQuery(this).val().split('\\').pop();
@@ -417,9 +299,17 @@
         jQuery('span.' + idname).next().find('span').html(filename);
     });
 </script>
-<script src="js/incidencias.js"></script>
 
+
+<script src="js/incidencias.js"></script>
+<script src="js/crearCalendarios.js"></script>
 <script src="js/cartas.js"></script>
-<script src="js/calendario.js"></script>
+<script src="js/datosCalendar.js"></script>
+
+<script src="js/modalCalendar.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/CC.js"></script>
+
+
 
 </html>

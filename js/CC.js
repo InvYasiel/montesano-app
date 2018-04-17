@@ -41,8 +41,12 @@ function recogerSalas() {
 function eliminarReserva(e) {
     document.getElementById('calendarioModal').style = ' display:none;'
     var denegar = document.getElementById('cerrarAdmin');
+    var den = document.getElementById('cerrarAd');
     var rr = e.getAttribute('reserva');
     denegar.addEventListener('click', function () {
+        document.getElementById('calendarioModal').style = ' display:initial;'
+    }, false)
+    den.addEventListener('click', function () {
         document.getElementById('calendarioModal').style = ' display:initial;'
     }, false)
     var idSala = document.getElementById('selectedSala').value;
@@ -64,7 +68,7 @@ function eliminarReserva(e) {
                     dataType: "text",
                     asycn: false,
                     success: function () {
-                        // alert("Ha sido ejecutada la acción.");
+                        
                     }
                 });
                 $('#ModalAdmin').modal('hide');
@@ -76,11 +80,9 @@ function eliminarReserva(e) {
 
                
                 var close = document.getElementById('close');
-                close.addEventListener('click', function () {
-                   
-                    recogerDatos(idSala);
-                    
-                }, false)
+                close.addEventListener('click',function () {
+                    window.location.reload();
+                })
 
             } else {
                 alert('Usuario o contraseña incorrectos!')

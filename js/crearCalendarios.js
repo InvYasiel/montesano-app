@@ -645,7 +645,8 @@ function crearEsquema() {
         var codigocompleto = e.CompanyCode + e.EmployeeCode.substring(2)
 
         var option = document.createElement("option");
-        option.value = codigocompleto;
+        
+        option.value = name;
         option.innerText = name;
 
         contenedordatalist.appendChild(option);

@@ -38,47 +38,48 @@ function abrirmodal(dia) {
             registroCC.forEach(e => {
                 if (e.EmployeeCode == employeecode) {
                     employeeName = e.Name;
+                    
                 }
             });
 
             for (let t = 0; t < hh.length; t++) {
 
                 if (hh[t].id == registro[i].entrada.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;cursor:pointer;'
+                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80%;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
                     hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('data-placement', "top");
-                    hh[t].setAttribute('data-original-title', employeeName+ '<br> <b>Click para eliminar</br>');
+                    hh[t].setAttribute('data-original-title', employeeName+ '<br><p>Concepto: '+registro[i].motivo+ '<br> <b>Click para eliminar</br>');
                     hh[t].setAttribute('data-target','#ModalAdmin');
                     hh[t].setAttribute('onclick','eliminarReserva(this)')
                     hh[t].setAttribute('reserva', registro[i].ID);
                 }
                 if (hh[t].id > registro[i].entrada.substring(11, 16) && hh[t].id < registro[i].salida.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:350px;position:relative;float:right;border-bottom:solid 1px;cursor:pointer;'
+                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80%;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
                     hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('data-placement', "top");
-                    hh[t].setAttribute('data-original-title', employeeName+ '<br> <b>Click para eliminar</br>');
+                    hh[t].setAttribute('data-original-title', employeeName+ '<br><p>Concepto: '+registro[i].motivo+ '<br> <b>Click para eliminar</br>');
                     hh[t].setAttribute('data-target','#ModalAdmin');
                     hh[t].setAttribute('onclick','eliminarReserva(this)')
                     hh[t].setAttribute('reserva', registro[i].ID);
                 }
                 if (hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].entrada.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;cursor:pointer;'
+                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80% ;position:relative;float:right; border-bottom:dashed 1px;cursor:pointer;'
                     hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('data-placement', "top");
-                    hh[t].setAttribute('data-original-title', employeeName+ '<br> <b>Click para eliminar</br>');
+                    hh[t].setAttribute('data-original-title', employeeName+'<br><p>Concepto: '+registro[i].motivo+  '<br> <b>Click para eliminar</br>');
                     hh[t].setAttribute('data-target','#ModalAdmin');
                     hh[t].setAttribute('onclick','eliminarReserva(this)')
                     hh[t].setAttribute('reserva', registro[i].ID);
                 }
                 if (hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].salida.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width: 350px;position:relative;float:right;border-bottom:solid 1px;cursor:pointer;'
+                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80% ;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
                     hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('data-placement', "top");
-                    hh[t].setAttribute('data-original-title', employeeName + '<br> <b>Click para eliminar</br>');
+                    hh[t].setAttribute('data-original-title', employeeName + '<br><p>Concepto: '+registro[i].motivo+ '<br> <b>Click para eliminar</br>');
                     hh[t].setAttribute('data-target','#ModalAdmin');
                     hh[t].setAttribute('onclick','eliminarReserva(this)')
                     hh[t].setAttribute('reserva', registro[i].ID);
@@ -105,7 +106,9 @@ $("#btn-ingresar").click(function () {
     var fechaEntrada = seleccionado + ' ' + horaEntrada + ':00';
     var fechaSalida = seleccionado + ' ' + horaSalida + ':00';
     var idUsuario = document.getElementById('usuarioElegido').value;
+    var motivo = document.getElementById('motivoReserva').value;
     var idSala = document.getElementById('selectedSala').value;
+    var us = ''
     var v = true;
     for (let i = 0; i < registro.length; i++) {
         if (fechaEntrada > fechaSalida || fechaEntrada == fechaSalida) {
@@ -131,17 +134,28 @@ $("#btn-ingresar").click(function () {
         }
 
     }
+    for (let i = 0; i < registroCC.length; i++) {
+        if(registroCC[i].CompleteName == idUsuario){
+            us = registroCC[i].CompanyCode + registroCC[i].EmployeeCode.substring(2);
+        }
+        
+    }
     if (idUsuario == '' || idUsuario == null) {
         alert('Error hay que seleccionar un usuario');
+        v = false;
+    }
+    if (motivo ==''|| motivo == null){
+        alert('Añada un motivo')
         v = false;
     }
     //---------------------------------POST A LA BASE DE DATOS---------------------------------  
     if (v == true) {
         var infoParaEnviar = {
             sala: idSala,
-            usuario: idUsuario,
+            usuario: us,
             entrada: fechaEntrada,
-            salida: fechaSalida
+            salida: fechaSalida,
+            motivo: motivo
         };
         $.ajax({
             type: "POST",
@@ -150,16 +164,17 @@ $("#btn-ingresar").click(function () {
             dataType: "text",
             asycn: false,
             success: function () {
-                // alert("Ha sido ejecutada la acción.");
+                recogerDatos(idSala)
             }
         });
-        $("#calendarioModal").modal('hide');
 
+        $("#calendarioModal").modal("hide");
+
+       
         $("#modalreservas").modal();
 
-
         var name = '';
-        var fullcode = document.getElementById("usuarioElegido").value;
+        var fullcode = us;
 
         var coderight = fullcode.substring(4, 8);
 
@@ -172,13 +187,11 @@ $("#btn-ingresar").click(function () {
         });
 
         var mensaje = "Reserva confirmada para <b>" + name + "</b> desde las <b>" + fechaEntrada.substring(11,16) + "</b> hasta las <b>" + fechaSalida.substring(11,16) + "</b> del día <b>"+fechaEntrada.substring(8,10)+'-'+fechaEntrada.substring(5,7)+"-"+fechaEntrada.substring(0,4)+"</b>"
-
+        
         document.getElementById("reservaInformacion").innerHTML = mensaje;
-        var close = document.getElementsByClassName('cerrate');
-        close[0].addEventListener('click', function () {
-            recogerDatos(idSala);
-            
-        }, false)
+        var close = document.getElementById('close');
+       
+        
     }
 });
 

@@ -76,9 +76,7 @@ o {
     margin-left: 25px;
 }
 
-#horario {
-    width: 70%;
-}
+
 
 #enpunto {
     position: absolute;
@@ -86,13 +84,7 @@ o {
     margin-left: 10px;
 }
 
-.hh {
-    margin: 0;
-    height: 8px;
-    width: 200px;
-    position: relative;
-    float: right;
-}
+
 
 .hora {
     width: 260px;

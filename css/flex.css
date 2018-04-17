@@ -11,6 +11,12 @@ h1 {
     margin-bottom: 10px;
 }
 
+#contagenda {
+    width: 75%;
+    overflow-y: scroll;
+    height: 650px;
+}
+
 .calendar {
     margin: auto;
     border: 1px solid royalblue;
@@ -75,30 +81,134 @@ o {
 }
 
 #horario {
-    width: 70%;
+    border: solid 1px black;
+    width: 300px;
 }
 
 #enpunto {
     position: absolute;
-    font-size: 15px;
-    margin-left: 10px;
+    font-size: 18px;
+    margin-top: 4px;
+ 
+}
+
+.popover {
+    max-width: 100%;
 }
 
 .hh {
     margin: 0;
     height: 8px;
     width: 200px;
+    
     position: relative;
     float: right;
 }
 
+.btn-salas {
+    margin-right: 10px;
+    margin: 10px;
+}
+
 .hora {
-    width: 260px;
-    height: 34px;
+    width: 100%;
+    height: 33px;
+    
+    border-bottom: solid 0.5px black;
 }
 
 .hs {
-  position: absolute;
-  right: 70px;
-   
+    position: absolute;
+    right: 70px;
+}
+
+#contagenda {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.containerCalendario {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+#pills-Agenda {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+#contenidoCarta {
+    /* display: flex; */
+}
+
+#buscador {
+    width: 300px;
+    height: 40px;
+}
+
+#seleccion {
+    width: 500px;
+}
+
+#btnJuntas {
+    cursor: pointer;
+    margin: 20px;
+    width: 45%;
+}
+
+#btnConvites {
+    cursor: pointer;
+    margin: 20px;
+    width: 45%;
+}
+
+.display-4 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+@media (min-width: 576px) {
+    .CC {
+        max-width: 800px;
+        min-width: 800px;
+        margin: 1.75rem auto;
+    }
+}
+@media (max-width: 576px) {
+    .CC {
+        max-width: 800px;
+        min-width: 800px;
+        margin: 1.75rem auto;
+    }
+}
+
+
+.modalCC{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#actual{
+    width: 100%;
+}
+#Dform{
+    width: 300px;
+    margin-left: 10%;
+}
+#contendorbotones {
+    flex-direction: column;
+    display: flex;
+    margin:10px;
+}
+#titleCC{
+    width: 100%;
+    text-align: left!important;
+}
+#containerReservas{
+    display: flex;
+    flex-wrap: wrap;
 }
