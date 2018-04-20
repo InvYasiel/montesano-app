@@ -13,7 +13,7 @@ $(window).on("popstate", function () {
 
 var salas = []
 recogerSalas()
-
+//---------------------------------Consulta a Salas.php--------------------------------  
 function recogerSalas() {
     if (window.XMLHttpRequest) {
         xmlhttp = new XMLHttpRequest();
@@ -27,17 +27,17 @@ function recogerSalas() {
             for (let i = 0; i < sala.length; i++) {
                 salas.push(sala[i]);
             }
-            console.log(salas);
+            
             crearBtns();
         }
     };
     xmlhttp.open("GET", "php/salas.php", true);
-    console.log(xmlhttp)
+    
     xmlhttp.send();
 }
 
 
-
+//---------------------------------Eliminiar Reserva---------------------------------  
 function eliminarReserva(e) {
     document.getElementById('calendarioModal').style = ' display:none;'
     var denegar = document.getElementById('cerrarAdmin');
@@ -56,8 +56,6 @@ function eliminarReserva(e) {
         var pass = document.getElementById('pass').value;
         for (let i = 0; i < admin.length; i++) {
             if (admin[i].usuario == usu && admin[i].password == pass) {
-
-
                 var infoParaEnviar = {
                     reserva: rr
                 };
@@ -91,7 +89,4 @@ function eliminarReserva(e) {
         }
 
     }, false)
-
-
-
 }

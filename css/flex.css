@@ -14,12 +14,13 @@ h1 {
 #contagenda {
     width: 75%;
     overflow-y: scroll;
-    height: 650px;
+    height: 550px;
 }
 
 .calendar {
     margin: auto;
     border: 1px solid royalblue;
+    border-radius: 10px solid;
     background-color: rgba(43, 43, 43, 0.86);
     color: white;
     width: 50%;
@@ -211,4 +212,24 @@ o {
 #containerReservas{
     display: flex;
     flex-wrap: wrap;
+}
+.mes {
+    width: 80% !important;
+    border-bottom: solid 1px bisque;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 10px;
+    text-align: center;
+}
+.diaSemana,
+.day {
+    text-align: center;
+    cursor: pointer;
+    width: 5vw;
+    height: 4.3vw;
+    padding: 3px;
+    background-color: none;
+}
+.day {
+    border: solid 1px bisque;
 }

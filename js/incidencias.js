@@ -82,7 +82,7 @@ function incidenciasCrear() {
             if (comprobarCampos()) {
                 if (ice && ice.candidate && ice.candidate.candidate) {
                     var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
-                    console.log('my IP: ', myIP);
+                   
                     pc.onicecandidate = noop;
                 }
                 //--------------------VALORES DE LA DESCRIPCIÓN--------------------
@@ -105,7 +105,7 @@ function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
     xhr.send(data);
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-            console.log(this.responseText);
+            
             var dt = this.responseText;
             h = JSON.parse(dt).id;
             spiner.style = 'display:block';
@@ -223,7 +223,7 @@ function cambio(e) {
         alert("Imagen muy grande");
         return false;
     } else {
-        console.log(e);
+        
         chooser.files[0];
 
         var path = document.getElementById("" + e).value;

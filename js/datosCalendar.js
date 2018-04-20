@@ -4,15 +4,10 @@ var texto = "";
 
 //--------------------------------- CREAR CALENDARIO --------------------------------- 
 function datosCalendar(e) {
-
     var days = document.querySelectorAll(".day");
-
     days.forEach(element => {
         element.style = 'background-color: none;';
     });
-
-    console.log(e);
-
     var insertado = false;
     var n;
     if (e == "+1" || e == "-1") {
@@ -20,7 +15,6 @@ function datosCalendar(e) {
     } else {
         n = parseInt("1");
     }
-
 
     var month = document.getElementById('mes').value;
     var year = document.getElementById('anio').value;
@@ -119,37 +113,26 @@ function datosCalendar(e) {
         }
         var auxdia = "";
         for (let j = 0; j < registro.length; j++) {
-
             if (registro[j].sala == e) {
-
                 var diasplit = registro[j].entrada.substring(10, 8);
-
                 if(auxdia != diasplit){
                     texto = "";
                 }
-
                 var messplit = registro[j].entrada.substring(5, 7);
-
                 var newDiasSplit = parseInt(diasplit, 10);
                 var newMesSplit = parseInt(messplit, 10);
-
                 var diaLi = diasplit + ' ' + newMesSplit;
-
-
                 var coderight = registro[j].Usuario.substring(4, 8)
                 var codeleft = registro[j].Usuario.substring(0, 4);
                 var employeecode = "00" + coderight;
-
                 var employeeName = "";
                 registroCC.forEach(e => {
                     if (e.EmployeeCode == employeecode) {
                         employeeName = e.Name;
                     }
                 });
-
                 texto += '' + employeeName + ' <br>' + registro[j].entrada.substring(11, 16) + ' - ' + registro[j].salida.substring(11, 16) + '</br>';
                 insertado = true;
-
                 try {
                     document.getElementById(diaLi).setAttribute('data-original-title', texto);
                 var m = document.getElementById(diaLi).getAttribute('data-original-title');
@@ -162,14 +145,10 @@ function datosCalendar(e) {
                 } catch (error) {
                     
                 }
-                
                 auxdia = registro[j].entrada.substring(10, 8);
-
             }
 
         }
-
-       
     }
 }
 //---------------------------------FECHA ORIGINAL---------------------------------
@@ -184,3 +163,4 @@ function currDate(e) {
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
+

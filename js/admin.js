@@ -13,11 +13,11 @@ function recogerUsu() {
             for (let i = 0; i < sala.length; i++) {
                 admin.push(sala[i]);
             }
-            console.log(admin);
+            
             
         }
     };
     xmlhttp.open("GET", "php/admin.php", true);
-    console.log(xmlhttp)
+   
     xmlhttp.send();
 }

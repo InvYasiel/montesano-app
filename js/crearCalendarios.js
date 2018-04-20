@@ -1,5 +1,5 @@
 var registro = [];
-
+//---------------------------------Llamada a reservas.php---------------------------------  
 function recogerDatos(idSala) {
     if (window.XMLHttpRequest) {
         xmlhttp = new XMLHttpRequest();
@@ -9,7 +9,7 @@ function recogerDatos(idSala) {
     xmlhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var fechas = JSON.parse(this.responseText);
-            console.log(fechas);
+           
             for (let i = 0; i < fechas.length; i++) {
                 registro.push(fechas[i]);
             }
@@ -23,18 +23,15 @@ function recogerDatos(idSala) {
         }
     };
     xmlhttp.open("GET", "php/reservas.php", true);
-    console.log(xmlhttp)
+   
     xmlhttp.send();
 }
-
 
 
 var ContReservas = document.getElementById('containerReservas');
 //----Crea Botones según el numero de salas----
 function crearBtns() {
     var Arbtn = document.getElementsByClassName('salas');
-  
-
     const unique = [...new Set(registro.map(item => item.sala))];
     var contenedorbotones = document.getElementById("contendorbotones");
     for (let i = 1; i <= salas.length; i++) {
@@ -46,19 +43,15 @@ function crearBtns() {
         cbtn.setAttribute('onclick', 'crearCalendarioGlobal("' + i + '")');
         cbtn.innerHTML = 'Salas ' + salas[i - 1].nombre
         contenedorbotones.appendChild(cbtn);
-        
     }
 }
-
+//----Crear calendario----
 function crearCalendarioGlobal(e) {
     creaCalendario(e);
     document.getElementById("selectedSala").value = e;
     var titulo = document.getElementById('tituloSala');
 
 }
-
-
-
 var ContCalendario = document.getElementById('calendar');
 //----Crea los items del calendario----
 function creaCalendario(e) {

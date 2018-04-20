@@ -8,13 +8,11 @@ if (window.XMLHttpRequest) {
 xmlhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
         var fechas = JSON.parse(this.responseText);
-        console.log(fechas);
+
         for (let i = 0; i < fechas.length; i++) {
             registroCC.push(fechas[i]);
 
         }
-        
-
         var contenedordatalistagenda = document.getElementById("personasagenda");
         var contenedordatalistincidencias = document.getElementById("personasincidencias");
 
@@ -58,7 +56,7 @@ xmlhttp.onreadystatechange = function () {
     }
 };
 xmlhttp.open("GET", "php/cartas.php", true);
-console.log(xmlhttp)
+
 xmlhttp.send();
 
 
@@ -81,7 +79,6 @@ function search() {
     var palabra = buscador.value.toUpperCase();
     var selIndex = document.getElementById("empresas").selectedIndex;
     var selValue = document.getElementById("empresas").options[selIndex].innerHTML;
-
     if (palabra == "") {
         generarCartas();
     } else {
@@ -127,7 +124,7 @@ function search() {
 function carta(i) {
     var card = document.createElement('div');
     card.setAttribute('class', 'card text-black border-dark bg-info  mb-3 carta');
-    card.setAttribute('style', 'max-width: 23rem; margin:10px;');
+    card.setAttribute('style', 'width: 400px; max-width: 23rem; margin:10px;');
     card.setAttribute('id', 'carta' + i);
     var header = document.createElement('div');
     header.setAttribute('class', 'card-header');
@@ -137,18 +134,35 @@ function carta(i) {
     var titulo = document.createElement('h5');
     titulo.setAttribute('class', 'card-title');
 
-    var h  = registroCC[i].Observations;
+   
     var exten = '';
-    if(h.indexOf('#') != -1){
-        var ca = h.split('#')[1];
-     exten = ca.split('#')[0];
+     var ex = new RegExp(/#\w+:\w+#/g)
+    var texto = registroCC[i].Observations.match(ex);
+    if (texto == null) {
+        exten = '';
+
+    } else {
+        for (let j = 0; j < texto.length; j++) {
+            exten += ' ' + texto[j].split(':')[1].replace('#', '')
+            console.log(exten);
+        }
     }
+
+    var lugarDeTrabajo = '<b>Lugar de trabajo: </b>' + registroCC[i].WorkplaceName;
+    var Email = '<b>Email: </b>' + registroCC[i].EmailAddress;
+    var FijoEx = '<b>Fijo:  </b>' + registroCC[i].DirectPhoneNumber + '<b> Extensión de fijo: </b>' + registroCC[i].Extension;
+    var MovilEx = '<b>Móvil: </b>' + registroCC[i].CompanyMobilePhoneNumber + '  <b>Extensión: </b> ' + exten;
+    var NuFax = '<b>Número de Fax: </b>' + registroCC[i].FaxNumber;
+    var Observa = '<b>Observaciones: </b>' + registroCC[i].Observations;
+    Observa = Observa.replace(ex,'');
     
+
+
 
     var texto = document.createElement('div');
     header.innerHTML = '<b>Persona</b>'
     titulo.innerHTML = '<b>' + registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + '</b>'
-    texto.innerHTML =   '<b> Lugar de trabajo </b>' + registroCC[i].WorkplaceName+'<br> <b>Fijo:  </b>' + registroCC[i].DirectPhoneNumber +  '<b>  Extensión de fijo </b>' + registroCC[i].Extension + '</br>' +'<b> Móvil </b>' + registroCC[i].CompanyMobilePhoneNumber +'  <b>Extensión:</b> '+exten + '<br>'+  '<b> Número de Fax </b>' + registroCC[i].FaxNumber + '</br>' +'<b> Observaciones </b>' + registroCC[i].Observations + '</br>' +'<b> Código Completo </b> ' + registroCC[i].CompanyCode + registroCC[i].EmployeeCode.substring(2) + '</br>';  
+    texto.innerHTML = lugarDeTrabajo + '</br>' + Email + '</br>' + FijoEx + '</br>' + MovilEx + '</br>' + NuFax + '</br>' + NuFax + '</br>' + Observa;
 
     cardBody.appendChild(titulo);
     cardBody.appendChild(texto);
@@ -211,4 +225,3 @@ var pill = document.getElementById('pills-Agenda')
 function limpiar() {
     pill.style = 'display:none;'
 }
-
