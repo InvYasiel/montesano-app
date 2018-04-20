@@ -1,6 +1,7 @@
 var registro = [];
 //---------------------------------Llamada a reservas.php---------------------------------  
 function recogerDatos(idSala) {
+    registro = [];
     if (window.XMLHttpRequest) {
         xmlhttp = new XMLHttpRequest();
     } else {
@@ -18,16 +19,11 @@ function recogerDatos(idSala) {
             }else{
                 document.getElementById('sala'+idSala).click(idSala);
             }
-            
-            
         }
     };
     xmlhttp.open("GET", "php/reservas.php", true);
-   
     xmlhttp.send();
 }
-
-
 var ContReservas = document.getElementById('containerReservas');
 //----Crea Botones según el numero de salas----
 function crearBtns() {
@@ -274,7 +270,6 @@ function crearEsquema() {
     ho15.setAttribute('id', 'enpunto');
     ho15.innerHTML = '22:00';
 
-
     var hora1 = document.createElement('div');
     hora1.setAttribute('id', 'hora');
     hora1.setAttribute('class', 'hora');
@@ -358,7 +353,6 @@ function crearEsquema() {
     hora4.appendChild(j1)
     hora4.appendChild(j2)
     hora4.appendChild(j3)
-
 
     var hora5 = document.createElement('div');
     hora5.setAttribute('id', 'hora');
@@ -636,9 +630,7 @@ function crearEsquema() {
     registroCC.forEach(e => {
         var name = e.CompleteName;
         var codigocompleto = e.CompanyCode + e.EmployeeCode.substring(2)
-
         var option = document.createElement("option");
-        
         option.value = name;
         option.innerText = name;
 

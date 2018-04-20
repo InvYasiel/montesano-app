@@ -33,7 +33,6 @@ function datosCalendar(e) {
                 document.getElementById('mes').value = 12
             }
     }
-
     var formatter = new Intl.DateTimeFormat("sp", {
             month: "long"
         }),
@@ -101,13 +100,11 @@ function datosCalendar(e) {
             da++;
         }
     }
-
     //---------------------------------INSERTAR TEXTO TOOLTIP ---------------------------------
     if (insertado == false) {
         var diasClick = document.getElementsByClassName('day');
         // for (let i = 0; i < diasClick.length; i++) {
         texto = "";
-
         if (e == "+1" || e == "-1") {
             e = document.getElementById("selectedSala").value;
         }
@@ -127,7 +124,7 @@ function datosCalendar(e) {
                 var employeecode = "00" + coderight;
                 var employeeName = "";
                 registroCC.forEach(e => {
-                    if (e.EmployeeCode == employeecode) {
+                    if (e.EmployeeCode == employeecode && e.CompanyCode == codeleft) {
                         employeeName = e.Name;
                     }
                 });
@@ -139,11 +136,11 @@ function datosCalendar(e) {
                 //--------------------------------- INSERTAR COLOR AL CUADRADO DEL CALENDARIO---------------------------------
                 if (m.length > 0) {
                     document.getElementById(diaLi).style = 'background-color: rgba(199, 31, 31, 0.411)';
+                   
                 } else {
                     document.getElementById(diaLi).style = 'background-color: none;';
                 }
-                } catch (error) {
-                    
+                } catch (error) { 
                 }
                 auxdia = registro[j].entrada.substring(10, 8);
             }
@@ -159,7 +156,6 @@ function currDate(e) {
     document.getElementById('anio').value = currDate.getFullYear();
     datosCalendar(e);
 }
-
 String.prototype.capitalize = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }

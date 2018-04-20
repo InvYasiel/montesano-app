@@ -11,9 +11,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/spiner.css">
     <link rel="stylesheet" type="text/css" href="css/flex.css">
-
 </head>
-
 <body onload="recogerDatos(), limpiar()">
     <div class="container">
         <br>
@@ -120,7 +118,7 @@
                             <div class="modal-body">
                                 <h1 id='titleC'>Incidencia creada.</h1>
                                 <b id="FechaIncidencia"></b>
-                                <button type="button" class="btn btn-secondary cerrate" id="close" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-secondary cerrate" id="close" data-dismiss="modal">Cerrar</button>
                             </div>
                         </div>
                     </div>
@@ -146,8 +144,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" id='cerrarAdmin' data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" id='borrarAdmin'>Save changes</button>
+                                <button type="button" class="btn btn-secondary" id='cerrarAdmin' data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id='borrarAdmin'>Eliminar</button>
                             </div>
                         </div>
                     </div>
@@ -219,22 +217,20 @@
                                     <div class="row" id='Dform'>
                                         <div class="form-group col-12">
                                             <label for="usuarioElegido">Nombre de persona (*)</label>
-                                            <input type="text" class="form-control" id="usuarioElegido" list="personas">
+                                            <input type="text" class="form-control" id="usuarioElegido" list="personas" required>
                                             <datalist id="personas">
                                             </datalist>
                                         </div>
                                         <div class="col-12">
-                                            <label for="motivoReserva">Motivo de la Reserva</label>
+                                            <label for="motivoReserva">Motivo de la Reserva (*)</label>
                                             <input type="text" class="form-control" id="motivoReserva" placeholder="Motivo...">
                                         </div>
-                                        
+                                   
                                         <div class="col-12">
                                                 <br>
                                             <b>Hora a la que deseas ingresar:</b>
                                             <br>
                                         </div>
-
-
                                         <div class="form-group col-6">
                                             <label for="horaEntrada">Hora de entrada (*)</label>
                                             <input type="time" class="form-control" id="horaEntrada" style="width: 105px;" list="personas" value="00:00" min="08:00" max="21:00" step="900">
@@ -244,8 +240,6 @@
                                             <input type="time" class="form-control" id="horaSalida" style="width: 105px;" list="personas" value="00:00" min="08:00" max="22:00" step="900">
                                         </div>
                                     </div>
-
-
                                     <br>
                                 </div>
                             </div>
@@ -258,7 +252,6 @@
                 </div>
 
                 <!-- Modal confirmar reserva  -->
-
                 <div id="resp"></div>
             </div>
         </div>

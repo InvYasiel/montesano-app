@@ -27,18 +27,20 @@ function recogerSalas() {
             for (let i = 0; i < sala.length; i++) {
                 salas.push(sala[i]);
             }
-            
+
             crearBtns();
         }
     };
     xmlhttp.open("GET", "php/salas.php", true);
-    
+
     xmlhttp.send();
 }
 
 
 //---------------------------------Eliminiar Reserva---------------------------------  
 function eliminarReserva(e) {
+    var da = e.getAttribute('dd');
+    var dd = document.getElementById(da);
     document.getElementById('calendarioModal').style = ' display:none;'
     var denegar = document.getElementById('cerrarAdmin');
     var den = document.getElementById('cerrarAd');
@@ -64,28 +66,27 @@ function eliminarReserva(e) {
                     url: "php/delete.php",
                     data: infoParaEnviar,
                     dataType: "text",
-                    asycn: false,
+                    asycn: true,
                     success: function () {
-                        
+                       
+                        recogerDatos(idSala);
+                        $('#ModalAdmin').modal('hide');
+                        $('#calendarioModal').modal('hide');
+                        $('#mensajeModal').modal();
+                        var titleC = document.getElementById('titleC');
+                        titleC.innerHTML = 'Reserva eliminada correctamente </br>';
                     }
                 });
-                $('#ModalAdmin').modal('hide');
-                $('#calendarioModal').modal('hide');
-                $('#mensajeModal').modal();
-              
-                var titleC = document.getElementById('titleC');
-                titleC.innerHTML = 'Reserva eliminada correctamente </br>';
 
-               
+
                 var close = document.getElementById('close');
-                close.addEventListener('click',function () {
-                    window.location.reload();
-                })
+                close.addEventListener('click', function () {
 
+                    dd.click();
+                }, false)
             } else {
                 alert('Usuario o contraseña incorrectos!')
             }
-
         }
 
     }, false)
