@@ -123,8 +123,8 @@ function search() {
 //---------------------------------CREACIÓN DE LOS ELEMENTOS ---------------------------------  
 function carta(i) {
     var card = document.createElement('div');
-    card.setAttribute('class', 'card text-black border-dark bg-info  mb-3 carta');
-    card.setAttribute('style', 'width: 400px; max-width: 23rem; margin:10px;');
+    card.setAttribute('class', 'card text-white border-dark bg-secondary mb-3');
+    card.setAttribute('style', 'width: 400px; max-width: 23rem; margin:10px;  height:auto ;');
     card.setAttribute('id', 'carta' + i);
     var header = document.createElement('div');
     header.setAttribute('class', 'card-header');
@@ -147,24 +147,40 @@ function carta(i) {
             console.log(exten);
         }
     }
-
-    var lugarDeTrabajo = '<b>Lugar de trabajo: </b>' + registroCC[i].WorkplaceName;
-    var Email = '<b>Email: </b>' + registroCC[i].EmailAddress;
-    var FijoEx = '<b>Fijo:  </b>' + registroCC[i].DirectPhoneNumber + '<b> Extensión de fijo: </b>' + registroCC[i].Extension;
-    var MovilEx = '<b>Móvil: </b>' + registroCC[i].CompanyMobilePhoneNumber + '  <b>Extensión: </b> ' + exten;
-    var NuFax = '<b>Número de Fax: </b>' + registroCC[i].FaxNumber;
-    var Observa = '<b>Observaciones: </b>' + registroCC[i].Observations;
+    var lugarDeTrabajo = '<b>Lugar de trabajo: </b>' + registroCC[i].WorkplaceName+ '</br>';
+    var Email = '<b>Email: </b>' + registroCC[i].EmailAddress+ '</br>';
+    var FijoEx = '<b>Fijo:  </b>' + registroCC[i].DirectPhoneNumber + ' (' + registroCC[i].Extension+')'+ '</br>';
+    var MovilEx = '<b>Móvil: </b>' + registroCC[i].CompanyMobilePhoneNumber + '  <b>Corto: </b> ' + exten+ '</br>';
+    var NuFax = '<b>Número de Fax: </b>' + registroCC[i].FaxNumber+ '</br>';
+    var Observa = '<b>Observaciones: </b>' + registroCC[i].Observations+ '</br>';
     Observa = Observa.replace(ex,'');
     
-
+    if( registroCC[i].WorkplaceName == '' || registroCC[i].WorkplaceName == '0' || registroCC[i].WorkplaceName == null ){
+        lugarDeTrabajo = ''
+    }
+    if( registroCC[i].EmailAddress == '' || registroCC[i].EmailAddress == '0' || registroCC[i].EmailAddress == null ||registroCC[i].EmailAddress == '.' ){
+        Email = ''
+    }
+    if( registroCC[i].DirectPhoneNumber == '' || registroCC[i].DirectPhoneNumber == '0' || registroCC[i].DirectPhoneNumber == null ){
+        FijoEx = ''
+    }
+    if( registroCC[i].CompanyMobilePhoneNumber == '' || registroCC[i].CompanyMobilePhoneNumber == '0' || registroCC[i].CompanyMobilePhoneNumber == null ){
+        MovilEx = ''
+    }
+    if( registroCC[i].FaxNumber == '' || registroCC[i].FaxNumber == '0' || registroCC[i].FaxNumber == null ){
+        NuFax = ''
+    }
+    if( registroCC[i].Observations == '' || registroCC[i].Observations == '0' || registroCC[i].Observations == null ){
+        Observa = ''
+    }
 
 
     var texto = document.createElement('div');
-    header.innerHTML = '<b>Persona</b>'
-    titulo.innerHTML = '<b>' + registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + '</b>'
-    texto.innerHTML = lugarDeTrabajo + '</br>' + Email + '</br>' + FijoEx + '</br>' + MovilEx + '</br>' + NuFax + '</br>' + NuFax + '</br>' + Observa;
+    header.innerHTML = '<b>' + registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + '</b>'
 
-    cardBody.appendChild(titulo);
+    texto.innerHTML = lugarDeTrabajo  + Email + FijoEx + MovilEx + NuFax  + Observa;
+
+    
     cardBody.appendChild(texto);
     card.appendChild(header);
     card.appendChild(cardBody);

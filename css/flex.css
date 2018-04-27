@@ -127,6 +127,10 @@ o {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    width: 75%;
+    overflow-y: scroll;
+    height: 100%;
+    max-height: 550px;
 }
 
 .containerCalendario {
