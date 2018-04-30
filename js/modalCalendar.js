@@ -117,22 +117,43 @@ $("#btn-ingresar").click(function () {
         var v = true;
         for (let i = 0; i < registro.length; i++) {
             if (fechaEntrada > fechaSalida || fechaEntrada == fechaSalida) {
-                alert('Error salida antes de la entrada');
+                swal({
+                    title: "Error!",
+                    text: "Fecha de entrada superior a la de salida",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                  });
                 v = false;
                 break;
             }
             if (new Date(fechaEntrada) >= new Date(registro[i].entrada) && new Date(fechaEntrada) <= new Date(registro[i].salida) && registro[i].sala == idSala) {
-                alert('Error esa hora está ocupada <b>');
+                swal({
+                    title: "Error!",
+                    text: "Reserva con 15 minutos de diferencia!",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                  });
+               
                 v = false;
                 break;
             }
             if (new Date(fechaEntrada) <= new Date(registro[i].entrada) && new Date(fechaSalida) >= new Date(registro[i].entrada) && registro[i].sala == idSala) {
-                alert('Error esa hora está ocupada');
+                swal({
+                    title: "Error!",
+                    text: "Hay horas ocupadas en tu selección",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                  });
                 v = false;
                 break;
             }
             if (new Date(fechaEntrada) <= new Date(registro[i].entrada) && new Date(fechaSalida) >= new Date(registro[i].salida) && registro[i].sala == idSala) {
-                alert('Error esa hora está ocupada');
+                swal({
+                    title: "Error!",
+                    text: "Hora ya ocupada",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                  });
                 v = false;
                 break;
             }
@@ -143,11 +164,22 @@ $("#btn-ingresar").click(function () {
             }
         }
         if (idUsuario == '' || idUsuario == null) {
-            alert('Error hay que seleccionar un usuario');
+            swal({
+                title: "Error!",
+                text: "Seleccionar un usuario",
+                icon: "error",
+                button: "Volver a intentar",
+              });
+            
             v = false;
         }
         if (motivo == '' || motivo == null) {
-            alert('Añada un motivo')
+            swal({
+                title: "Error!",
+                text: "Añada un motivo",
+                icon: "error",
+                button: "Volver a intentar",
+              });
             v = false;
         }
         //---------------------------------POST A LA BASE DE DATOS---------------------------------  
@@ -189,7 +221,13 @@ $("#btn-ingresar").click(function () {
             }, false)
         }
     }else{
-        alert('Seleccione un nombre del desplegable ')
+        swal({
+            title: "Error!",
+            text: "Seleccione un nombre del desplegable",
+            icon: "error",
+            button: "Volver a intentar",
+          });
+        
     }
 });
 function random_rgba() {

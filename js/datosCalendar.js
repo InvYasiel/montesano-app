@@ -109,6 +109,7 @@ function datosCalendar(e) {
             e = document.getElementById("selectedSala").value;
         }
         var auxdia = "";
+        var auxanio = "";
         for (let j = 0; j < registro.length; j++) {
             if (registro[j].sala == e) {
                 var diasplit = registro[j].entrada.substring(10, 8);
@@ -116,6 +117,7 @@ function datosCalendar(e) {
                     texto = "";
                 }
                 var messplit = registro[j].entrada.substring(5, 7);
+                var anioN = registro[j].entrada.substring(0,4);
                 var newDiasSplit = parseInt(diasplit, 10);
                 var newMesSplit = parseInt(messplit, 10);
                 var diaLi = diasplit + ' ' + newMesSplit;
@@ -131,11 +133,19 @@ function datosCalendar(e) {
                 texto += '' + employeeName + ' <br>' + registro[j].entrada.substring(11, 16) + ' - ' + registro[j].salida.substring(11, 16) + '</br>';
                 insertado = true;
                 try {
+                    if(anioN != document.getElementById('anio').value){
+                        texto = '';
+                    }
                     document.getElementById(diaLi).setAttribute('data-original-title', texto);
                 var m = document.getElementById(diaLi).getAttribute('data-original-title');
                 //--------------------------------- INSERTAR COLOR AL CUADRADO DEL CALENDARIO---------------------------------
                 if (m.length > 0) {
-                    document.getElementById(diaLi).style = 'background-color: rgba(199, 31, 31, 0.411)';
+                    if(anioN != document.getElementById('anio').value){
+                        document.getElementById(diaLi).style = 'background-color: none;';
+                    }else{
+                        document.getElementById(diaLi).style = 'background-color: rgba(199, 31, 31, 0.411)';
+                    }
+                    
                    
                 } else {
                     document.getElementById(diaLi).style = 'background-color: none;';
@@ -143,6 +153,7 @@ function datosCalendar(e) {
                 } catch (error) { 
                 }
                 auxdia = registro[j].entrada.substring(10, 8);
+                auxanio = registro[j].entrada.substring(0,4);
             }
 
         }

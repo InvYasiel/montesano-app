@@ -85,7 +85,13 @@ function eliminarReserva(e) {
                     dd.click();
                 }, false)
             } else {
-                alert('Usuario o contraseña incorrectos!')
+                swal({
+                    title: "Error!",
+                    text: "Usuario o contraseña incorrectos",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                  });
+                
             }
         }
 
