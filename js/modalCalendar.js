@@ -1,5 +1,6 @@
 var seleccionado = '';
 function abrirmodal(dia) {
+    
     var horaEntrada = document.getElementById('horaEntrada').value = "00:00";
     var horaSalida = document.getElementById('horaSalida').value = "00:00";
     crearEsquema();
@@ -21,7 +22,7 @@ function abrirmodal(dia) {
     var dd = document.getElementById(fechaEntrada.substring(8, 10) + ' ' + fechaEntrada.substring(6, 7));
     for (let i = 0; i < hh.length; i++) {
         hh[i].style = 'margin: 0; height:8px;width: 200px;position:relative;float:right;'
-      
+
     }
     ss.innerHTML = 'Reservas para ' + year + '-' + mes + '-' + diaSolo;
     //---------------------------------DIBUJAR GRAFICO --------------------------------- 
@@ -49,7 +50,7 @@ function abrirmodal(dia) {
                     hh[t].setAttribute('data-target', '#ModalAdmin');
                     hh[t].setAttribute('onclick', 'eliminarReserva(this)')
                     hh[t].setAttribute('reserva', registro[i].ID);
-                    
+
                 }
                 if (hh[t].id > registro[i].entrada.substring(11, 16) && hh[t].id < registro[i].salida.substring(11, 16)) {
                     hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80%;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
@@ -61,7 +62,7 @@ function abrirmodal(dia) {
                     hh[t].setAttribute('data-target', '#ModalAdmin');
                     hh[t].setAttribute('onclick', 'eliminarReserva(this)')
                     hh[t].setAttribute('reserva', registro[i].ID);
-                    
+
                 }
                 if (hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].entrada.substring(11, 16)) {
                     hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80% ;position:relative;float:right; border-bottom:dashed 1px;cursor:pointer;'
@@ -73,7 +74,7 @@ function abrirmodal(dia) {
                     hh[t].setAttribute('data-target', '#ModalAdmin');
                     hh[t].setAttribute('onclick', 'eliminarReserva(this)')
                     hh[t].setAttribute('reserva', registro[i].ID);
-                    
+
                 }
                 if (hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].salida.substring(11, 16)) {
                     hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80% ;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
@@ -85,7 +86,7 @@ function abrirmodal(dia) {
                     hh[t].setAttribute('data-target', '#ModalAdmin');
                     hh[t].setAttribute('onclick', 'eliminarReserva(this)')
                     hh[t].setAttribute('reserva', registro[i].ID);
-                    
+
                 }
             }
         }
@@ -122,7 +123,7 @@ $("#btn-ingresar").click(function () {
                     text: "Fecha de entrada superior a la de salida",
                     icon: "error",
                     button: "Volver a intentar ",
-                  });
+                });
                 v = false;
                 break;
             }
@@ -132,8 +133,8 @@ $("#btn-ingresar").click(function () {
                     text: "Reserva con 15 minutos de diferencia!",
                     icon: "error",
                     button: "Volver a intentar ",
-                  });
-               
+                });
+
                 v = false;
                 break;
             }
@@ -143,7 +144,7 @@ $("#btn-ingresar").click(function () {
                     text: "Hay horas ocupadas en tu selección",
                     icon: "error",
                     button: "Volver a intentar ",
-                  });
+                });
                 v = false;
                 break;
             }
@@ -153,7 +154,7 @@ $("#btn-ingresar").click(function () {
                     text: "Hora ya ocupada",
                     icon: "error",
                     button: "Volver a intentar ",
-                  });
+                });
                 v = false;
                 break;
             }
@@ -169,8 +170,8 @@ $("#btn-ingresar").click(function () {
                 text: "Seleccionar un usuario",
                 icon: "error",
                 button: "Volver a intentar",
-              });
-            
+            });
+
             v = false;
         }
         if (motivo == '' || motivo == null) {
@@ -179,7 +180,7 @@ $("#btn-ingresar").click(function () {
                 text: "Añada un motivo",
                 icon: "error",
                 button: "Volver a intentar",
-              });
+            });
             v = false;
         }
         //---------------------------------POST A LA BASE DE DATOS---------------------------------  
@@ -203,7 +204,7 @@ $("#btn-ingresar").click(function () {
             });
             var dd = document.getElementById(fechaEntrada.substring(8, 10) + ' ' + fechaEntrada.substring(6, 7));
             $("#calendarioModal").modal("hide");
-            $("#modalreservas").modal();
+            // $("#modalreservas").modal();
             var name = '';
             var fullcode = us;
             var coderight = fullcode.substring(4, 8);
@@ -213,23 +214,34 @@ $("#btn-ingresar").click(function () {
                     name = e.CompleteName;
                 }
             });
-            var mensaje = "Reserva confirmada para <b>" + name + "</b> desde las <b>" + fechaEntrada.substring(11, 16) + "</b> hasta las <b>" + fechaSalida.substring(11, 16) + "</b> del día <b>" + fechaEntrada.substring(8, 10) + '-' + fechaEntrada.substring(5, 7) + "-" + fechaEntrada.substring(0, 4) + "</b>"
-            document.getElementById("reservaInformacion").innerHTML = mensaje;
-            var close = document.getElementById('closeReserva');
-            close.addEventListener('click', function () {
-                dd.click();
-            }, false)
+            var mensaje = "Reserva confirmada para " + name + " desde las " + fechaEntrada.substring(11, 16) + " hasta las " + fechaSalida.substring(11, 16) + " del día " + fechaEntrada.substring(8, 10) + '-' + fechaEntrada.substring(5, 7) + "-" + fechaEntrada.substring(0, 4) + ""
+            // document.getElementById("reservaInformacion").innerHTML = mensaje;
+            // var close = document.getElementById('closeReserva');
+            // close.addEventListener('click', function () {
+            //     dd.click();
+            // }, false)
+            swal({
+                title: "Completado!",
+                text: mensaje,
+                icon: "success",
+                button: "Cerrar",
+              })
+              .then((value) => {
+                swal(dd.click());
+              });
+              
         }
-    }else{
+    } else {
         swal({
             title: "Error!",
             text: "Seleccione un nombre del desplegable",
             icon: "error",
             button: "Volver a intentar",
-          });
-        
+        });
+
     }
 });
+
 function random_rgba() {
     var o = Math.round,
         r = Math.random,

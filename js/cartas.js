@@ -15,7 +15,7 @@ xmlhttp.onreadystatechange = function () {
         }
         var contenedordatalistagenda = document.getElementById("personasagenda");
         var contenedordatalistincidencias = document.getElementById("personasincidencias");
-
+        var contenedordatalistextenciones = document.getElementById('extencion')
         registroCC.forEach(e => {
             var name = e.CompleteName;
 
@@ -24,6 +24,19 @@ xmlhttp.onreadystatechange = function () {
             option.innerText = name;
 
             contenedordatalistagenda.appendChild(option);
+        });
+        registroCC.forEach(e => {
+            var exten = e.Extension;
+            if(exten == "0"){
+
+            }else{
+                var option = document.createElement("option");
+            option.value = exten;
+            option.innerText = exten;
+
+            contenedordatalistextenciones.appendChild(option);
+            }
+            
         });
 
         registroCC.forEach(e => {
@@ -76,14 +89,15 @@ function generarCartas() {
 //---------------------------------FILTRO PARA BUSCAR---------------------------------  
 function search() {
     contAgenda.innerHTML = '';
+    var extencion = document.getElementById('ext').value
     var palabra = buscador.value.toUpperCase();
     var selIndex = document.getElementById("empresas").selectedIndex;
     var selValue = document.getElementById("empresas").options[selIndex].innerHTML;
-    if (palabra == "") {
+    if (palabra == "" && extencion == "") {
         generarCartas();
     } else {
         for (let i = 0; i < registroCC.length; i++) {
-            if (registroCC[i].CompleteName.indexOf(palabra) >= 0) {
+            if (registroCC[i].CompleteName.indexOf(palabra) >= 0 && registroCC[i].Extension.indexOf(extencion) >=0 ) {
                 carta(i);
             } else if (palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1)) {
                 if (selValue == registroCC[i].CompanyName) {
@@ -115,6 +129,8 @@ function search() {
                 } else if (selValue == 'TODAS') {
                     carta(i);
                 }
+            }else if(extencion == registroCC[i].Extension){
+                carta(i);
             }
         }
     }

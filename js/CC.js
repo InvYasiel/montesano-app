@@ -72,18 +72,26 @@ function eliminarReserva(e) {
                         recogerDatos(idSala);
                         $('#ModalAdmin').modal('hide');
                         $('#calendarioModal').modal('hide');
-                        $('#mensajeModal').modal();
-                        var titleC = document.getElementById('titleC');
-                        titleC.innerHTML = 'Reserva eliminada correctamente </br>';
+                        // $('#mensajeModal').modal();
+                        // var titleC = document.getElementById('titleC');
+                        // titleC.innerHTML = 'Reserva eliminada correctamente </br>';
+                        swal({
+                            title: "Reserva Eliminada",
+                            text: 'Reserva eliminada correctamente',
+                            icon: "success",
+                            button: "Cerrar",
+                          })
+                          .then((value) => {
+                            swal(dd.click());
+                          });
                     }
                 });
+                // var close = document.getElementById('close');
+                // close.addEventListener('click', function () {
 
-
-                var close = document.getElementById('close');
-                close.addEventListener('click', function () {
-
-                    dd.click();
-                }, false)
+                //     dd.click();
+                // }, false)
+                
             } else {
                 swal({
                     title: "Error!",
