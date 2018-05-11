@@ -12,6 +12,7 @@ h1 {
 }
 
 #contagenda {
+    margin: 0 auto;
     width: 75%;
     overflow-y: scroll;
     height: 550px;
@@ -29,6 +30,7 @@ h1 {
 }
 
 .seleccion {
+
     text-align: center;
 }
 
@@ -107,14 +109,15 @@ o {
 }
 
 .btn-salas {
+    width: 150px;
     margin-right: 10px;
     margin: 10px;
+    
 }
 
 .hora {
     width: 100%;
     height: 33px;
-    
     border-bottom: solid 0.5px black;
 }
 
@@ -150,11 +153,13 @@ o {
 }
 
 #buscador {
+    margin: 10px;
     width: 200px;
     height: 40px;
 }
 
 #seleccion {
+    margin: 10px;
     width: 350px;
 }
 
@@ -178,6 +183,7 @@ o {
 
 #ext {
     /* display: flex; */
+    margin:10px;
     width: 100px;
     height: 40px;
 }
@@ -214,9 +220,12 @@ o {
     flex-direction: column;
     display: flex;
     margin:10px;
+    margin-right: 100px;
+    
+    
 }
 #titleCC{
-    width: 100%;
+    width: 110%;
     text-align: left!important;
 }
 #containerReservas{

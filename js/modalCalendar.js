@@ -21,7 +21,7 @@ function abrirmodal(dia) {
     var fechaSalida = seleccionado + ' ' + horaSalida + ':00';
     var dd = document.getElementById(fechaEntrada.substring(8, 10) + ' ' + fechaEntrada.substring(6, 7));
     for (let i = 0; i < hh.length; i++) {
-        hh[i].style = 'margin: 0; height:8px;width: 200px;position:relative;float:right;'
+        hh[i].style.cssText = 'margin: 0; height:8px;width: 200px;position:relative;float:right;'
 
     }
     ss.innerHTML = 'Reservas para ' + year + '-' + mes + '-' + diaSolo;
@@ -34,14 +34,14 @@ function abrirmodal(dia) {
             var codeleft = registro[i].Usuario.substring(0, 4);
             var employeecode = "00" + coderight;
             var employeeName = "";
-            registroCC.forEach(e => {
+            registroCC.forEach(function(e) {
                 if (e.EmployeeCode == employeecode && e.CompanyCode == codeleft) {
                     employeeName = e.Name;
                 }
             });
             for (let t = 0; t < hh.length; t++) {
                 if (hh[t].id == registro[i].entrada.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80%;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
+                    hh[t].style.cssText = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80%;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
                     hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('dd', dd.id);
                     hh[t].setAttribute('data-html', "true");
@@ -53,7 +53,7 @@ function abrirmodal(dia) {
 
                 }
                 if (hh[t].id > registro[i].entrada.substring(11, 16) && hh[t].id < registro[i].salida.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80%;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
+                    hh[t].style.cssText = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80%;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
                     hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('dd', dd.id);
@@ -65,7 +65,7 @@ function abrirmodal(dia) {
 
                 }
                 if (hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].entrada.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80% ;position:relative;float:right; border-bottom:dashed 1px;cursor:pointer;'
+                    hh[t].style.cssText = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80% ;position:relative;float:right; border-bottom:dashed 1px;cursor:pointer;'
                     hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('dd', dd.id);
@@ -77,7 +77,7 @@ function abrirmodal(dia) {
 
                 }
                 if (hh[t].id < registro[i].entrada.substring(11, 16) && hh[t].id > registro[i].salida.substring(11, 16)) {
-                    hh[t].style = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80% ;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
+                    hh[t].style.cssText = 'background-color:' + randomrgba + ';margin: 0; height:8px;width:80% ;position:relative;float:right;border-bottom:dashed 1px;cursor:pointer;'
                     hh[t].setAttribute('data-toggle', "modal");
                     hh[t].setAttribute('data-html', "true");
                     hh[t].setAttribute('dd', dd.id);
@@ -209,7 +209,7 @@ $("#btn-ingresar").click(function () {
             var fullcode = us;
             var coderight = fullcode.substring(4, 8);
             var employeecode = "00" + coderight;
-            registroCC.forEach(e => {
+            registroCC.forEach(function(e) {
                 if (e.EmployeeCode == employeecode && e.CompanyCode == fullcode.substring(0, 4)) {
                     name = e.CompleteName;
                 }
@@ -226,7 +226,7 @@ $("#btn-ingresar").click(function () {
                 icon: "success",
                 button: "Cerrar",
               })
-              .then((value) => {
+              .then(function(value) {
                 swal(dd.click());
               });
               

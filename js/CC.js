@@ -41,15 +41,15 @@ function recogerSalas() {
 function eliminarReserva(e) {
     var da = e.getAttribute('dd');
     var dd = document.getElementById(da);
-    document.getElementById('calendarioModal').style = ' display:none;'
+    document.getElementById('calendarioModal').style.cssText = ' display:none;'
     var denegar = document.getElementById('cerrarAdmin');
     var den = document.getElementById('cerrarAd');
     var rr = e.getAttribute('reserva');
     denegar.addEventListener('click', function () {
-        document.getElementById('calendarioModal').style = ' display:initial;'
+        document.getElementById('calendarioModal').style.cssText = ' display:initial;'
     }, false)
     den.addEventListener('click', function () {
-        document.getElementById('calendarioModal').style = ' display:initial;'
+        document.getElementById('calendarioModal').style.cssText = ' display:initial;'
     }, false)
     var idSala = document.getElementById('selectedSala').value;
     var aceptar = document.getElementById('borrarAdmin');
@@ -81,7 +81,7 @@ function eliminarReserva(e) {
                             icon: "success",
                             button: "Cerrar",
                           })
-                          .then((value) => {
+                          .then(function(value) {
                             swal(dd.click());
                           });
                     }

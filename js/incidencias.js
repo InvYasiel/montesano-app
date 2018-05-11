@@ -3,7 +3,7 @@ let nombre = document.getElementById("incidenciasNombre");
 let incidenCheck = document.getElementById("incidenCheck");
 let titulo = document.getElementById("incidenciasTitulo");
 let descripcion = document.getElementById("incidenciasDescripcion").value;
-
+var tname = true;
 let spiner = document.getElementById('spiner');
 let chooser = document.getElementById('chooser');
 let archivo = document.getElementById('archivo');
@@ -23,7 +23,12 @@ var usuario2 = "59a68c4e314350c790512ae9";
 function comprobarCampos() {
     let res = true;
     if (nombre.value == "" || titulo.value == "") {
-        alert('Rellena los campos obligatorios (*)')
+        swal({
+            title: "Error!",
+            text: "Rellena los campos obligatorios (*)",
+            icon: "error",
+            button: "Volver a intentar",
+        });
         res = false;
     }
     return res;
@@ -52,47 +57,63 @@ function getBrowserInfo() {
 
 ///--------------------CREAR INCIDENDIA--------------------
 function incidenciasCrear() {
-    //--------------------OBTENER SO--------------------
-    var OSName = "Desconocido";
-    if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
-    if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
-    //--------------------OTENER FECHA ACTUAL--------------------
-    var fecha = new Date();
-    var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
-    var hora = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-    var FechaIncidencia = document.getElementById('FechaIncidencia');
-    FechaIncidencia.innerHTML = 'La creación ' + fechaTrello + ' ' + hora + ' Se aejecutado correctamente';
+    for (let t = 0; t < registroCC.length; t++) {
+        if (registroCC[t].CompleteName == nombre.value) {
 
-    //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
-    var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
-    if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
-        let descripcion = document.getElementById("incidenciasDescripcion").value;
-        var desc = descripcion + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
-        crearCarta(desc, OSName, fechaTrello, hora);
-    } else { ///--------------------DEMAS NAVEGADORES--------------------
-        //--------------------OBTENER IP--------------------
-        window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
-        var pc = new RTCPeerConnection({
-                iceServers: []
-            }),
-            noop = function () {};
-        pc.createDataChannel('');
-        pc.createOffer(pc.setLocalDescription.bind(pc), noop);
-        pc.onicecandidate = function (ice) {
-            if (comprobarCampos()) {
-                if (ice && ice.candidate && ice.candidate.candidate) {
-                    var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
-                   
-                    pc.onicecandidate = noop;
-                }
-                //--------------------VALORES DE LA DESCRIPCIÓN--------------------
-                let descripcion = document.getElementById("incidenciasDescripcion").value;
-                var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
-                ///--------------------LLAMADA A CREAR CARTA--------------------
-                crearCarta(desc, myIP, OSName, fechaTrello, hora);
-            }
+            var tname = false
         }
     }
+    if (tname == false) {
+        var OSName = "Desconocido";
+        if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
+        if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
+        //--------------------OTENER FECHA ACTUAL--------------------
+        var fecha = new Date();
+        var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
+        var hora = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+        var FechaIncidencia = document.getElementById('FechaIncidencia');
+        FechaIncidencia.innerHTML = 'La creación ' + fechaTrello + ' ' + hora + ' Se ha ejecutado correctamente';
+
+        //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
+        var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
+        if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
+            let descripcion = document.getElementById("incidenciasDescripcion").value;
+            var desc = descripcion + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
+            crearCarta(desc, OSName, fechaTrello, hora);
+        } else { ///--------------------DEMAS NAVEGADORES--------------------
+            //--------------------OBTENER IP--------------------
+            window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
+            var pc = new RTCPeerConnection({
+                    iceServers: []
+                }),
+                noop = function () {};
+            pc.createDataChannel('');
+            pc.createOffer(pc.setLocalDescription.bind(pc), noop);
+            pc.onicecandidate = function (ice) {
+                if (comprobarCampos()) {
+                    if (ice && ice.candidate && ice.candidate.candidate) {
+                        var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
+
+                        pc.onicecandidate = noop;
+                    }
+                    //--------------------VALORES DE LA DESCRIPCIÓN--------------------
+                    let descripcion = document.getElementById("incidenciasDescripcion").value;
+                    var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
+                    ///--------------------LLAMADA A CREAR CARTA--------------------
+                    crearCarta(desc, myIP, OSName, fechaTrello, hora);
+                }
+            }
+        }
+    } else {
+        swal({
+            title: "Error!",
+            text: "Seleccione un nombre del desplegable",
+            icon: "error",
+            button: "Volver a intentar",
+        });
+    }
+    //--------------------OBTENER SO--------------------
+
 }
 ///--------------------CREAR CARTA--------------------
 function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
@@ -105,16 +126,16 @@ function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
     xhr.send(data);
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-            
+
             var dt = this.responseText;
             h = JSON.parse(dt).id;
-            spiner.style = 'display:block';
+            spiner.style.cssText = 'display:block';
             //------------LLAMADA A FUNCIONES PARA RELLENAR LA CARTA -------------
             selecLabel(h);
             if (archivos.length > 0) {
-                adjuntos(h);
+                adjuntos(h, name);
             }
-            // usuarioPredefinido(h);
+            usuarioPredefinido(h, name);
         }
     });
 }
@@ -123,9 +144,9 @@ var importante = document.getElementById('incidenciasCheck');
 var dpImportante = document.getElementById('dpImportante');
 importante.addEventListener('click', function () {
     if (importante.checked == true) {
-        dpImportante.style = 'display:true';
+        dpImportante.style.cssText = 'display:true';
     } else {
-        dpImportante.style = 'display:none';
+        dpImportante.style.cssText = 'display:none';
     }
 }, false)
 ///--------------------CREAR LABEL IMPORTANTE--------------------
@@ -138,7 +159,7 @@ function selecLabel(data) {
     }
 }
 ///--------------------CREAR Y ENVIAR LOS ARCHIVOS ADJUNTOS--------------------
-function adjuntos(data) {
+function adjuntos(data, name) {
     var arrData = [];
     var formData = new FormData();
     formData.append("token", token);
@@ -159,12 +180,16 @@ function adjuntos(data) {
                     }
                 }
                 if (finalizado == true) {
-                    spiner.style = 'display:none';
-                    $("#mensajeModal").modal();
-                    var close = document.getElementById('close');
-                    close.addEventListener('click', function () {
-                        location.reload();
-                    }, false)
+                    spiner.style.cssText = 'display:none';
+                    swal({
+                            title: "Completado!",
+                            text: 'Incidencia ' + name,
+                            icon: "success",
+                            button: "Cerrar",
+                        })
+                        .then(function(value) {
+                            swal(location.reload());
+                        });
                 }
             }
         });
@@ -180,7 +205,7 @@ function eliminar(e) {
 }
 
 ///--------------------CREAR LOS USUARIOS PREDEFINIDOS--------------------
-function usuarioPredefinido(data) {
+function usuarioPredefinido(data, name) {
     var arrRQ = [];
     var datas = null;
     var usuRQ1 = new XMLHttpRequest();
@@ -200,12 +225,36 @@ function usuarioPredefinido(data) {
                 }
             }
             if (finalizado == true && archivos.length == 0) {
-                spiner.style = 'display:none';
-                $("#mensajeModal").modal();
-                var close = document.getElementById('close');
-                close.addEventListener('click', function () {
-                    location.reload();
-                }, false)
+                // for (let d = 0; d < registroCC.length; d++) {
+                //     if(registroCC[d].CompleteName == nombre.value){
+                //         var email = registroCC[d].EmailAddress
+                //     }
+                // }
+                // var infoParaEnviar = {
+                //     text: 'Incidencia ' + name,
+                //     correo: email
+                // };
+                // $.ajax({
+                //     type: "POST",
+                //     url: "php/correo.php",
+                //     data: infoParaEnviar,
+                //     dataType: "text",
+                //     asycn: false,
+                //     success: function () {
+                        spiner.style.cssText = 'display:none';
+                        swal({
+                                title: "Completado!",
+                                text: 'Incidencia ' + name,
+                                icon: "success",
+                                button: "Cerrar",
+                            })
+                            .then(function(value){
+                                swal(location.reload());
+                            });
+                    // }
+                // });
+
+
             }
         }
     });
@@ -220,10 +269,15 @@ function cambio(e) {
     var fileSize = chooser.files[0].size;
     var siezekiloByte = parseInt(fileSize / 1024);
     if (siezekiloByte > chooser.getAttribute('size')) {
-        alert("Imagen muy grande");
+        swal({
+            title: "Error!",
+            text: "Imagen muy grande",
+            icon: "error",
+            button: "Volver a intentar",
+        });
         return false;
     } else {
-        
+
         chooser.files[0];
 
         var path = document.getElementById("" + e).value;
@@ -246,8 +300,13 @@ function cambio(e) {
                 info.innerHTML += '<b> | ' + path + '  <i class="fas fa-trash" id="papelera ' + cont + '" style="color:red" onclick="eliminar(id)"></i><b>';
                 cont++;
             } else {
+                swal({
+                    title: "Error!",
+                    text: "No puedes agregar otro archivo con el mismo nombre",
+                    icon: "error",
+                    button: "Volver a intentar",
+                });
 
-                alert('No puedes agregar otro archivo con el mismo nombre');
             }
         }
     }

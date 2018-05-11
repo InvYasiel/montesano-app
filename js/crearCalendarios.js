@@ -1,3 +1,29 @@
+var exTMovil = []
+
+function recogerExt() {
+    
+    if (window.XMLHttpRequest) {
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var datos = JSON.parse(this.responseText);
+
+            for (let i = 0; i < datos.length; i++) {
+                registroCC.push(datos[i]);
+                exTMovil.push(datos[i].extMovil);
+            }
+        }
+    };
+    xmlhttp.open("GET", "php/extensiones.php", true);
+    xmlhttp.send();
+}
+function limpiar() {
+    pill.style.cssText = 'display:none;'
+}
+
 var registro = [];
 //---------------------------------Llamada a reservas.php---------------------------------  
 function recogerDatos(idSala) {
@@ -28,7 +54,13 @@ var ContReservas = document.getElementById('containerReservas');
 //----Crea Botones según el numero de salas----
 function crearBtns() {
     var Arbtn = document.getElementsByClassName('salas');
-    const unique = [...new Set(registro.map(item => item.sala))];
+    var unique =[];
+    for (let i = 0; i < registro.length; i++) {
+        const element = registro[i].sala;
+        unique.push(element);
+        
+    }
+    // const unique = [...new Set(registro.map(item => item.sala))];
     var contenedorbotones = document.getElementById("contendorbotones");
     for (let i = 1; i <= salas.length; i++) {
         
@@ -627,13 +659,16 @@ function crearEsquema() {
         contenedordatalist.removeChild(contenedordatalist.firstChild);
     }
 
-    registroCC.forEach(e => {
+    registroCC.forEach(function(e) {
+        if(e.CompleteName != undefined){
         var name = e.CompleteName;
         var codigocompleto = e.CompanyCode + e.EmployeeCode.substring(2)
         var option = document.createElement("option");
         option.value = name;
-        option.innerText = name;
-
+        option.innerText = name; 
         contenedordatalist.appendChild(option);
+        }else{
+        
+        }
     });
 }

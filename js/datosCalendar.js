@@ -2,10 +2,14 @@ var texto = "";
 //--------------------------------- CREAR CALENDARIO --------------------------------- 
 function datosCalendar(e) {
     var days = document.querySelectorAll(".day");
-    days.forEach(element => {
-        element.style = 'background-color: none;';
-        element.setAttribute('data-original-title', '')
-    });
+    // days.forEach(function(element){
+    //     element.style = 'background-color: none;';
+    //     element.setAttribute('data-original-title', '')
+    // });
+    for (let i = 0; i < days.length; i++) {
+        days[i].style.cssText = 'background-color: none;';
+        days[i].setAttribute('data-original-title', '');
+    }
     var insertado = false;
     var n;
     if (e == "+1" || e == "-1") {
@@ -123,8 +127,10 @@ function datosCalendar(e) {
                 var codeleft = registro[j].Usuario.substring(0, 4);
                 var employeecode = "00" + coderight;
                 var employeeName = "";
-                registroCC.forEach(e => {
-                    if (e.EmployeeCode == employeecode && e.CompanyCode == codeleft) {
+                registroCC.forEach(function(e) {
+                    if (e.EmployeeCode == undefined) {
+
+                    } else if (e.EmployeeCode == employeecode && e.CompanyCode == codeleft) {
                         employeeName = e.Name;
                     }
                 });
@@ -136,14 +142,15 @@ function datosCalendar(e) {
                     }
                     document.getElementById(diaLi).setAttribute('data-original-title', texto);
                     var t = document.getElementsByClassName('day');
-                    
+
                     //--------------------------------- INSERTAR COLOR AL CUADRADO DEL CALENDARIO---------------------------------
 
                     if (anioN != document.getElementById('anio').value) {
-                        document.getElementById(diaLi).style = 'background-color: none;';
+                        document.getElementById(diaLi).style.cssText = 'background-color: none;';
                         document.getElementById(diaLi).setAttribute('data-original-title', '');
                     } else {
-                        document.getElementById(diaLi).style = 'background-color: rgba(199, 31, 31, 0.411)';
+                        // diaLi.setAttribute('style','background-color: rgba(199, 31, 31, 0.411)')
+                        document.getElementById(diaLi).style.cssText = 'background-color: rgba(199, 31, 31, 0.411)';
 
                     }
                 } catch (error) {}
