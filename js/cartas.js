@@ -31,7 +31,7 @@ xmlhttp.onreadystatechange = function () {
         var contenedordatalistincidencias = document.getElementById("personasincidencias");
         var contenedordatalistextenciones = document.getElementById('extencion');
 
-        registroCC.forEach(function(e) {
+        registroCC.forEach(function (e) {
             var name = e.CompleteName;
             if (e.CompleteName == undefined) {
                 var name = e.Name;
@@ -42,7 +42,7 @@ xmlhttp.onreadystatechange = function () {
 
             contenedordatalistagenda.appendChild(option);
         });
-        registroCC.forEach(function(e) {
+        registroCC.forEach(function (e) {
             var exten = e.Extension;
             if (exten == "0") {
 
@@ -70,7 +70,7 @@ xmlhttp.onreadystatechange = function () {
         }
 
 
-        registroCC.forEach(function(e) {
+        registroCC.forEach(function (e) {
             var name = e.CompleteName;
 
             var option = document.createElement("option");
@@ -82,7 +82,7 @@ xmlhttp.onreadystatechange = function () {
 
         var filteredEmpresas = [];
 
-        registroCC.forEach(function(element) {
+        registroCC.forEach(function (element) {
             if (filteredEmpresas.indexOf(element.CompanyName) == -1) {
                 filteredEmpresas.push(element.CompanyName);
             }
@@ -90,7 +90,7 @@ xmlhttp.onreadystatechange = function () {
 
         var conentedorempresas = document.getElementById('empresas');
 
-        filteredEmpresas.forEach(function(e) {
+        filteredEmpresas.forEach(function (e) {
             var option = document.createElement("option");
             option.value = e;
             option.innerText = e;
@@ -121,12 +121,13 @@ function generarCartas() {
 
 //---------------------------------FILTRO PARA BUSCAR---------------------------------  
 function search() {
-
+    var vv = true;
     contAgenda.innerHTML = '';
     var extencion = document.getElementById('ext').value
     var palabra = buscador.value.toUpperCase();
     var selIndex = document.getElementById("empresas").selectedIndex;
     var selValue = document.getElementById("empresas").options[selIndex].innerHTML;
+
     if (palabra == "" && extencion == "") {
         generarCartas();
     } else {
@@ -152,39 +153,25 @@ function search() {
                     carta(i);
                 }
 
-            } else if (registroCC[i].CompleteName.indexOf(palabra) >= 0 && registroCC[i].Extension.indexOf(extencion) >= 0) {
+            }
+            
+            var splitPalabra = palabra.split(' ');
+            for (let t = 0; t < splitPalabra.length; t++) {
+                if (registroCC[i].Observations != undefined) {
+                    registroCC[i].CompleteName.indexOf(splitPalabra[t])
+                    if (registroCC[i].CompleteName.indexOf(splitPalabra[t]) == -1) {
+                        vv = false;
+                        break;
+                    }else{
+                        vv = true;
+                    }
+                }
+
+            }
+            if (extencion == registroCC[i].Extension || exten.indexOf(extencion) >= 0 && extencion != '') {
                 carta(i);
-            } else if (palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1)) {
-                if (selValue == registroCC[i].CompanyName) {
-                    carta(i);
-                } else if (selValue == 'TODAS') {
-                    carta(i);
-                }
-            } else if (palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName2)) {
-                if (selValue == registroCC[i].CompanyName) {
-                    carta(i);
-                } else if (selValue == 'TODAS') {
-                    carta(i);
-                }
-            } else if (palabra == (registroCC[i].SecondName1 + ' ' + registroCC[i].Name)) {
-                if (selValue == registroCC[i].CompanyName) {
-                    carta(i);
-                } else if (selValue == 'TODAS') {
-                    carta(i);
-                }
-            } else if (palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2)) {
-                if (selValue == registroCC[i].CompanyName) {
-                    carta(i);
-                } else if (selValue == 'TODAS') {
-                    carta(i);
-                }
-            } else if (palabra == (registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + ' ' + registroCC[i].Name)) {
-                if (selValue == registroCC[i].CompanyName) {
-                    carta(i);
-                } else if (selValue == 'TODAS') {
-                    carta(i);
-                }
-            } else if (extencion == registroCC[i].Extension || exten.indexOf(extencion) >= 0 && extencion != '') {
+                vv = false;
+            } else if (vv && extencion == '') {
                 carta(i);
             }
         }
@@ -196,7 +183,7 @@ function search() {
 function carta(i) {
     var card = document.createElement('div');
     card.setAttribute('class', 'card text-white border-dark bg-secondary mb-3');
-    card.setAttribute('style', 'width: 400px; max-width: 23rem; margin:10px;  height:auto ;');
+    card.setAttribute('style', 'width: 300px; max-width: 23rem; margin:5px;  height:auto ;');
     card.setAttribute('id', 'carta' + i);
     var header = document.createElement('div');
     header.setAttribute('class', 'card-header');
@@ -276,7 +263,7 @@ function carta(i) {
         if (registroCC[i].FaxNumber == '' || registroCC[i].FaxNumber == '0' || registroCC[i].FaxNumber == null) {
             NuFax = ''
         }
-        if (registroCC[i].Observations == '' || registroCC[i].Observations == '0' || registroCC[i].Observations == null) {
+        if (Observa.indexOf('<b>Observaciones: </b>') >= 0 || registroCC[i].Observations == '' || registroCC[i].Observations == '0' || registroCC[i].Observations == null) {
             Observa = ''
         }
 
