@@ -146,6 +146,8 @@ o {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+    top: -25px !important;
+
 }
 
 #contenidoCarta {
@@ -153,13 +155,13 @@ o {
 }
 
 #buscador {
-    margin: 10px;
+    
     width: 200px;
     height: 40px;
 }
 
 #seleccion {
-    margin: 10px;
+    
     width: 350px;
 }
 
@@ -174,7 +176,16 @@ o {
     margin: 20px;
     width: 45%;
 }
-
+#cor{
+    position: absolute;
+    right: 2px;
+    cursor:pointer;
+    
+}
+#email{
+    text-decoration:none;
+    color:rgba(214, 55, 55, 0.918);
+}
 .display-4 {
     font-size: 2.5rem;
     font-weight: 300;
@@ -183,7 +194,7 @@ o {
 
 #ext {
     /* display: flex; */
-    margin:10px;
+    
     width: 100px;
     height: 40px;
 }
@@ -211,6 +222,13 @@ o {
 }
 #actual{
     width: 100%;
+}
+#nombreabuscar{
+    width: 200px;
+
+}
+#extensiones{
+    width: 50px;
 }
 #Dform{
     width: 300px;

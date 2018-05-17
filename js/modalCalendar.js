@@ -117,41 +117,87 @@ $("#btn-ingresar").click(function () {
         var us = ''
         var v = true;
         for (let i = 0; i < registro.length; i++) {
-            if (fechaEntrada > fechaSalida || fechaEntrada == fechaSalida) {
+            if(parseInt(horaEntrada.substring(0,2))<08 || parseInt(horaEntrada.substring(0,2)) >21 ){
                 swal({
                     title: "Error!",
-                    text: "Fecha de entrada superior a la de salida",
+                    text: "La fecha de entrada seleccionada esta fuera de horario",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                });
+                v = false;
+                break;
+            } 
+            if(parseInt(horaSalida.substring(0,2))<08 || parseInt(horaSalida.substring(0,2)) >22 ){
+                swal({
+                    title: "Error!",
+                    text: "La fecha de salida seleccionada esta fuera de horario",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                });
+                v = false;
+                break;
+            } 
+            
+            if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) == new Date(registro[i].salida) && registro[i].sala == idSala) {
+                v = true;
+                break;
+            }
+            if (new Date(fechaEntrada) == new Date(registro[i].salida) && new Date(fechaSalida) > new Date(registro[i].salida) && registro[i].sala == idSala) {
+                v = true;
+                break;
+            }
+            if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) > new Date(registro[i].entrada) && registro[i].sala == idSala) {
+                swal({
+                    title: "Error!",
+                    text: "Intervalo de fechas ocupado",
                     icon: "error",
                     button: "Volver a intentar ",
                 });
                 v = false;
                 break;
             }
-            if (new Date(fechaEntrada) >= new Date(registro[i].entrada) && new Date(fechaEntrada) <= new Date(registro[i].salida) && registro[i].sala == idSala) {
+            if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) > new Date(registro[i].salida) && registro[i].sala == idSala) {
                 swal({
                     title: "Error!",
-                    text: "Reserva con 15 minutos de diferencia!",
-                    icon: "error",
-                    button: "Volver a intentar ",
-                });
-
-                v = false;
-                break;
-            }
-            if (new Date(fechaEntrada) <= new Date(registro[i].entrada) && new Date(fechaSalida) >= new Date(registro[i].entrada) && registro[i].sala == idSala) {
-                swal({
-                    title: "Error!",
-                    text: "Hay horas ocupadas en tu selección",
+                    text: "Intervalo de fechas ocupado",
                     icon: "error",
                     button: "Volver a intentar ",
                 });
                 v = false;
                 break;
             }
-            if (new Date(fechaEntrada) <= new Date(registro[i].entrada) && new Date(fechaSalida) >= new Date(registro[i].salida) && registro[i].sala == idSala) {
+            if (new Date(fechaEntrada) > new Date(registro[i].entrada) && new Date(fechaEntrada) < new Date(registro[i].salida) && new Date(fechaSalida) > new Date(registro[i].salida) && registro[i].sala == idSala) {
                 swal({
                     title: "Error!",
-                    text: "Hora ya ocupada",
+                    text: "Intervalo de fechas ocupado",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                });
+                v = false;
+                break;
+            }
+            if (new Date(fechaEntrada) >= new Date(registro[i].entrada) && new Date(fechaSalida) <= new Date(registro[i].salida) && registro[i].sala == idSala) {
+                swal({
+                    title: "Error!",
+                    text: "Intervalo de fechas ocupado",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                });
+                v = false;
+                break;
+            }if (new Date(fechaEntrada) == new Date(registro[i].entrada) && new Date(fechaSalida) < new Date(registro[i].salida) && registro[i].sala == idSala) {
+                swal({
+                    title: "Error!",
+                    text: "Intervalo de fechas ocupado",
+                    icon: "error",
+                    button: "Volver a intentar ",
+                });
+                v = false;
+                break;
+            }if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) == new Date(registro[i].salida) && registro[i].sala == idSala) {
+                swal({
+                    title: "Error!",
+                    text: "Intervalo de fechas ocupado",
                     icon: "error",
                     button: "Volver a intentar ",
                 });

@@ -46,10 +46,10 @@ function eliminarReserva(e) {
     var den = document.getElementById('cerrarAd');
     var rr = e.getAttribute('reserva');
     denegar.addEventListener('click', function () {
-        document.getElementById('calendarioModal').style.cssText = ' display:initial;'
+        document.getElementById('calendarioModal').style.cssText = ' display:block;'
     }, false)
     den.addEventListener('click', function () {
-        document.getElementById('calendarioModal').style.cssText = ' display:initial;'
+        document.getElementById('calendarioModal').style.cssText = ' display:block;'
     }, false)
     var idSala = document.getElementById('selectedSala').value;
     var aceptar = document.getElementById('borrarAdmin');

@@ -59,7 +59,6 @@ function getBrowserInfo() {
 function incidenciasCrear() {
     for (let t = 0; t < registroCC.length; t++) {
         if (registroCC[t].CompleteName == nombre.value) {
-
             var tname = false
         }
     }
@@ -126,7 +125,6 @@ function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
     xhr.send(data);
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
-
             var dt = this.responseText;
             h = JSON.parse(dt).id;
             spiner.style.cssText = 'display:block';
@@ -280,13 +278,13 @@ function cambio(e) {
 
         chooser.files[0];
 
-        var path = document.getElementById("" + e).value;
+        var path = document.getElementById("" + e).files[0].name;
         rutas.push(path)
         var archivoCorrecto = true;
         if (archivos.length == 0) {
             archivos.push(chooser.files[0]);
             var info = document.getElementById('infofile');
-            info.innerHTML += '<b> | ' + path + '  <i class="fas fa-trash" id="papelera ' + cont + '" style="color:red" onclick="eliminar(id)"></i><b>';
+            info.innerHTML += '<b> ' + path + '  <i class="fas fa-trash" id="papelera ' + cont + '" style="color:red" onclick="eliminar(id)"></i><b>';
             cont++;
         } else if (archivos.length > 0) {
             for (let i = 0; i < archivos.length; i++) {
