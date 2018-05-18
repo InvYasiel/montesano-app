@@ -164,7 +164,19 @@ o {
     
     width: 350px;
 }
-
+#contpp{
+    display: flex;
+    margin-left: 10px;
+    flex-wrap: wrap;
+    justify-content: end;
+}
+#cabesera{
+    display: flex;
+}
+#info{
+  margin-right:5px ;
+  font-size: 0.8em;
+}
 #btnJuntas {
     cursor: pointer;
     margin: 20px;
@@ -176,11 +188,9 @@ o {
     margin: 20px;
     width: 45%;
 }
-#cor{
-    position: absolute;
-    right: 2px;
-    cursor:pointer;
+#cor {
     
+    font-size: 1.1em;
 }
 #email{
     text-decoration:none;

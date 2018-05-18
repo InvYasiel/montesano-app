@@ -271,6 +271,7 @@ function carta(i) {
     card.setAttribute('id', 'carta' + i);
     var header = document.createElement('div');
     header.setAttribute('class', 'card-header');
+    header.setAttribute('id','cabesera')
     var cardBody = document.createElement('div');
     cardBody.setAttribute('class', 'card-body');
     cardBody.setAttribute('id', 'contenidoCarta');
@@ -281,7 +282,7 @@ function carta(i) {
         var exFijo = '(' + registroCC[i].Extension + ') ';
         var exFijo2 = '(' + registroCC[i].Extension2 + ') ';
         var exVozIP = '(IP:' + registroCC[i].extVozIP + ') ';
-        var exMovil = registroCC[i].extMovil;
+        var exMovil = '('+registroCC[i].extMovil+')';
         var email =  '<i class="far fa-envelope" style="font-size:20px" > </i> <a  href=mailto:'+ registroCC[i].Email+'>&nbsp;'+registroCC[i].Email+'</a></br>'  ;
         var nFijo = registroCC[i].NumeroFijo;
         var nMovil = registroCC[i].NumeroMovil;
@@ -313,7 +314,7 @@ function carta(i) {
         if (centro != '') {
             centro = '<b>Centro: ' + registroCC[i].Centro + '</b></br>';
         }
-        header.innerHTML = '<b>' + registroCC[i].Name + '</b>';
+        header.innerHTML = '<b style="width:82%" >' + registroCC[i].Name + '</b>';
         if (registroCC[i].Extension == '0' || registroCC[i].Extension == null || registroCC[i].Extension == '0' || registroCC[i].Extension == undefined) {
             var texto = document.createElement('div');
             texto.innerHTML = registroCC[i].CompanyName + '</br>' + centro;
@@ -335,49 +336,69 @@ function carta(i) {
         for (let i = 0; i < emailsRRHH.length; i++) {
             t += emailsInfo[i].direccion+','
         }
+        var contpp = document.createElement('div');
+        contpp.setAttribute('id','contpp')
+        var info = document.createElement('div');
+        info.setAttribute('id','info');
+        info.innerHTML = '<i title="BD Informatica" class="fas fa-info-circle"></i>'
+
         var sendEmail = document.createElement('a');
         
-        sendEmail.innerHTML = ' <i id="cor" class="fas fa-user-edit"></i>';
+        sendEmail.innerHTML = '<i id="cor" title="Sugerir corrección" class="fas fa-user-edit"></i>';
         sendEmail.setAttribute('id','email');
-        sendEmail.setAttribute('href', 'mailto:' + t + '?Subject=Correción%20en%20la%20agenda:%20'+registroCC[i].Name+'&body=Sugerencia%20de:%20');
-        header.appendChild(sendEmail);
+
+        
+        sendEmail.setAttribute('href', 'mailto:' + t + '?Subject=Sugerir correción%20en%20la%20agenda:%20'+registroCC[i].Name+'&body=Nombre: '+registroCC[i].Name+'%0D%0ALugar de trabajo: '+registroCC[i].CompanyName+' ('+registroCC[i].Centro+') '+' %0D%0AEmail: '+registroCC[i].Email+'%0D%0AFijo: '+registroCC[i].NumeroFijo+'%0D%0AExtensiones fijo: ('+registroCC[i].Extension+') (' + registroCC[i].Extension2 + ') '+'%0D%0AMovil: '+registroCC[i].NumeroMovil+'%0D%0AExtensión Movil: '+registroCC[i].extMovil);
+        contpp.appendChild(info);
+        contpp.appendChild(sendEmail);
+        header.appendChild(contpp)
     } else {
 
+        
+        var noMostrar = registroCC[i].Observations.indexOf('#NOMOSTRAR#') >= 0;
+        if(noMostrar){
+            return;
+        }
         var exten = '';
         var extip = '';
         var sufijo = '';
         var extnFijo = '';
+        var extFijo1 = ' ('+ registroCC[i].Extension+') ';
+        if(registroCC[i].Extension == '0'){
+            extFijo1 ='';
+        }
         var moExt = '';
-        var ex = new RegExp(/#\w+:\w+#/g)
+        var ex = new RegExp(/#\w+:\w+#/g);
+        
         var texto = registroCC[i].Observations.match(ex);
-        var lugarDeTrabajo = registroCC[i].WorkplaceName + '</br>';
+        var lugarDeTrabajo = registroCC[i].WorkplaceName ;
         if (texto == null) {
             exten = '';
 
         } else {
             for (let j = 0; j < texto.length; j++) {
+                
                 sufijo = '' + texto[j].split(':')[0].replace('#', '');
                 if (sufijo == 'FIJO2EXT') {
                     exten += '' + texto[j].split(':')[1].replace('#', '');
                     extnFijo = ' (' + exten + ')';
                 } else if (sufijo == 'MOVILEXT') {
-                    moExt += ' ' + texto[j].split(':')[1].replace('#', '');
+                    moExt += '(' + texto[j].split(':')[1].replace('#', '')+')';
                 } else if (sufijo == 'VOZIPEXT') {
                     extip += ' ' + texto[j].split(':')[1].replace('#', '');
                     extnFijo += ' (IP:' + extip + ')';
                 } else if (sufijo == 'CENTRO') {
                     extip += ' ' + texto[j].split(':')[1].replace('#', '');
-                    lugarDeTrabajo += '<b>Centro: ' + extip + ' </b> </br>';
+                    lugarDeTrabajo += '</br><b>Centro: ' + extip + ' </b>';
                 }
-
             }
         }
-
+       
         
         
         var Email = '<i class="far fa-envelope" style="font-size:20px" > </i> <a  href=mailto:'+ registroCC[i].EmailAddress+'>&nbsp;'+registroCC[i].EmailAddress+'</a></br>'  ;
         
-        var FijoEx = '<i class="fas fa-phone" style="font-size:20px" > </i> ' + registroCC[i].DirectPhoneNumber + ' (' + registroCC[i].Extension + ')' + extnFijo + '</br>';
+        var FijoEx = '<i class="fas fa-phone" style="font-size:20px" > </i> ' + registroCC[i].DirectPhoneNumber +  extFijo1  + extnFijo + '</br>';
 
         var MovilEx = '<i class="fas fa-mobile-alt" style="font-size:20px" ></i> &nbsp;&nbsp;' + registroCC[i].CompanyMobilePhoneNumber + '  <b>Corto: </b> ' + moExt + '</br>';
 
@@ -405,18 +426,27 @@ function carta(i) {
         }
 
         var texto = document.createElement('div');
-        header.innerHTML = '<b>' + registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + '</b>'
+        header.innerHTML = '<b style="width:82%" >' + registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + '</b>'
         var t = ''
         for (let i = 0; i < emailsRRHH.length; i++) {
             t += emailsRRHH[i].direccion+','
 
         }
-        texto.innerHTML = lugarDeTrabajo + Email + FijoEx + MovilEx + NuFax + Observa;
+        texto.innerHTML = lugarDeTrabajo +'</br>'+ Email + FijoEx + MovilEx + NuFax + Observa;
+        var contpp = document.createElement('div');
+        contpp.setAttribute('id','contpp')
+        var info = document.createElement('div');
+        info.setAttribute('id','info');
+        info.innerHTML = '<i title="BD A3" class="fas fa-info-circle"></i>'
+
         var sendEmail = document.createElement('a');
-        sendEmail.innerHTML = '<i id="cor" class="fas fa-user-edit"></i>';
+        
+        sendEmail.innerHTML = '<i id="cor" title="Sugerir corrección"  class="fas fa-user-edit"></i>';
         sendEmail.setAttribute('id','email');
-        sendEmail.setAttribute('href', 'mailto:' + t + '?Subject=Correción%20en%20la%20agenda:%20'+registroCC[i].Name+'&body=Sugerencia%20de:%20');
-        header.appendChild(sendEmail);
+        sendEmail.setAttribute('href', 'mailto:' + t + '?Subject=Sugerir corrección%20en%20la%20agenda:%20'+registroCC[i].Name+'&body=Nombre: '+registroCC[i].Name+'%0D%0ALugar de trabajo: '+registroCC[i].WorkplaceName+' %0D%0AEmail: '+registroCC[i].EmailAddress+'%0D%0AFijo: '+registroCC[i].DirectPhoneNumber+'%0D%0AExtensión fijo: '+extFijo1+' '+extnFijo+' %0D%0AMovil: '+registroCC[i].CompanyMobilePhoneNumber+'%0D%0AExtensión Movil: '+moExt+' %0D%0ANumero de Fax: '+registroCC[i].FaxNumber);
+        contpp.appendChild(info);
+        contpp.appendChild(sendEmail);
+        header.appendChild(contpp)
     }
 
     cardBody.appendChild(texto);

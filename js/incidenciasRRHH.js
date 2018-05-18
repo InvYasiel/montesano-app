@@ -1,28 +1,28 @@
-//Variables donde recogemos los elementos del formulario
-let nombre = document.getElementById("incidenciasNombre");
-let incidenCheck = document.getElementById("incidenCheck");
-let titulo = document.getElementById("incidenciasTitulo");
-let descripcion = document.getElementById("incidenciasDescripcion").value;
-var tname = true;
-let spiner = document.getElementById('spiner');
-let chooser = document.getElementById('chooser');
-let archivo = document.getElementById('archivo');
-let grande = document.getElementById('muyGrande');
 
+let nombreRRHH = document.getElementById("incidenciasNombreRRHH");
+let incidenCheckRRHH = document.getElementById("incidenciasCheckRRHH");
+let tituloRRHH = document.getElementById("incidenciasTituloRRHH");
+let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
+var tnameRRHH = true;
+let chooserRRHH = document.getElementById('chooserRRHH');
+let archivoRRHH = document.getElementById('archivoRRHH');
+let grandeRRHH = document.getElementById('muyGrandeRRHH');
+let tel = document.getElementsByName('incidenciasTelefono');
+let em = document.getElementById('incidenciasEmail');
 ///KEYS para conectar con trello
-var appkey = "151bcd104f1742fdcf0b8c2f4a4c8764";
-var secret = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d16";
+var appkeyRRHH = "151bcd104f1742fdcf0b8c2f4a4c8764";
+var secretRRHH = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d16";
 
-var token = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
-var idlist = "5aaf6422caeb39da694e7dc1";
-var usuario1 = "5891c93eb1cfa471ee1fe47c";
-var usuario2 = "59a68c4e314350c790512ae9";
+var tokenRRHH = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
+var idlistRRHH = "5afecefa968161adb800c49f";
+var usuario1RRHH = "5aabca240fa2e0ee00d049ce";
+var usuario2RRHH = "5374f51c6cbf7d6d1aab77a6";
 
 
 ///--------------------COMPROBAR CAMPOS OBLIGATORIOS--------------------
-function comprobarCampos() {
+function comprobarCamposRRHH() {
     let res = true;
-    if (nombre.value == "" || titulo.value == "") {
+    if (nombreRRHH.value == "" || tituloRRHH.value == "" || tel.value == "" ||em.value == "") {
         swal({
             title: "Error!",
             text: "Rellena los campos obligatorios (*)",
@@ -38,7 +38,7 @@ function incidenciasLimpiar() {
     location.reload();
 }
 ///--------------------IDENTIFAR EL NAVEGADOR--------------------
-function getBrowserInfo() {
+function getBrowserInfoRRHH() {
     var ua = navigator.userAgent,
         tem,
         M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
@@ -56,13 +56,13 @@ function getBrowserInfo() {
 };
 
 ///--------------------CREAR INCIDENDIA--------------------
-function incidenciasCrear() {
+function incidenciasCrearRRHH() {
     for (let t = 0; t < registroCC.length; t++) {
-        if (registroCC[t].CompleteName == nombre.value) {
-            var tname = false
+        if (registroCC[t].CompleteName == nombreRRHH.value) {
+            var tnameRRHH = false
         }
     }
-    if (tname == false) {
+    if (tnameRRHH == false) {
         var OSName = "Desconocido";
         if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
         if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
@@ -74,10 +74,10 @@ function incidenciasCrear() {
 
         //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
-        if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
-            let descripcion = document.getElementById("incidenciasDescripcion").value;
-            var desc = descripcion + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
-            crearCarta(desc, OSName, fechaTrello, hora);
+        if (getBrowserInfoRRHH() == 'IE 11' || getBrowserInfoRRHH() == 'Edge 16') {
+            let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
+            var desc = descripcionRRHH + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
+            crearCartaRRHH(desc, OSName, fechaTrello, hora);
         } else { ///--------------------DEMAS NAVEGADORES--------------------
             //--------------------OBTENER IP--------------------
             window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
@@ -88,17 +88,17 @@ function incidenciasCrear() {
             pc.createDataChannel('');
             pc.createOffer(pc.setLocalDescription.bind(pc), noop);
             pc.onicecandidate = function (ice) {
-                if (comprobarCampos()) {
+                if (comprobarCamposRRHH()) {
                     if (ice && ice.candidate && ice.candidate.candidate) {
                         var myIP = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/.exec(ice.candidate.candidate)[1];
 
                         pc.onicecandidate = noop;
                     }
                     //--------------------VALORES DE LA DESCRIPCIÓN--------------------
-                    let descripcion = document.getElementById("incidenciasDescripcion").value;
-                    var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
+                    let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
+                    var desc = descripcionRRHH + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
                     ///--------------------LLAMADA A CREAR CARTA--------------------
-                    crearCarta(desc, myIP, OSName, fechaTrello, hora);
+                    crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
                 }
             }
         }
@@ -114,13 +114,13 @@ function incidenciasCrear() {
 
 }
 ///--------------------CREAR CARTA--------------------
-function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
+function crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora) {
     var h = "";
     var data = null;
-    var name = fechaTrello + ' ' + hora + ' ' + titulo.value + " Creado por: " + nombre.value;
+    var name = fechaTrello + ' ' + hora + ' ' + tituloRRHH.value + " Creado por: " + nombreRRHH.value +' Teléfono: '+tel.value+' Email: '+em.value;
     var xhr = new XMLHttpRequest();
     desc = desc.replace(/\n/g, '%0A');
-    xhr.open("POST", "https://api.trello.com/1/cards?name=" + name + "&desc=" + desc + "&pos=top&idList=" + idlist + "&keepFromSource=all&key=" + appkey + "&token=" + token);
+    xhr.open("POST", "https://api.trello.com/1/cards?name=" + name + "&desc=" + desc + "&pos=top&idList=" + idlistRRHH + "&keepFromSource=all&key=" + appkeyRRHH + "&token=" + tokenRRHH);
     xhr.send(data);
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
@@ -128,43 +128,43 @@ function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
             h = JSON.parse(dt).id;
             spiner.style.cssText = 'display:block';
             //------------LLAMADA A FUNCIONES PARA RELLENAR LA CARTA -------------
-            selecLabel(h);
-            if (archivos.length > 0) {
-                adjuntos(h, name);
+            selecLabelRRHH(h);
+            if (archivosRRHH.length > 0) {
+                adjuntosRRHH(h, name);
             }
-            usuarioPredefinido(h, name);
+            usuarioPredefinidoRRHH(h, name);
         }
     });
 }
 ///--------------------MOSTRAR MENSAJE EN CASO DE QUE ESTÉ MARCADO EL CHECKBOX--------------------
-var importante = document.getElementById('incidenciasCheck');
-var dpImportante = document.getElementById('dpImportante');
-importante.addEventListener('click', function () {
-    if (importante.checked == true) {
-        dpImportante.style.cssText = 'display:true';
+var importanteRRHH = document.getElementById('incidenciasCheckRRHH');
+var dpImportanteRRHH = document.getElementById('dpImportanteRRHH');
+importanteRRHH.addEventListener('click', function () {
+    if (importanteRRHH.checked == true) {
+        dpImportanteRRHH.style.cssText = 'display:true';
     } else {
-        dpImportante.style.cssText = 'display:none';
+        dpImportanteRRHH.style.cssText = 'display:none';
     }
 }, false)
-///--------------------CREAR LABEL IMPORTANTE--------------------
-function selecLabel(data) {
+///--------------------CREAR LABEL IMPORTANTERRHH--------------------
+function selecLabelRRHH(data) {
     var datas = null;
-    if (importante.checked == true) {
+    if (importanteRRHH.checked == true) {
         var checkRQ = new XMLHttpRequest();
-        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkey + "&token=" + token);
+        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkeyRRHH + "&token=" + tokenRRHH);
         checkRQ.send(datas);
     }
 }
-///--------------------CREAR Y ENVIAR LOS ARCHIVOS ADJUNTOS--------------------
-function adjuntos(data, name) {
+///--------------------CREAR Y ENVIAR LOS ARCHIVOSRRHH ADJUNTOSRRHH--------------------
+function adjuntosRRHH(data, name) {
     var arrData = [];
     var formData = new FormData();
-    formData.append("token", token);
-    formData.append("key", appkey);
-    for (let i = 0; i < archivos.length; i++) {
-        formData.append("file", archivos[i]);
+    formData.append("token", tokenRRHH);
+    formData.append("key", appkeyRRHH);
+    for (let i = 0; i < archivosRRHH.length; i++) {
+        formData.append("file", archivosRRHH[i]);
         var request = new XMLHttpRequest();
-        request.open("POST", "https://api.trello.com/1/cards/" + data + "/attachments?key=" + appkey + "&token=" + token);
+        request.open("POST", "https://api.trello.com/1/cards/" + data + "/attachments?key=" + appkeyRRHH + "&token=" + tokenRRHH);
         request.send(formData);
         request.addEventListener("readystatechange", function () {
 
@@ -192,24 +192,24 @@ function adjuntos(data, name) {
         });
     }
 }
-///--------------------ELIMINAR ADJUNTOS--------------------
+///--------------------ELIMINAR ADJUNTOSRRHH--------------------
 function eliminar(e) {
     var eliminarPapelera = document.getElementById(e);
     eliminarPapelera.parentElement.remove();
     e = e.slice(9)
-    archivos.splice(e, 1);
+    archivosRRHH.splice(e, 1);
 
 }
 
 ///--------------------CREAR LOS USUARIOS PREDEFINIDOS--------------------
-function usuarioPredefinido(data, name) {
+function usuarioPredefinidoRRHH(data, name) {
     var arrRQ = [];
     var datas = null;
     var usuRQ1 = new XMLHttpRequest();
-    usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario1 + "&key=" + appkey + "&token=" + token);
+    usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario1RRHH + "&key=" + appkeyRRHH + "&token=" + tokenRRHH);
     usuRQ1.send(datas);
     var usuRQ2 = new XMLHttpRequest();
-    usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario2 + "&key=" + appkey + "&token=" + token);
+    usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario2RRHH + "&key=" + appkeyRRHH + "&token=" + tokenRRHH);
     usuRQ2.send(datas);
     arrRQ.push(usuRQ1);
 
@@ -221,7 +221,7 @@ function usuarioPredefinido(data, name) {
                     finalizado = false;
                 }
             }
-            if (finalizado == true && archivos.length == 0) {
+            if (finalizado == true && archivosRRHH.length == 0) {
                 // for (let d = 0; d < registroCC.length; d++) {
                 //     if(registroCC[d].CompleteName == nombre.value){
                 //         var email = registroCC[d].EmailAddress
@@ -256,16 +256,16 @@ function usuarioPredefinido(data, name) {
         }
     });
 }
-///--------------------CREAR ARCHIVOS ADJUNTOS DE MANERA VISIBLE--------------------
-var archivos = []
-var rutas = []
-var cont = 0;
+///--------------------CREAR ARCHIVOSRRHH ADJUNTOSRRHH DE MANERA VISIBLE--------------------
+var archivosRRHH = []
+var rutasRRHH = []
+var contRRHH = 0;
 
-function cambio(e) {
-    var chooser = document.getElementById("" + e)
-    var fileSize = chooser.files[0].size;
+function cambioRRHH(e) {
+    var chooserRRHH = document.getElementById("" + e)
+    var fileSize = chooserRRHH.files[0].size;
     var siezekiloByte = parseInt(fileSize / 1024);
-    if (siezekiloByte > chooser.getAttribute('size')) {
+    if (siezekiloByte > chooserRRHH.getAttribute('size')) {
         swal({
             title: "Error!",
             text: "Imagen muy grande",
@@ -275,27 +275,27 @@ function cambio(e) {
         return false;
     } else {
 
-        chooser.files[0];
+        chooserRRHH.files[0];
 
         var path = document.getElementById("" + e).files[0].name;
-        rutas.push(path)
+        rutasRRHH.push(path)
         var archivoCorrecto = true;
-        if (archivos.length == 0) {
-            archivos.push(chooser.files[0]);
-            var info = document.getElementById('infofile');
-            info.innerHTML += '<b> ' + path + '  <i class="fas fa-trash" id="papelera ' + cont + '" style="color:red" onclick="eliminar(id)"></i><b>';
-            cont++;
-        } else if (archivos.length > 0) {
-            for (let i = 0; i < archivos.length; i++) {
-                if (chooser.files[0].name == archivos[i].name) {
+        if (archivosRRHH.length == 0) {
+            archivosRRHH.push(chooserRRHH.files[0]);
+            var info = document.getElementById('infofileRRHH');
+            info.innerHTML += '<b> ' + path + '  <i class="fas fa-trash" id="papelera ' + contRRHH + '" style="color:red" onclick="eliminar(id)"></i><b>';
+            contRRHH++;
+        } else if (archivosRRHH.length > 0) {
+            for (let i = 0; i < archivosRRHH.length; i++) {
+                if (chooserRRHH.files[0].name == archivosRRHH[i].name) {
                     archivoCorrecto = false;
                 }
             }
             if (archivoCorrecto == true) {
-                archivos.push(chooser.files[0]);
-                var info = document.getElementById('infofile');
-                info.innerHTML += '<b> | ' + path + '  <i class="fas fa-trash" id="papelera ' + cont + '" style="color:red" onclick="eliminar(id)"></i><b>';
-                cont++;
+                archivosRRHH.push(chooserRRHH.files[0]);
+                var info = document.getElementById('infofileRRHH');
+                info.innerHTML += '<b> | ' + path + '  <i class="fas fa-trash" id="papelera ' + contRRHH + '" style="color:red" onclick="eliminar(id)"></i><b>';
+                contRRHH++;
             } else {
                 swal({
                     title: "Error!",
@@ -307,5 +307,5 @@ function cambio(e) {
             }
         }
     }
-    document.getElementsByClassName('chooser')[0].value = '';
+    document.getElementsByClassName('chooserRRHH')[0].value = '';
 }
