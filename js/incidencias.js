@@ -70,14 +70,14 @@ function incidenciasCrear() {
         var fecha = new Date();
         var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
         var hora = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-       
+       var myIP ='';
 
         //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
         if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
             let descripcion = document.getElementById("incidenciasDescripcion").value;
             var desc = descripcion + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
-            crearCarta(desc, OSName, fechaTrello, hora);
+            crearCarta(desc, myIP, OSName, fechaTrello, hora);
         } else { ///--------------------DEMAS NAVEGADORES--------------------
             //--------------------OBTENER IP--------------------
             window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
@@ -96,7 +96,24 @@ function incidenciasCrear() {
                     }
                     //--------------------VALORES DE LA DESCRIPCIÓN--------------------
                     let descripcion = document.getElementById("incidenciasDescripcion").value;
-                    var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
+                    var inciEm = '';
+                    var inciTel = '';
+                    var inciMovil = '';
+                    for (let i = 0; i < registroCC.length; i++) {
+                        if(nombre.value == registroCC[i].CompleteName){
+                            if (registroCC[i].Observations == undefined){
+                                inciEm = 'Email: '+registroCC[i].Email;
+                                inciTel = ' | Teléfono: '+registroCC[i].NumeroFijo;
+                                inciMovil =' | Móvil: '+registroCC[i].NumeroMovil;
+                            }else{
+                            inciEm = 'Email: '+registroCC[i].EmailAddress;
+                            inciTel = ' | Teléfono: '+registroCC[i].DirectPhoneNumber;
+                            inciMovil =' | Móvil: '+registroCC[i].CompanyMobilePhoneNumber;
+                            }
+                        }
+                        
+                    }
+                    var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName+ '%0A' + inciEm + inciTel + inciMovil;
                     ///--------------------LLAMADA A CREAR CARTA--------------------
                     crearCarta(desc, myIP, OSName, fechaTrello, hora);
                 }

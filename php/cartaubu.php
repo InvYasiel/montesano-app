@@ -8,7 +8,7 @@ $connectionOptions = array(
 $arr = array();
 $conn = sqlsrv_connect($serverName, $connectionOptions);
 if($conn){
-    $twql = "select * from [master].[dbo].[ZMontesano_Vista_Agenda]";
+    $tsql = "select * from [master].[dbo].[ZMontesano_Vista_Agenda]";
     $getResults = sqlsrv_query($conn,$tsql);
     if($getResults == False){
         die(FormatErrors(sqlsrv_errors()));

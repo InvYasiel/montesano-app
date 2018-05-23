@@ -1,13 +1,12 @@
-
 let nombreRRHH = document.getElementById("incidenciasNombreRRHH");
 let incidenCheckRRHH = document.getElementById("incidenciasCheckRRHH");
-let tituloRRHH = document.getElementById("incidenciasTituloRRHH");
+var tituloRRHH = document.getElementById("incidenciasTituloRRHH");
 let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
 var tnameRRHH = true;
 let chooserRRHH = document.getElementById('chooserRRHH');
 let archivoRRHH = document.getElementById('archivoRRHH');
 let grandeRRHH = document.getElementById('muyGrandeRRHH');
-let tel = document.getElementsByName('incidenciasTelefono');
+let tel = document.getElementById('incidenciasTelefono');
 let em = document.getElementById('incidenciasEmail');
 ///KEYS para conectar con trello
 var appkeyRRHH = "151bcd104f1742fdcf0b8c2f4a4c8764";
@@ -16,7 +15,7 @@ var secretRRHH = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d
 var tokenRRHH = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
 var idlistRRHH = "5afecefa968161adb800c49f";
 var usuario1RRHH = "5aabca240fa2e0ee00d049ce";
-var usuario2RRHH = "5374f51c6cbf7d6d1aab77a6";
+var usuario2RRHH = "5b0408aaa197b0edaddebe50";
 
 
 ///--------------------COMPROBAR CAMPOS OBLIGATORIOS--------------------
@@ -70,14 +69,14 @@ function incidenciasCrearRRHH() {
         var fecha = new Date();
         var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
         var hora = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-       
+        var myIP = ''
 
         //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
         if (getBrowserInfoRRHH() == 'IE 11' || getBrowserInfoRRHH() == 'Edge 16') {
             let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-            var desc = descripcionRRHH + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
-            crearCartaRRHH(desc, OSName, fechaTrello, hora);
+            var desc = descripcionRRHH  + "Sistema operativo: " + OSName;
+            crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
         } else { ///--------------------DEMAS NAVEGADORES--------------------
             //--------------------OBTENER IP--------------------
             window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
@@ -116,12 +115,13 @@ function incidenciasCrearRRHH() {
 ///--------------------CREAR CARTA--------------------
 function crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora) {
     var h = "";
-    var data = null;
-    var name = fechaTrello + ' ' + hora + ' ' + tituloRRHH.value + " Creado por: " + nombreRRHH.value +' Teléfono: '+tel.value+' Email: '+em.value;
+    var dat = null;
+    var name = fechaTrello + ' ' + hora + ' ' + tituloRRHH.value + " Creado por: " + nombreRRHH.value;
     var xhr = new XMLHttpRequest();
     desc = desc.replace(/\n/g, '%0A');
     xhr.open("POST", "https://api.trello.com/1/cards?name=" + name + "&desc=" + desc + "&pos=top&idList=" + idlistRRHH + "&keepFromSource=all&key=" + appkeyRRHH + "&token=" + tokenRRHH);
-    xhr.send(data);
+    
+    xhr.send(dat);
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
             var dt = this.responseText;
@@ -222,22 +222,6 @@ function usuarioPredefinidoRRHH(data, name) {
                 }
             }
             if (finalizado == true && archivosRRHH.length == 0) {
-                // for (let d = 0; d < registroCC.length; d++) {
-                //     if(registroCC[d].CompleteName == nombre.value){
-                //         var email = registroCC[d].EmailAddress
-                //     }
-                // }
-                // var infoParaEnviar = {
-                //     text: 'Incidencia ' + name,
-                //     correo: email
-                // };
-                // $.ajax({
-                //     type: "POST",
-                //     url: "php/correo.php",
-                //     data: infoParaEnviar,
-                //     dataType: "text",
-                //     asycn: false,
-                //     success: function () {
                         spiner.style.cssText = 'display:none';
                         swal({
                                 title: "Completado!",
@@ -248,10 +232,6 @@ function usuarioPredefinidoRRHH(data, name) {
                             .then(function(value){
                                 swal(location.reload());
                             });
-                    // }
-                // });
-
-
             }
         }
     });

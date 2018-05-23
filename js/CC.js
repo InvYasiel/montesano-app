@@ -41,15 +41,20 @@ function recogerSalas() {
 function eliminarReserva(e) {
     var da = e.getAttribute('dd');
     var dd = document.getElementById(da);
-    document.getElementById('calendarioModal').style.cssText = ' display:none;'
+    $('#calendarioModal').modal('hide');
     var denegar = document.getElementById('cerrarAdmin');
     var den = document.getElementById('cerrarAd');
     var rr = e.getAttribute('reserva');
     denegar.addEventListener('click', function () {
-        document.getElementById('calendarioModal').style.cssText = ' display:block;'
+       
+       $('#ModalAdmin').modal('hide');
+
+        $('#calendarioModal').modal('show');
     }, false)
     den.addEventListener('click', function () {
-        document.getElementById('calendarioModal').style.cssText = ' display:block;'
+       
+       $('#ModalAdmin').modal('hide');
+        $('#calendarioModal').modal('show');
     }, false)
     var idSala = document.getElementById('selectedSala').value;
     var aceptar = document.getElementById('borrarAdmin');
@@ -72,9 +77,6 @@ function eliminarReserva(e) {
                         recogerDatos(idSala);
                         $('#ModalAdmin').modal('hide');
                         $('#calendarioModal').modal('hide');
-                        // $('#mensajeModal').modal();
-                        // var titleC = document.getElementById('titleC');
-                        // titleC.innerHTML = 'Reserva eliminada correctamente </br>';
                         swal({
                             title: "Reserva Eliminada",
                             text: 'Reserva eliminada correctamente',
@@ -86,12 +88,6 @@ function eliminarReserva(e) {
                           });
                     }
                 });
-                // var close = document.getElementById('close');
-                // close.addEventListener('click', function () {
-
-                //     dd.click();
-                // }, false)
-                
             } else {
                 swal({
                     title: "Error!",

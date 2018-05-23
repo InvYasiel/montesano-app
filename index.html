@@ -59,20 +59,20 @@
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="incidenciasNombre">Nombre (*)</label>
-                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombre" placeholder="Juan">
+                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombre" placeholder="Introduce tu nombre">
                                 <datalist id="personasincidencias">
                                 </datalist>
                             </div>
                             <div class="form-group col-6">
                                 <label for="incidenciasTitulo">Titulo (*)</label>
-                                <input type="text" class="form-control" id="incidenciasTitulo" placeholder="No funciona la navegacion de la pagina principal">
+                                <input type="text" class="form-control" id="incidenciasTitulo" placeholder="">
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="form-group col-12">
                                 <label for="incidenciasDescripcion">Descripción</label>
-                                <textarea class="form-control" id="incidenciasDescripcion" rows="4" placeholder="No carga el sistema"></textarea>
+                                <textarea class="form-control" id="incidenciasDescripcion" rows="4" placeholder="Incidencia"></textarea>
                                 <div id="checked">
                                     <label for="incidenciasCheck" style="font-size: 20px;">Haz click aquí si es urgente &nbsp;</label>
                                     <input type="checkbox" class="incidenciasCheck" id="incidenciasCheck">
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- INCIDENDCIAS RRHH-->
                 <div class="tab-pane fade" id="pills-InicidenciasRRHH" role="tabpanel" aria-labelledby="pills-InicidenciasRRHH-tab">
                     <div class="container">
@@ -112,30 +112,30 @@
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="incidenciasNombreRRHH">Nombre (*)</label>
-                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombreRRHH" placeholder="Juan">
+                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombreRRHH" placeholder="Introduce tu nombre">
                                 <datalist id="personasincidencias">
                                 </datalist>
                             </div>
                             <div class="form-group col-6">
                                 <label for="incidenciasTituloRRHH">Titulo (*)</label>
-                                <input type="text" class="form-control" id="incidenciasTituloRRHH" placeholder="No funciona la navegacion de la pagina principal">
+                                <input type="text" class="form-control" id="incidenciasTituloRRHH" placeholder="">
                             </div>
                         </div>
                         <div class="row">
-                                <div class="form-group col-6">
-                                    <label for="incidenciasEmail">Email (*)</label>
-                                    <input type="email"  class="form-control" id="incidenciasEmail" placeholder="Jmartinez@montesano.es">
-                                    </div>
-                                <div class="form-group col-6">
-                                    <label for="incidenciasTelefono">Teléfono (*)</label>
-                                    <input type="text" class="form-control" id="incidenciasTelefono" placeholder="652478635">
-                                </div>
+                            <div class="form-group col-6">
+                                <label for="incidenciasEmail">Email (*)</label>
+                                <input type="email" class="form-control" id="incidenciasEmail" placeholder="Ejemplo@montesano.es">
                             </div>
+                            <div class="form-group col-6">
+                                <label for="incidenciasTelefono">Teléfono (*)</label>
+                                <input type="text" class="form-control" id="incidenciasTelefono" placeholder="Introduce tu número de teléfono">
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="form-group col-12">
                                 <label for="incidenciasDescripcion">Descripción</label>
-                                <textarea class="form-control" id="incidenciasDescripcionRRHH" rows="4" placeholder="No carga el sistema"></textarea>
+                                <textarea class="form-control" id="incidenciasDescripcionRRHH" rows="4" placeholder="Incidencia"></textarea>
                                 <div id="checked">
                                     <label for="incidenciasCheck" style="font-size: 20px;">Haz click aquí si es urgente &nbsp;</label>
                                     <input type="checkbox" class="incidenciasCheck" id="incidenciasCheckRRHH">
@@ -143,7 +143,8 @@
                                 </div>
                                 <br>
                                 <div id="archivoRRHH">
-                                    <input type="file" id="chooserRRHH0" class="chooser" onchange="cambioRRHH(this.id)" style="color: transparent" size="10000" />
+                                    <input type="file" id="chooserRRHH0" class="chooser" onchange="cambioRRHH(this.id)" style="color: transparent" size="10000"
+                                    />
                                     <div id="infofileRRHH"> Archivos adjuntos: </div>
                                     <div id="muyGrandeRRHH"></div>
                                     <br>
@@ -204,6 +205,62 @@
                         </div>
                     </div>
                 </div>
+                <!-- Modal Infor Admin -->
+                <div class="modal fade" id="ModalInformatica" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Solo administradores de Informatica</h5>
+                                <button type="button" class="close" data-dismiss="modal" id='cerrarAd' aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="usu" class="sr-only">Usuario</label>
+                                    <input type="text" class="form-control" id="usuInfo" placeholder="Usuario">
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="pass" class="sr-only">Contraseña</label>
+                                    <input type="password" class="form-control" id="passInfo" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id='insertarAdmin' data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id='insertarAdmin' onclick="soloinfo()">Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal editar Admin -->
+                <div class="modal fade" id="ModalEditar" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Solo administradores de Informatica</h5>
+                                <button type="button" class="close" data-dismiss="modal" id='cerrarAd' aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="usu" class="sr-only">Usuario</label>
+                                    <input type="text" class="form-control" id="usuEdit" placeholder="Usuario">
+                                </div>
+                                <div class="form-group mx-sm-3 mb-2">
+                                    <label for="pass" class="sr-only">Contraseña</label>
+                                    <input type="password" class="form-control" id="passEdit" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" id='editAdmin' data-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id='editAdmin' >Aceptar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- AGENDA -->
                 <div class="tab-pane fade " id="pills-Agenda" role="tabpanel" aria-labelledby="pills-Agenda-tab">
                     <div id="seleccion">
@@ -216,8 +273,7 @@
                         <label for="buscador" style="font-size: 1.3em;">Nombre a buscar</label>
                         <input list="personasagenda" class="form-control mr-sm-2" type="text" placeholder="Enter para buscar" id="buscador" oninput="search(this);"
                             aria-label="Search">
-                        <!-- <datalist id="personasagenda">
-                        </datalist> -->
+                            <i class="fas fa-plus-circle" style="width: 60px;margin:15px; cursor: pointer" data-toggle="modal" data-target="#ModalInformatica"></i>
                     </div>
                     <div id="extensiones">
                         <label for="ext" style="font-size: 1.3em; ">Extensión</label>
@@ -227,10 +283,39 @@
                         </datalist>
                     </div>
                     <div id="contagenda">
-
+                        
                     </div>
                 </div>
-
+                <!-- Modal New Person -->
+                <div class="modal fade" id="ModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="exampleModalLabel">Solo Informatica</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body" style="display:flex; flex-wrap: wrap">
+                          <span style="width: 45%;">Nombre:  <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newNombre" ></span>
+                          <span style="width: 45%;">Nº Fijo: <input type="text" style=" width: 130px; "  class="form-control mr-sm-2" id="newFijo" ></span>
+                          <span style="width: 45%;">Extension: <input type="number" style=" width: 100px; "  class="form-control mr-sm-2" id="newExtension" ></span>
+                          <span style="width: 45%;">Extension2: <input type="number" style=" width: 100px; "  class="form-control mr-sm-2" id="newExtension2" ></span>
+                          <span style="width: 45%;">Numero de Movil: <input type="text" style=" width: 100px; "  class="form-control mr-sm-2" id="newNumeroMovil" ></span>
+                          <span style="width: 45%;">Extension Movil: <input type="number" style=" width: 130px; "  class="form-control mr-sm-2" id="newExtensionMovil" ></span>
+                          <span style="width: 45%;">Extension Voz IP: <input type="number" style=" width: 100px; "  class="form-control mr-sm-2" id="newExtensionIP" ></span>
+                          <span style="width: 45%;">Email: <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newEmail" ></span>
+                          <span style="width: 45%;">Email2: <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newEmail2" ></span>
+                          <span style="width: 45%;">Lugar de trabajo: <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newLugar" ></span>
+                          <span style="width: 45%;">Centro: <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newCentro" ></span>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="button" class="btn btn-primary" onclick="insert()">Insertar</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 <!-- RESERVAS -->
                 <div class="tab-pane fade" id="pills-Reserva" role="tabpanel" aria-labelledby="pills-Reserva-tab">
                     <div class="container" id="containerReservas">
@@ -282,23 +367,17 @@
                                             <label for="motivoReserva">Motivo de la Reserva (*)</label>
                                             <input type="text" class="form-control" id="motivoReserva" placeholder="Motivo...">
                                         </div>
-
-                                        <div class="col-12" style="height: 15px;">
-                                            <br>
-                                            <b>Hora a la que deseas ingresar:</b>
-                                            <br>
-                                        </div>
-                                        <div class="form-group col-6">
+                                        
+                                        <div class="form-group col-12" >
+                                         <b>Hora a la que deseas ingresar:</b>
                                             <label for="horaEntrada">Hora de entrada</label>
                                             <input type="time" class="form-control" readonly id="horaEntrada" style="width: 105px;" onchange="calcHora(this.id)" list="personas"
                                                 value="08:00" min="08:00" max="21:00" step="900">
-                                        </div>
-
-                                        <div class="form-group col-6">
-                                            <label for="horaSalida">Hora de salida</label>
+                                                <label for="horaSalida">Hora de salida</label>
                                             <input type="time" class="form-control" readonly id="horaSalida" style="width: 105px;" onchange="calcHora(this.id)" list="personas"
                                                 value="09:00" min="08:00" max="22:00" step="900">
                                         </div>
+
                                     </div>
                                     <br>
                                 </div>
@@ -315,7 +394,7 @@
     </div>
 
     <script src=" https://unpkg.com/sweetalert/dist/sweetalert.min.js "></script>
-    <script type="application/javascript" src="js/incidenciasRRHH.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -333,7 +412,7 @@
             jQuery('span.' + idname).next().find('span').html(filename);
         });
     </script>
-
+    <script src="js/insertNew.js"></script>
     <script src="js/correos.js"></script>
     <script src="js/clock.js"></script>
     <script type="text/javascript" src="clockpicker/assets/js/highlight.min.js"></script>
@@ -345,7 +424,7 @@
     </script>
 
     <script type="application/javascript" src="js/incidencias.js"></script>
-    
+    <script type="application/javascript" src="js/incidenciasRRHH.js"></script>
     <script src="js/cartas.js"></script>
     <script type="application/javascript" src="js/crearCalendarios.js"></script>
     <script src="js/datosCalendar.js"></script>
