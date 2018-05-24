@@ -46,14 +46,14 @@ function eliminarReserva(e) {
     var den = document.getElementById('cerrarAd');
     var rr = e.getAttribute('reserva');
     denegar.addEventListener('click', function () {
-       
-       $('#ModalAdmin').modal('hide');
+        rr = '';
+        $('#ModalAdmin').modal('hide');
 
         $('#calendarioModal').modal('show');
     }, false)
     den.addEventListener('click', function () {
-       
-       $('#ModalAdmin').modal('hide');
+        rr = ''
+        $('#ModalAdmin').modal('hide');
         $('#calendarioModal').modal('show');
     }, false)
     var idSala = document.getElementById('selectedSala').value;
@@ -62,41 +62,44 @@ function eliminarReserva(e) {
         var usu = document.getElementById('usu').value;
         var pass = document.getElementById('pass').value;
         for (let i = 0; i < admin.length; i++) {
-            if (admin[i].usuario == usu && admin[i].password == pass) {
-                var infoParaEnviar = {
-                    reserva: rr
-                };
-                $.ajax({
-                    type: "POST",
-                    url: "php/delete.php",
-                    data: infoParaEnviar,
-                    dataType: "text",
-                    asycn: true,
-                    success: function () {
-                       
-                        recogerDatos(idSala);
-                        $('#ModalAdmin').modal('hide');
-                        $('#calendarioModal').modal('hide');
-                        swal({
-                            title: "Reserva Eliminada",
-                            text: 'Reserva eliminada correctamente',
-                            icon: "success",
-                            button: "Cerrar",
-                          })
-                          .then(function(value) {
-                            swal(dd.click());
-                          });
-                    }
-                });
-            } else {
-                swal({
-                    title: "Error!",
-                    text: "Usuario o contraseña incorrectos",
-                    icon: "error",
-                    button: "Volver a intentar ",
-                  });
-                
+            if (rr != '') {
+                if (admin[i].usuario == usu && admin[i].password == pass) {
+                    var infoParaEnviar = {
+                        reserva: rr
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: "php/delete.php",
+                        data: infoParaEnviar,
+                        dataType: "text",
+                        asycn: true,
+                        success: function () {
+
+                            recogerDatos(idSala);
+                            $('#ModalAdmin').modal('hide');
+                            $('#calendarioModal').modal('hide');
+                            swal({
+                                    title: "Reserva Eliminada",
+                                    text: 'Reserva eliminada correctamente',
+                                    icon: "success",
+                                    button: "Cerrar",
+                                })
+                                .then(function (value) {
+                                    swal(dd.click());
+                                });
+                        }
+                    });
+                } else {
+                    swal({
+                        title: "Error!",
+                        text: "Usuario o contraseña incorrectos",
+                        icon: "error",
+                        button: "Volver a intentar ",
+                    });
+
+                }
             }
+
         }
 
     }, false)

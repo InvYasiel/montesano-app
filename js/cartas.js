@@ -143,7 +143,7 @@ function registroA3() {
 
 
             registroCC.forEach(function (e) {
-                var name = e.CompleteName;
+                var name = e.Name +' '+ e.SecondName1+' '+ e.SecondName2;
 
                 var option = document.createElement("option");
                 option.value = name;
@@ -298,8 +298,8 @@ function carta(i) {
         var exFijo2 = '(' + registroCC[i].Extension2 + ') ';
         var exVozIP = '(IP:' + registroCC[i].extVozIP + ') ';
         var exMovil = '(' + registroCC[i].extMovil + ')';
-        var email2 = '<i class="far fa-envelope" style="font-size:20px" > </i> <a  href=mailto:' + registroCC[i].Email2 + '>&nbsp;' + registroCC[i].Email2 + '</a></br>';
-        var email = '<i class="far fa-envelope" style="font-size:20px" > </i> <a  href=mailto:' + registroCC[i].Email + '>&nbsp;' + registroCC[i].Email + '</a></br>';
+        var email2 = '<i class="far fa-envelope" style="font-size:20px" > </i> <a  style="color: #ff4747;" href=mailto:' + registroCC[i].Email2 + '>&nbsp;' + registroCC[i].Email2 + '</a></br>';
+        var email = '<i class="far fa-envelope" style="font-size:20px" > </i> <a  style="color: #ff4747;" href=mailto:' + registroCC[i].Email + '>&nbsp;' + registroCC[i].Email + '</a></br>';
         var nFijo = registroCC[i].NumeroFijo;
         var nMovil = registroCC[i].NumeroMovil;
         var centro = registroCC[i].Centro;
@@ -418,7 +418,7 @@ function carta(i) {
                     lugarDeTrabajo += '</br><b>Centro: </b>' + extip + ' ';
                 } else if (sufijo == 'EMAIL2') {
                     extip = ' ' + texto[j].split(':')[1].replace('#', '');
-                    Email2 += '<i class="far fa-envelope" style="font-size:20px" > </i> <a  href=mailto:' + extip + '>&nbsp;' + extip + '</a></br>';
+                    Email2 += '<i class="far fa-envelope" style="font-size:20px" > </i> <a style="color: #ff4747;" href=mailto:' + extip + '>&nbsp;' + extip + '</a></br>';
                 }else if (sufijo == 'DEPARTAMENTO') {
                     extip = ' ' + texto[j].split(':')[1].replace('#', '');
                     depart += '</br><b>Departamento: </b>' + extip + ' ';
@@ -428,7 +428,7 @@ function carta(i) {
 
 
 
-        var Email = '<i class="far fa-envelope" style="font-size:20px" > </i> <a  href=mailto:' + registroCC[i].EmailAddress + '>&nbsp;' + registroCC[i].EmailAddress + '</a></br>';
+        var Email = '<i class="far fa-envelope" style="font-size:20px" > </i> <a style="color: #ff4747;"  href=mailto:' + registroCC[i].EmailAddress + '>&nbsp;' + registroCC[i].EmailAddress + '</a></br>';
 
         var FijoEx = '<i class="fas fa-phone" style="font-size:20px" > </i> ' + registroCC[i].DirectPhoneNumber + extFijo1 + extnFijo + '</br>';
 

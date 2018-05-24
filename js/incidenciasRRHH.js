@@ -14,14 +14,15 @@ var secretRRHH = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d
 
 var tokenRRHH = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
 var idlistRRHH = "5afecefa968161adb800c49f";
-var usuario1RRHH = "5aabca240fa2e0ee00d049ce";
-var usuario2RRHH = "5b0408aaa197b0edaddebe50";
-
-
+var usuario1RRHH = "58bd34cb10e32d9556f39e0b";//indiscan
+var usuario2RRHH = "5b0408aaa197b0edaddebe50";//Eva
+var usuario3RRHH = "5b056285aab397b19fe0d181";//Ángela
+var usuario4RRHH = "5b03e5bc970c63814808add8";//rrhh
+var usuario5RRHH = "5b05631c0fee976a1b7bbdb9";//Nestor
 ///--------------------COMPROBAR CAMPOS OBLIGATORIOS--------------------
 function comprobarCamposRRHH() {
     let res = true;
-    if (nombreRRHH.value == "" || tituloRRHH.value == "" || tel.value == "" ||em.value == "") {
+    if (nombreRRHH.value == "" || tituloRRHH.value == "" || tel.value == "" ) {
         swal({
             title: "Error!",
             text: "Rellena los campos obligatorios (*)",
@@ -34,7 +35,20 @@ function comprobarCamposRRHH() {
 }
 ///--------------------LIMPIAR CAMPOS DE LA SOLICITUD DE LA INCIDENCIA--------------------
 function incidenciasLimpiar() {
-    location.reload();
+    swal({
+        title: "¿Deseas limpiar la incidencia?",
+        text: "Se borrarán todos los campos",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then(function (willDelete){
+        if (willDelete) {
+            location.reload()
+        } else {
+          swal("Continue con su incidencia");
+        }
+      });
 }
 ///--------------------IDENTIFAR EL NAVEGADOR--------------------
 function getBrowserInfoRRHH() {
@@ -57,7 +71,7 @@ function getBrowserInfoRRHH() {
 ///--------------------CREAR INCIDENDIA--------------------
 function incidenciasCrearRRHH() {
     for (let t = 0; t < registroCC.length; t++) {
-        if (registroCC[t].CompleteName == nombreRRHH.value) {
+        if (registroCC[t].Name +' '+registroCC[t].SecondName1+' '+registroCC[t].SecondName2 == nombreRRHH.value) {
             var tnameRRHH = false
         }
     }
@@ -75,7 +89,7 @@ function incidenciasCrearRRHH() {
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
         if (getBrowserInfoRRHH() == 'IE 11' || getBrowserInfoRRHH() == 'Edge 16') {
             let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-            var desc = descripcionRRHH  + "Sistema operativo: " + OSName;
+            var desc = descripcionRRHH+ '%0A' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+  "Sistema operativo: " + OSName;
             crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
         } else { ///--------------------DEMAS NAVEGADORES--------------------
             //--------------------OBTENER IP--------------------
@@ -95,7 +109,7 @@ function incidenciasCrearRRHH() {
                     }
                     //--------------------VALORES DE LA DESCRIPCIÓN--------------------
                     let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-                    var desc = descripcionRRHH + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName;
+                    var desc = descripcionRRHH + '%0A' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+ " Ip: " + myIP + " Sistema operativo: " + OSName;
                     ///--------------------LLAMADA A CREAR CARTA--------------------
                     crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
                 }
@@ -208,10 +222,26 @@ function usuarioPredefinidoRRHH(data, name) {
     var usuRQ1 = new XMLHttpRequest();
     usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario1RRHH + "&key=" + appkeyRRHH + "&token=" + tokenRRHH);
     usuRQ1.send(datas);
+
     var usuRQ2 = new XMLHttpRequest();
     usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario2RRHH + "&key=" + appkeyRRHH + "&token=" + tokenRRHH);
     usuRQ2.send(datas);
     arrRQ.push(usuRQ1);
+
+    var usuRQ3 = new XMLHttpRequest();
+    usuRQ3.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario3RRHH + "&key=" + appkeyRRHH + "&token=" + tokenRRHH);
+    usuRQ3.send(datas);
+   
+
+    var usuRQ4 = new XMLHttpRequest();
+    usuRQ4.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario4RRHH + "&key=" + appkeyRRHH + "&token=" + tokenRRHH);
+    usuRQ4.send(datas);
+    
+
+    var usuRQ5 = new XMLHttpRequest();
+    usuRQ5.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario5RRHH + "&key=" + appkeyRRHH + "&token=" + tokenRRHH);
+    usuRQ5.send(datas);
+    
 
     usuRQ1.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {

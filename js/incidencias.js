@@ -35,7 +35,20 @@ function comprobarCampos() {
 }
 ///--------------------LIMPIAR CAMPOS DE LA SOLICITUD DE LA INCIDENCIA--------------------
 function incidenciasLimpiar() {
-    location.reload();
+    swal({
+        title: "¿Deseas limpiar la incidencia?",
+        text: "Se borrarán todos los campos",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      })
+      .then(function (willDelete) {
+        if (willDelete) {
+            location.reload()
+        } else {
+          swal("Continue con su incidencia");
+        }
+      });
 }
 ///--------------------IDENTIFAR EL NAVEGADOR--------------------
 function getBrowserInfo() {
@@ -58,7 +71,7 @@ function getBrowserInfo() {
 ///--------------------CREAR INCIDENDIA--------------------
 function incidenciasCrear() {
     for (let t = 0; t < registroCC.length; t++) {
-        if (registroCC[t].CompleteName == nombre.value) {
+        if (registroCC[t].Name +' '+registroCC[t].SecondName1+' '+registroCC[t].SecondName2 == nombre.value) {
             var tname = false
         }
     }

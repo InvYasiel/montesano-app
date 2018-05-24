@@ -78,6 +78,7 @@
                                     <input type="checkbox" class="incidenciasCheck" id="incidenciasCheck">
                                     <b id="dpImportante" style="display:none;"> ¡El departamento le dará prioridad a esta incidencia!</b>
                                 </div>
+                                <div style="color:rgba(170, 0, 0, 0.938)">Los campos (*) son obligatorios</div>
                                 <br>
                                 <div id="archivo">
                                     <input type="file" id="chooser0" class="chooser" onchange="cambio(this.id)" style="color: transparent" size="10000" />
@@ -141,16 +142,18 @@
                                     <input type="checkbox" class="incidenciasCheck" id="incidenciasCheckRRHH">
                                     <b id="dpImportanteRRHH" style="display:none;"> ¡El departamento le dará prioridad a esta incidencia!</b>
                                 </div>
+                                <div style="color:rgba(170, 0, 0, 0.938)">Los campos (*) son obligatorios</div>
                                 <br>
+
                                 <div id="archivoRRHH">
                                     <input type="file" id="chooserRRHH0" class="chooser" onchange="cambioRRHH(this.id)" style="color: transparent" size="10000"
                                     />
-                                    <div id="infofileRRHH"> Archivos adjuntos: </div>
-                                    <div id="muyGrandeRRHH"></div>
-                                    <br>
+                                   
                                 </div>
 
                             </div>
+                            <div id="infofileRRHH"> Archivos adjuntos: </div>
+                            <div id="muyGrandeRRHH"></div>
                         </div>
                         <div class="row ">
                             <div class="col-12" style="text-align: right">
@@ -256,7 +259,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" id='editAdmin' data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id='editAdmin' >Aceptar</button>
+                                <button type="button" class="btn btn-primary" id='editAdmin'>Aceptar</button>
                             </div>
                         </div>
                     </div>
@@ -273,7 +276,7 @@
                         <label for="buscador" style="font-size: 1.3em;">Nombre a buscar</label>
                         <input list="personasagenda" class="form-control mr-sm-2" type="text" placeholder="Enter para buscar" id="buscador" oninput="search(this);"
                             aria-label="Search">
-                            <i class="fas fa-plus-circle" style="width: 60px;margin:15px; cursor: pointer" data-toggle="modal" data-target="#ModalInformatica"></i>
+                        <i class="fas fa-plus-circle" style="width: 60px;margin:15px; cursor: pointer" data-toggle="modal" data-target="#ModalInformatica"></i>
                     </div>
                     <div id="extensiones">
                         <label for="ext" style="font-size: 1.3em; ">Extensión</label>
@@ -283,39 +286,65 @@
                         </datalist>
                     </div>
                     <div id="contagenda">
-                        
+
                     </div>
                 </div>
                 <!-- Modal New Person -->
                 <div class="modal fade" id="ModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Solo Informatica</h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Solo Informatica</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body" style="display:flex; flex-wrap: wrap">
+                                <span style="width: 45%;">Nombre:
+                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newNombre">
+                                </span>
+                                <span style="width: 45%;">Nº Fijo:
+                                    <input type="text" style=" width: 130px; " class="form-control mr-sm-2" id="newFijo">
+                                </span>
+                                <span style="width: 45%;">Extension:
+                                    <input type="number" style=" width: 100px; " class="form-control mr-sm-2" id="newExtension">
+                                </span>
+                                <span style="width: 45%;">Extension2:
+                                    <input type="number" style=" width: 100px; " class="form-control mr-sm-2" id="newExtension2">
+                                </span>
+                                <span style="width: 45%;">Numero de Movil:
+                                    <input type="text" style=" width: 100px; " class="form-control mr-sm-2"
+                                        id="newNumeroMovil">
+                                </span>
+                                <span style="width: 45%;">Extension Movil:
+                                    <input type="number" style=" width: 130px; " class="form-control mr-sm-2"
+                                        id="newExtensionMovil">
+                                </span>
+                                <span style="width: 45%;">Extension Voz IP:
+                                    <input type="number" style=" width: 100px; " class="form-control mr-sm-2"
+                                        id="newExtensionIP">
+                                </span>
+                                <span style="width: 45%;">Email:
+                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newEmail">
+                                </span>
+                                <span style="width: 45%;">Email2:
+                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newEmail2">
+                                </span>
+                                <span style="width: 45%;">Lugar de trabajo:
+                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2"
+                                        id="newLugar">
+                                </span>
+                                <span style="width: 45%;">Centro:
+                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newCentro">
+                                </span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary" onclick="insert()">Insertar</button>
+                            </div>
                         </div>
-                        <div class="modal-body" style="display:flex; flex-wrap: wrap">
-                          <span style="width: 45%;">Nombre:  <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newNombre" ></span>
-                          <span style="width: 45%;">Nº Fijo: <input type="text" style=" width: 130px; "  class="form-control mr-sm-2" id="newFijo" ></span>
-                          <span style="width: 45%;">Extension: <input type="number" style=" width: 100px; "  class="form-control mr-sm-2" id="newExtension" ></span>
-                          <span style="width: 45%;">Extension2: <input type="number" style=" width: 100px; "  class="form-control mr-sm-2" id="newExtension2" ></span>
-                          <span style="width: 45%;">Numero de Movil: <input type="text" style=" width: 100px; "  class="form-control mr-sm-2" id="newNumeroMovil" ></span>
-                          <span style="width: 45%;">Extension Movil: <input type="number" style=" width: 130px; "  class="form-control mr-sm-2" id="newExtensionMovil" ></span>
-                          <span style="width: 45%;">Extension Voz IP: <input type="number" style=" width: 100px; "  class="form-control mr-sm-2" id="newExtensionIP" ></span>
-                          <span style="width: 45%;">Email: <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newEmail" ></span>
-                          <span style="width: 45%;">Email2: <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newEmail2" ></span>
-                          <span style="width: 45%;">Lugar de trabajo: <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newLugar" ></span>
-                          <span style="width: 45%;">Centro: <input type="text" style=" width: 200px; "  class="form-control mr-sm-2" id="newCentro" ></span>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary" onclick="insert()">Insertar</button>
-                        </div>
-                      </div>
                     </div>
-                  </div>
+                </div>
                 <!-- RESERVAS -->
                 <div class="tab-pane fade" id="pills-Reserva" role="tabpanel" aria-labelledby="pills-Reserva-tab">
                     <div class="container" id="containerReservas">
@@ -367,13 +396,13 @@
                                             <label for="motivoReserva">Motivo de la Reserva (*)</label>
                                             <input type="text" class="form-control" id="motivoReserva" placeholder="Motivo...">
                                         </div>
-                                        
-                                        <div class="form-group col-12" >
-                                         <b>Hora a la que deseas ingresar:</b>
+
+                                        <div class="form-group col-12">
+                                            <b>Hora a la que deseas ingresar:</b>
                                             <label for="horaEntrada">Hora de entrada</label>
                                             <input type="time" class="form-control" readonly id="horaEntrada" style="width: 105px;" onchange="calcHora(this.id)" list="personas"
                                                 value="08:00" min="08:00" max="21:00" step="900">
-                                                <label for="horaSalida">Hora de salida</label>
+                                            <label for="horaSalida">Hora de salida</label>
                                             <input type="time" class="form-control" readonly id="horaSalida" style="width: 105px;" onchange="calcHora(this.id)" list="personas"
                                                 value="09:00" min="08:00" max="22:00" step="900">
                                         </div>
