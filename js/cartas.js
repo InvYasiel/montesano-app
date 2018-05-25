@@ -16,6 +16,7 @@ function recogerExt() {
             var datos = JSON.parse(this.responseText);
 
             for (let i = 0; i < datos.length; i++) {
+                datos[i].CompleteName = datos[i].Name;
                 registroCC.push(datos[i]);
                 exTMovil.push(datos[i].extMovil);
                 exTfijo.push(datos[i].Extension);
@@ -60,6 +61,28 @@ function registroA3() {
             }
 
 
+            registroCC.sort(function (a, b) {
+                var nombreCompletoA = '';
+                var nombreCompletoB = '';
+                nombreCompletoA = a.Name + ' ' + a.SecondName1 + ' ' + a.SecondName2
+                nombreCompletoB = b.Name + ' ' + b.SecondName1 + ' ' + b.SecondName2
+                if (a.SecondName1 == undefined && a.SecondName2 == undefined) {
+                    nombreCompletoA = a.Name
+                }
+                if (b.SecondName1 == undefined && b.SecondName2 == undefined) {
+                    nombreCompletoB = b.Name
+                }
+
+                if (nombreCompletoA > nombreCompletoB) {
+                    return 1;
+                }
+                if (nombreCompletoA < nombreCompletoB) {
+                    return -1;
+                }
+
+                // a must be equal to b
+                return 0;
+            });
             var contenedordatalistagenda = document.getElementById("personasagenda");
             var contenedordatalistincidencias = document.getElementById("personasincidencias");
             var contenedordatalistextensiones = document.getElementById('extension');
@@ -143,7 +166,7 @@ function registroA3() {
 
 
             registroCC.forEach(function (e) {
-                var name = e.Name +' '+ e.SecondName1+' '+ e.SecondName2;
+                var name = e.Name + ' ' + e.SecondName1 + ' ' + e.SecondName2;
 
                 var option = document.createElement("option");
                 option.value = name;
@@ -249,7 +272,6 @@ function search() {
                 var splitPalabra = palabra.split(' ');
                 for (let t = 0; t < splitPalabra.length; t++) {
                     if (registroCC[i].Observations != undefined) {
-                        registroCC[i].CompleteName.indexOf(splitPalabra[t])
                         if (registroCC[i].CompleteName.indexOf(splitPalabra[t]) == -1) {
                             vv = false;
                             break;
@@ -353,7 +375,7 @@ function carta(i) {
         }
         var t = ''
         for (let i = 0; i < emailsRRHH.length; i++) {
-            t += emailsInfo[i].direccion + ','
+            t += emailsInfo[i].direccion + ';'
         }
         var contpp = document.createElement('div');
         contpp.setAttribute('id', 'contpp')
@@ -370,7 +392,7 @@ function carta(i) {
         sendEmail.setAttribute('href', 'mailto:' + t + '?Subject=Sugerir correción%20en%20la%20agenda:%20' + registroCC[i].Name + '&body=Nombre: ' + registroCC[i].Name + '%0D%0ALugar de trabajo: ' + registroCC[i].CompanyName + ' (' + registroCC[i].Centro + ') ' + ' %0D%0AEmail: ' + registroCC[i].Email + '%0D%0AFijo: ' + registroCC[i].NumeroFijo + '%0D%0AExtensiones fijo: (' + registroCC[i].Extension + ') (' + registroCC[i].Extension2 + ') ' + '%0D%0AMovil: ' + registroCC[i].NumeroMovil + '%0D%0AExtensión Movil: ' + registroCC[i].extMovil);
         var editar = document.createElement('div');
         editar.setAttribute('id', 'updateInfo');
-        editar.innerHTML = '<i class="far fa-edit" style="color:red; cursor:pointer;" id="edit'+i+'" data-toggle="modal" onclick="soloEdit(this.id)"></i>';
+        editar.innerHTML = '<i class="far fa-edit" style="color:red; cursor:pointer;" id="edit' + i + '" data-toggle="modal" onclick="soloEdit(this.id)"></i>';
 
         contpp.appendChild(info);
         contpp.appendChild(sendEmail);
@@ -397,7 +419,7 @@ function carta(i) {
         var ex = new RegExp(/#\w+:.+#/g);
 
         var texto = registroCC[i].Observations.match(ex);
-        var lugarDeTrabajo = registroCC[i].WorkplaceName;
+        var lugarDeTrabajo = registroCC[i].CompanyName;
         if (texto == null) {
             exten = '';
 
@@ -419,7 +441,7 @@ function carta(i) {
                 } else if (sufijo == 'EMAIL2') {
                     extip = ' ' + texto[j].split(':')[1].replace('#', '');
                     Email2 += '<i class="far fa-envelope" style="font-size:20px" > </i> <a style="color: #ff4747;" href=mailto:' + extip + '>&nbsp;' + extip + '</a></br>';
-                }else if (sufijo == 'DEPARTAMENTO') {
+                } else if (sufijo == 'DEPARTAMENTO') {
                     extip = ' ' + texto[j].split(':')[1].replace('#', '');
                     depart += '</br><b>Departamento: </b>' + extip + ' ';
                 }
@@ -444,7 +466,7 @@ function carta(i) {
         if (registroCC[i].EmailAddress == '' || registroCC[i].EmailAddress == '0' || registroCC[i].EmailAddress == null || registroCC[i].EmailAddress == '.') {
             Email = ''
         }
-        if (registroCC[i].DirectPhoneNumber == '' || registroCC[i].DirectPhoneNumber == '0' || registroCC[i].DirectPhoneNumber == null) {
+        if ((extFijo1 == '') && (extnFijo == '') && (registroCC[i].DirectPhoneNumber == '') || (registroCC[i].DirectPhoneNumber == '0')) {
             FijoEx = ''
         }
         if (registroCC[i].CompanyMobilePhoneNumber == '' || registroCC[i].CompanyMobilePhoneNumber == '0' || registroCC[i].CompanyMobilePhoneNumber == null) {
@@ -461,11 +483,11 @@ function carta(i) {
         header.innerHTML = '<b style="width:82%" >' + registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + '</b>'
         var t = ''
         for (let i = 0; i < emailsRRHH.length; i++) {
-            t += emailsRRHH[i].direccion + ','
+            t += emailsRRHH[i].direccion + ';'
 
         }
 
-        texto.innerHTML = lugarDeTrabajo +depart + '</br>' + Email + Email2 + FijoEx + MovilEx + NuFax + Observa;
+        texto.innerHTML = lugarDeTrabajo + depart + '</br>' + Email + Email2 + FijoEx + MovilEx + NuFax + Observa;
         var contpp = document.createElement('div');
         contpp.setAttribute('id', 'contpp')
         var info = document.createElement('div');
@@ -543,4 +565,35 @@ var pill = document.getElementById('pills-Agenda')
 
 function limpiar() {
     pill.style.cssText = 'display:none;'
+}
+
+function filtradoPorEmpresaYnombre() {
+    setTimeout(function () {
+        var empresaAcutal = document.getElementById('empresas').value
+        var nombreActual = document.getElementById('buscador').value
+        nombreActual = nombreActual.toUpperCase();
+        contAgenda.innerHTML = '';
+
+        for (let i = 0; i < registroCC.length; i++) {
+            var vv = true;
+            if (empresaAcutal != 'TODAS') {
+                if (empresaAcutal != registroCC[i].CompanyName) {
+                    continue;
+                }
+            }
+            if (nombreActual != '') {
+                var splitPalabra = nombreActual.split(' ');
+                for (let t = 0; t < splitPalabra.length; t++) {
+                    if (registroCC[i].CompleteName.indexOf(splitPalabra[t]) == -1) {
+                        vv = false;
+                    }
+                }
+                if (!vv) {
+                    continue;
+                }
+            }
+            carta(i);
+        }
+
+    }, 1000);
 }

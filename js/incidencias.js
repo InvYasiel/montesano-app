@@ -89,7 +89,7 @@ function incidenciasCrear() {
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
         if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
             let descripcion = document.getElementById("incidenciasDescripcion").value;
-            var desc = descripcion + '%0A' + " Ip no disponible al usar Internet Explore. " + "Sistema operativo: " + OSName;
+            var desc = descripcion + '%0A' + " **Ip no disponible** al usar Internet Explore. " + " **Sistema operativo:** " + OSName;
             crearCarta(desc, myIP, OSName, fechaTrello, hora);
         } else { ///--------------------DEMAS NAVEGADORES--------------------
             //--------------------OBTENER IP--------------------
@@ -126,7 +126,7 @@ function incidenciasCrear() {
                         }
                         
                     }
-                    var desc = descripcion + '%0A' + " Ip: " + myIP + " Sistema operativo: " + OSName+ '%0A' + inciEm + inciTel + inciMovil;
+                    var desc = descripcion + '%0A' + " **Ip:** " + myIP + " **Sistema operativo:** " + OSName+ '%0A' + inciEm + inciTel + inciMovil;
                     ///--------------------LLAMADA A CREAR CARTA--------------------
                     crearCarta(desc, myIP, OSName, fechaTrello, hora);
                 }

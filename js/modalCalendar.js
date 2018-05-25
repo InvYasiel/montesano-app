@@ -24,7 +24,11 @@ function abrirmodal(dia) {
         hh[i].style.cssText = 'margin: 0; height:8px;width: 200px;position:relative;float:right;'
 
     }
-    ss.innerHTML = 'Reservas para ' + year + '-' + mes + '-' + diaSolo;
+    // ss.innerHTML = 'Reservas para ' + diaSolo + '/' + mes + '/' + year;
+    
+    var tituloMdl =document.getElementById('calendarioModalLabel');
+    tituloMdl.innerHTML = '';
+    tituloMdl.innerHTML = 'Reserva para la sala de '+salas[boton-1].nombre + ' el día ' + diaSolo + '/' + mes + '/' + year;
     //---------------------------------DIBUJAR GRAFICO --------------------------------- 
     var tt = 0;
     var selectedSala = document.getElementById("selectedSala").value;
@@ -167,7 +171,7 @@ $("#btn-ingresar").click(function () {
                     if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) > new Date(registro[i].entrada) && registro[i].sala == idSala) {
                         swal({
                             title: "Error!",
-                            text: "Intervalo de fechas ocupado",
+                            text: "Intervalo de horas ocupado",
                             icon: "error",
                             button: "Volver a intentar ",
                         });
@@ -177,7 +181,7 @@ $("#btn-ingresar").click(function () {
                     if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) > new Date(registro[i].salida) && registro[i].sala == idSala) {
                         swal({
                             title: "Error!",
-                            text: "Intervalo de fechas ocupado",
+                            text: "Intervalo de horas ocupado",
                             icon: "error",
                             button: "Volver a intentar ",
                         });
@@ -187,7 +191,7 @@ $("#btn-ingresar").click(function () {
                     if (new Date(fechaEntrada) > new Date(registro[i].entrada) && new Date(fechaEntrada) < new Date(registro[i].salida) && new Date(fechaSalida) > new Date(registro[i].salida) && registro[i].sala == idSala) {
                         swal({
                             title: "Error!",
-                            text: "Intervalo de fechas ocupado",
+                            text: "Intervalo de horas ocupado",
                             icon: "error",
                             button: "Volver a intentar ",
                         });
@@ -197,7 +201,7 @@ $("#btn-ingresar").click(function () {
                     if (new Date(fechaEntrada) >= new Date(registro[i].entrada) && new Date(fechaSalida) <= new Date(registro[i].salida) && registro[i].sala == idSala) {
                         swal({
                             title: "Error!",
-                            text: "Intervalo de fechas ocupado",
+                            text: "Intervalo de horas ocupado",
                             icon: "error",
                             button: "Volver a intentar ",
                         });
@@ -206,7 +210,7 @@ $("#btn-ingresar").click(function () {
                     }if (new Date(fechaEntrada) == new Date(registro[i].entrada) && new Date(fechaSalida) < new Date(registro[i].salida) && registro[i].sala == idSala) {
                         swal({
                             title: "Error!",
-                            text: "Intervalo de fechas ocupado",
+                            text: "Intervalo de horas ocupado",
                             icon: "error",
                             button: "Volver a intentar ",
                         });
@@ -215,7 +219,7 @@ $("#btn-ingresar").click(function () {
                     }if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) == new Date(registro[i].salida) && registro[i].sala == idSala) {
                         swal({
                             title: "Error!",
-                            text: "Intervalo de fechas ocupado",
+                            text: "Intervalo de horas ocupado",
                             icon: "error",
                             button: "Volver a intentar ",
                         });

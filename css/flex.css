@@ -19,18 +19,19 @@ h1 {
 }
 
 .calendar {
+    width: 600px;
+    height: 100%;
     margin: auto;
     border: 1px solid royalblue;
     border-radius: 10px solid;
     background-color: rgba(43, 43, 43, 0.86);
     color: white;
-    width: 70%;
-    font-size: 2vw;
+    /* width: 70%; */
+    font-size: 1.2em;
     padding: 1vw;
 }
 
 .seleccion {
-
     text-align: center;
 }
 
@@ -61,7 +62,8 @@ o {
 
 .dw,
 .week {
-    width: 80%;
+    width: 500px;
+    height: 50px;
     display: flex;
     justify-content: space-around;
 }
@@ -70,13 +72,13 @@ o {
 .days {
     text-align: center;
     cursor: pointer;
-    width: 5vw;
-    height: 4.3vw;
-    padding: 3px;
+    width: 4vw;
+    height: 4vw;
+    padding: 8px;
 }
 
-.days {
-    border: solid 1px bisque;
+.day {
+    border-bottom: solid 1px bisque;
 }
 
 .modalCC {
@@ -92,7 +94,6 @@ o {
     position: absolute;
     font-size: 18px;
     margin-top: 4px;
- 
 }
 
 .popover {
@@ -103,7 +104,6 @@ o {
     margin: 0;
     height: 8px;
     width: 200px;
-    
     position: relative;
     float: right;
 }
@@ -112,7 +112,6 @@ o {
     width: 150px;
     margin-right: 10px;
     margin: 10px;
-    
 }
 
 .hora {
@@ -147,7 +146,6 @@ o {
     justify-content: space-evenly;
     flex-wrap: wrap;
     top: -25px !important;
-
 }
 
 #contenidoCarta {
@@ -155,28 +153,30 @@ o {
 }
 
 #buscador {
-    
     width: 200px;
     height: 40px;
 }
 
 #seleccion {
-    
     width: 350px;
 }
-#contpp{
+
+#contpp {
     display: flex;
     margin-left: 10px;
     flex-wrap: wrap;
     justify-content: end;
 }
-#cabesera{
+
+#cabesera {
     display: flex;
 }
-#info{
-  margin-right:5px ;
-  font-size: 0.8em;
+
+#info {
+    margin-right: 5px;
+    font-size: 0.8em;
 }
+
 #btnJuntas {
     cursor: pointer;
     margin: 20px;
@@ -188,14 +188,16 @@ o {
     margin: 20px;
     width: 45%;
 }
+
 #cor {
-    
     font-size: 1.1em;
 }
-#email{
-    text-decoration:none;
-    color:rgba(214, 55, 55, 0.918);
+
+#email {
+    text-decoration: none;
+    color: rgba(214, 55, 55, 0.918);
 }
+
 .display-4 {
     font-size: 2.5rem;
     font-weight: 300;
@@ -204,10 +206,16 @@ o {
 
 #ext {
     /* display: flex; */
-    
     width: 100px;
     height: 40px;
 }
+
+/* @media (min-width: 576px) {
+    .container {
+        max-width: 740px !important ;
+    }
+} */
+
 
 @media (min-width: 576px) {
     .CC {
@@ -216,6 +224,7 @@ o {
         margin: 1.75rem auto;
     }
 }
+
 @media (max-width: 576px) {
     .CC {
         max-width: 800px;
@@ -224,60 +233,77 @@ o {
     }
 }
 
-
-.modalCC{
+.modalCC {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
-#actual{
+
+#actual {
     width: 100%;
 }
-#nombreabuscar{
-    width: 200px;
 
+#nombreabuscar {
+    width: 200px;
 }
-#extensiones{
+
+#extensiones {
     width: 50px;
 }
-#Dform{
+
+#Dform {
     width: 300px;
     margin-left: 10%;
 }
+
 #contendorbotones {
     flex-direction: column;
     display: flex;
-    margin:10px;
+    margin: 10px;
     margin-right: 100px;
-    
-    
 }
 
-#titleCC{
-    width: 110%;
-    text-align: left!important;
+#horaEntrada {
+    width: 105px;
+    cursor: pointer;
+    background-color: #bedcbe;
+    height: 30px;
+    margin-right: 20px;
 }
-#containerReservas{
+
+#horaSalida {
+    width: 105px;
+    cursor: pointer;
+    background-color: #bedcbe;
+    height: 30px;
+    margin-right: 20px;
+}
+
+#titleCC {
+    width: 110%;
+    text-align: left !important;
+}
+
+#containerReservas {
     display: flex;
     flex-wrap: wrap;
 }
+
 .mes {
-    width: 80% !important;
+  
     border-bottom: solid 1px bisque;
     font-weight: bold;
     font-size: 1.5em;
     padding: 10px;
     text-align: center;
 }
+
 .diaSemana,
 .day {
     text-align: center;
     cursor: pointer;
-    width: 6vw;
-    height: 4.3vw;
+    width: 80px;
     padding: 8px;
     background-color: none;
 }
-.day {
-    border: solid 1px bisque;
-}
+

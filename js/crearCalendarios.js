@@ -52,11 +52,17 @@ function crearBtns() {
     }
 }
 //----Crear calendario----
+var boton = ''
 function crearCalendarioGlobal(e) {
+    boton = '';
     creaCalendario(e);
     document.getElementById("selectedSala").value = e;
     var titulo = document.getElementById('tituloSala');
-
+    titulo.innerHTML = '';
+    
+    titulo.innerHTML += ' '+salas[e-1].nombre;
+    
+    boton = e;
 }
 var ContCalendario = document.getElementById('calendar');
 //----Crea los items del calendario----
@@ -188,7 +194,7 @@ function crearEsquema() {
         window['ho' + (i + 1)].setAttribute('id', 'enpunto');
         window['ho' + (i + 1)].setAttribute('class', horas[i]);
         window['ho' + (i + 1)].setAttribute('onclick', 'camhora(this.className)')
-        window['ho' + (i + 1)].setAttribute('title', 'click para seleccionar hora')
+        window['ho' + (i + 1)].setAttribute('title', 'CLICK para seleccionar hora de entrada.')
         window['ho' + (i + 1)].setAttribute('style', 'cursor:pointer;')
         window['ho' + (i + 1)].innerHTML = horas[i];
 
@@ -232,7 +238,7 @@ function crearEsquema() {
         contenedordatalist.removeChild(contenedordatalist.firstChild);
     }
     registroCC.forEach(function (e) {
-        if (e.CompleteName != undefined) {
+        if (e.Observations != undefined) {
             var name = e.CompleteName;
 
             var codigocompleto = e.CompanyCode + e.EmployeeCode.substring(2)

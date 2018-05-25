@@ -89,7 +89,7 @@ function incidenciasCrearRRHH() {
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
         if (getBrowserInfoRRHH() == 'IE 11' || getBrowserInfoRRHH() == 'Edge 16') {
             let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-            var desc = descripcionRRHH+ '%0A' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+  "Sistema operativo: " + OSName;
+            var desc = descripcionRRHH+ '%0A' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+  " **Sistema operativo:** " + OSName;
             crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
         } else { ///--------------------DEMAS NAVEGADORES--------------------
             //--------------------OBTENER IP--------------------
@@ -109,7 +109,7 @@ function incidenciasCrearRRHH() {
                     }
                     //--------------------VALORES DE LA DESCRIPCIÓN--------------------
                     let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-                    var desc = descripcionRRHH + '%0A' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+ " Ip: " + myIP + " Sistema operativo: " + OSName;
+                    var desc = descripcionRRHH + '%0A' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+ " Sistema operativo: " + OSName;
                     ///--------------------LLAMADA A CREAR CARTA--------------------
                     crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
                 }
