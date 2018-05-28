@@ -77,8 +77,8 @@ function incidenciasCrearRRHH() {
     }
     if (tnameRRHH == false) {
         var OSName = "Desconocido";
-        if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
-        if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
+        if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows ";
+        if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux ";
         //--------------------OTENER FECHA ACTUAL--------------------
         var fecha = new Date();
         var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
@@ -89,7 +89,7 @@ function incidenciasCrearRRHH() {
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
         if (getBrowserInfoRRHH() == 'IE 11' || getBrowserInfoRRHH() == 'Edge 16') {
             let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-            var desc = descripcionRRHH+ '%0A' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+  " **Sistema operativo:** " + OSName;
+            var desc = descripcionRRHH + '\n' +" **Email:** "+ em.value+ " **Teléfono: **"+tel.value+  " **Sistema operativo:** " + OSName;
             crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
         } else { ///--------------------DEMAS NAVEGADORES--------------------
             //--------------------OBTENER IP--------------------
@@ -109,7 +109,7 @@ function incidenciasCrearRRHH() {
                     }
                     //--------------------VALORES DE LA DESCRIPCIÓN--------------------
                     let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-                    var desc = descripcionRRHH + '%0A' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+ " Sistema operativo: " + OSName;
+                    var desc = descripcionRRHH + ' %0A ' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+ " Sistema operativo: " + OSName;
                     ///--------------------LLAMADA A CREAR CARTA--------------------
                     crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
                 }
@@ -128,12 +128,14 @@ function incidenciasCrearRRHH() {
 }
 ///--------------------CREAR CARTA--------------------
 function crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora) {
+  
     var h = "";
     var dat = null;
     var name = fechaTrello + ' ' + hora + ' ' + tituloRRHH.value + " Creado por: " + nombreRRHH.value;
     var xhr = new XMLHttpRequest();
+    desc = encodeURI(desc);
     desc = desc.replace(/\n/g, '%0A');
-    xhr.open("POST", "https://api.trello.com/1/cards?name=" + name + "&desc=" + desc + "&pos=top&idList=" + idlistRRHH + "&keepFromSource=all&key=" + appkeyRRHH + "&token=" + tokenRRHH);
+    xhr.open("POST", "https://api.trello.com/1/cards?name=" +encodeURI(name) + "&desc=" + desc + "&pos=top&idList=" + idlistRRHH + "&keepFromSource=all&key=" + appkeyRRHH + "&token=" + tokenRRHH);
     
     xhr.send(dat);
     xhr.addEventListener("readystatechange", function () {

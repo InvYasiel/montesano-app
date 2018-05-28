@@ -54,13 +54,20 @@ function crearBtns() {
 //----Crear calendario----
 var boton = ''
 function crearCalendarioGlobal(e) {
+    var chBoton = document.getElementById('sala'+e)
+    chBoton.setAttribute('class','btn btn-primary btn-salas');
+    arbotones = document.getElementsByClassName('btn-salas');
+    for (let i = 0; i < arbotones.length; i++) {
+        if(arbotones[i].id != 'sala'+e){
+            arbotones[i].setAttribute('class', 'btn btn-outline-primary salas btn-salas')
+        }
+        
+    }
+    
     boton = '';
     creaCalendario(e);
     document.getElementById("selectedSala").value = e;
-    var titulo = document.getElementById('tituloSala');
-    titulo.innerHTML = '';
     
-    titulo.innerHTML += ' '+salas[e-1].nombre;
     
     boton = e;
 }

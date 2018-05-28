@@ -60,7 +60,6 @@ function registroA3() {
                 }
             }
 
-
             registroCC.sort(function (a, b) {
                 var nombreCompletoA = '';
                 var nombreCompletoB = '';
@@ -72,32 +71,19 @@ function registroA3() {
                 if (b.SecondName1 == undefined && b.SecondName2 == undefined) {
                     nombreCompletoB = b.Name
                 }
-
                 if (nombreCompletoA > nombreCompletoB) {
                     return 1;
                 }
                 if (nombreCompletoA < nombreCompletoB) {
                     return -1;
                 }
-
-                // a must be equal to b
                 return 0;
             });
+
             var contenedordatalistagenda = document.getElementById("personasagenda");
             var contenedordatalistincidencias = document.getElementById("personasincidencias");
             var contenedordatalistextensiones = document.getElementById('extension');
 
-            // registroCC.forEach(function (e) {
-            //     var name = e.CompleteName;
-            //     if (e.CompleteName == undefined) {
-            //         var name = e.Name;
-            //     }
-            //     var option = document.createElement("option");
-            //     option.value = name;
-            //     option.innerText = name;
-
-            //     contenedordatalistagenda.appendChild(option);
-            // });
             registroCC.forEach(function (e) {
                 var exten = e.Extension;
                 if (exten == "0") {
@@ -137,6 +123,7 @@ function registroA3() {
                 }
 
             }
+
             for (let d = 0; d < exTfijo2.length; d++) {
                 var exten = exTfijo2[d]
                 if (exten == "0") {
@@ -150,6 +137,7 @@ function registroA3() {
                 }
 
             }
+
             for (let d = 0; d < extVozIp.length; d++) {
                 var exten = extVozIp[d]
                 if (exten == "0") {
@@ -164,10 +152,11 @@ function registroA3() {
 
             }
 
-
             registroCC.forEach(function (e) {
                 var name = e.Name + ' ' + e.SecondName1 + ' ' + e.SecondName2;
-
+                if(e.SecondName1 == undefined || e.SecondName2 == undefined ){
+                    name = e.Name
+                }
                 var option = document.createElement("option");
                 option.value = name;
                 option.innerText = name;
@@ -223,16 +212,9 @@ function generarCartas() {
 //---------------------------------FILTRO PARA BUSCAR---------------------------------  
 function search() {
     setTimeout(function () {
-
-
-        var vv = true;
         contAgenda.innerHTML = '';
         var extension = document.getElementById('ext').value
-        var palabra = buscador.value.toUpperCase();
-        var selIndex = document.getElementById("empresas").selectedIndex;
-        var selValue = document.getElementById("empresas").options[selIndex].innerHTML;
-
-        if (palabra == "" && extension == "") {
+        if (extension == "") {
             generarCartas();
         } else {
             for (let i = 0; i < registroCC.length; i++) {
@@ -249,49 +231,29 @@ function search() {
                     }
                 }
                 if (registroCC[i].Observations == undefined) {
-                    var nameEx = registroCC[i].Name.toUpperCase()
-                    if (nameEx.indexOf(palabra) >= 0 && registroCC[i].Extension.indexOf(extension) >= 0) {
+                    if (registroCC[i].Extension.indexOf(extension) >= 0) {
                         carta(i);
-                        spiner.setAttribute('style', 'display:none');
                     } else if (extension == registroCC[i].Extension || extension == registroCC[i].extMovil) {
                         carta(i);
-                        spiner.setAttribute('style', 'display:none');
-                    } else if (nameEx.indexOf(palabra) >= 0 && registroCC[i].Extension2.indexOf(extension) >= 0) {
+                    } else if (registroCC[i].Extension2.indexOf(extension) >= 0) {
                         carta(i);
-                        spiner.setAttribute('style', 'display:none');
-                    } else if (nameEx.indexOf(palabra) >= 0 && registroCC[i].extMovil.indexOf(extension) >= 0) {
+                    } else if (registroCC[i].extMovil.indexOf(extension) >= 0) {
                         carta(i);
-                        spiner.setAttribute('style', 'display:none');
-                    } else if (nameEx.indexOf(palabra) >= 0 && registroCC[i].extVozIP.indexOf(extension) >= 0) {
+                    } else if (registroCC[i].extVozIP.indexOf(extension) >= 0) {
+                        carta(i);
+                    }
+                } else {
+                    if (extension == registroCC[i].Extension || exten.indexOf(extension) >= 0 && extension != '') {
+                        carta(i);
+                    } else if (extension == '') {
                         carta(i);
                         spiner.setAttribute('style', 'display:none');
                     }
-
                 }
 
-                var splitPalabra = palabra.split(' ');
-                for (let t = 0; t < splitPalabra.length; t++) {
-                    if (registroCC[i].Observations != undefined) {
-                        if (registroCC[i].CompleteName.indexOf(splitPalabra[t]) == -1) {
-                            vv = false;
-                            break;
-                        } else {
-                            vv = true;
-                        }
-                    }
-
-                }
-                if (extension == registroCC[i].Extension || exten.indexOf(extension) >= 0 && extension != '') {
-                    carta(i);
-                    vv = false;
-                } else if (vv && extension == '') {
-                    carta(i);
-                    spiner.setAttribute('style', 'display:none');
-                }
             }
         }
     }, 1000);
-
 }
 
 //---------------------------------CREACIÓN DE LOS ELEMENTOS ---------------------------------  
@@ -309,12 +271,7 @@ function carta(i) {
     cardBody.setAttribute('id', 'contenidoCarta');
     var titulo = document.createElement('h5');
     titulo.setAttribute('class', 'card-title');
-    // if(registroCC[i].Name == 'Estéfano'  || registroCC[i].Name == 'ESTEFANO'||  registroCC[i].Name == 'estefano'|| registroCC[i].Name == 'ESTÉFANO' ){
-    //     alert('soy '+registroCC[i].Name)
-    // }
-    // if(registroCC[i].extension == '5170'){
-    //     alert('hola')
-    // }
+  
     if (registroCC[i].Observations == undefined) {
         var exFijo = '(' + registroCC[i].Extension + ') ';
         var exFijo2 = '(' + registroCC[i].Extension2 + ') ';
@@ -396,8 +353,8 @@ function carta(i) {
 
         contpp.appendChild(info);
         contpp.appendChild(sendEmail);
-        // texto.appendChild(editar);
-        header.appendChild(contpp)
+        header.appendChild(contpp);
+        // texto.appendChild(editar)
     } else {
 
 
@@ -474,7 +431,7 @@ function carta(i) {
         }
         if (registroCC[i].FaxNumber == '' || registroCC[i].FaxNumber == '0' || registroCC[i].FaxNumber == null) {
             NuFax = ''
-        } //no mostrar observaciones 
+        } 
         if (Observa.indexOf('<b>Observaciones: </b>') >= 0 || registroCC[i].Observations == '' || registroCC[i].Observations == '0' || registroCC[i].Observations == null) {
             Observa = ''
         }

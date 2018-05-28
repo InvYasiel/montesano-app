@@ -14,7 +14,7 @@ var appkey = "151bcd104f1742fdcf0b8c2f4a4c8764";
 var secret = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d16";
 
 var token = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
-var idlist = "5aaf6422caeb39da694e7dc1";
+var idlist = "5890852c1e1dc7fb0bd94521";//incidencias informática.
 var usuario1 = "5891c93eb1cfa471ee1fe47c";
 var usuario2 = "59a68c4e314350c790512ae9";
 

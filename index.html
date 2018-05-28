@@ -59,7 +59,7 @@
                         <div class="row">
                             <div class="form-group col-6">
                                 <label for="incidenciasNombre">Nombre (*)</label>
-                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombre" placeholder="Introduce tu nombre">
+                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombre" oninput="crearNombres()" placeholder="Introduce tu nombre">
                                 <datalist id="personasincidencias">
                                 </datalist>
                             </div>
@@ -139,7 +139,7 @@
                                 <textarea class="form-control" id="incidenciasDescripcionRRHH" rows="4" placeholder="Incidencia"></textarea>
                                 <div id="checked">
                                     <label for="incidenciasCheck" style="font-size: 20px;">Haz click aquí si es urgente &nbsp;</label>
-                                    <input type="checkbox" class="incidenciasCheck" id="incidenciasCheckRRHH">
+                                    <input type="checkbox" class="incidenciasCheckRRHH" id="incidenciasCheckRRHH">
                                     <b id="dpImportanteRRHH" style="display:none;"> ¡El departamento le dará prioridad a esta incidencia!</b>
                                 </div>
                                 <div style="color:rgba(170, 0, 0, 0.938)">Los campos (*) son obligatorios</div>
