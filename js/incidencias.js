@@ -14,12 +14,11 @@ var appkey = "151bcd104f1742fdcf0b8c2f4a4c8764";
 var secret = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d16";
 
 var token = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
-var idlist = "5890852c1e1dc7fb0bd94521";//incidencias informática.
-var usuario1 = "5891c93eb1cfa471ee1fe47c";
-var usuario2 = "59a68c4e314350c790512ae9";
+var idlist = "5890852c1e1dc7fb0bd94521"; //incidencias informática.
+var usuario1 = "5891c93eb1cfa471ee1fe47c";//bibiana
+var usuario2 = "59a68c4e314350c790512ae9";//borja
 
-
-///--------------------COMPROBAR CAMPOS OBLIGATORIOS--------------------
+//comprovamos que los campos obligatorios están rellenados
 function comprobarCampos() {
     let res = true;
     if (nombre.value == "" || titulo.value == "") {
@@ -33,24 +32,24 @@ function comprobarCampos() {
     }
     return res;
 }
-///--------------------LIMPIAR CAMPOS DE LA SOLICITUD DE LA INCIDENCIA--------------------
+// a la hora de limpiar la insidencia damos un aviso y recargamos la página
 function incidenciasLimpiar() {
     swal({
-        title: "¿Deseas limpiar la incidencia?",
-        text: "Se borrarán todos los campos",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then(function (willDelete) {
-        if (willDelete) {
-            location.reload()
-        } else {
-          swal("Continue con su incidencia");
-        }
-      });
+            title: "¿Deseas limpiar la incidencia?",
+            text: "Se borrarán todos los campos",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then(function (willDelete) {
+            if (willDelete) {
+                location.reload()
+            } else {
+                swal("Continue con su incidencia");
+            }
+        });
 }
-///--------------------IDENTIFAR EL NAVEGADOR--------------------
+//recogemos información del navegador en el que estamos actualmente
 function getBrowserInfo() {
     var ua = navigator.userAgent,
         tem,
@@ -68,31 +67,32 @@ function getBrowserInfo() {
     return M.join(' ');
 };
 
-///--------------------CREAR INCIDENDIA--------------------
+//Función que se inicia al crear la incidencia
 function incidenciasCrear() {
     for (let t = 0; t < registroCC.length; t++) {
-        if (registroCC[t].Name +' '+registroCC[t].SecondName1+' '+registroCC[t].SecondName2 == nombre.value) {
+        if (registroCC[t].Name + ' ' + registroCC[t].SecondName1 + ' ' + registroCC[t].SecondName2 == nombre.value) {
             var tname = false
         }
     }
     if (tname == false) {
         var OSName = "Desconocido";
+        //Obtenemos sistema operativo
         if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows";
         if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux";
-        //--------------------OTENER FECHA ACTUAL--------------------
+        //Obtenemos fecha actual
         var fecha = new Date();
         var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
         var hora = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-       var myIP ='';
+        var myIP = '';
 
-        //--------------------EN CASO DE QUE SE USE INTERNET EXPLORER O EDJE--------------------
+        //en caso de que se use internet explorer no podemos disponer de la IP
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
         if (getBrowserInfo() == 'IE 11' || getBrowserInfo() == 'Edge 16') {
             let descripcion = document.getElementById("incidenciasDescripcion").value;
             var desc = descripcion + '%0A' + " **Ip no disponible** al usar Internet Explore. " + " **Sistema operativo:** " + OSName;
             crearCarta(desc, myIP, OSName, fechaTrello, hora);
-        } else { ///--------------------DEMAS NAVEGADORES--------------------
-            //--------------------OBTENER IP--------------------
+        } else { //demás navegadores
+            //obtenemos la IP
             window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
             var pc = new RTCPeerConnection({
                     iceServers: []
@@ -107,27 +107,27 @@ function incidenciasCrear() {
 
                         pc.onicecandidate = noop;
                     }
-                    //--------------------VALORES DE LA DESCRIPCIÓN--------------------
+                    //Valores de la descripción en la incidensia
                     let descripcion = document.getElementById("incidenciasDescripcion").value;
                     var inciEm = '';
                     var inciTel = '';
                     var inciMovil = '';
                     for (let i = 0; i < registroCC.length; i++) {
-                        if(nombre.value == registroCC[i].CompleteName){
-                            if (registroCC[i].Observations == undefined){
-                                inciEm = 'Email: '+registroCC[i].Email;
-                                inciTel = ' | Teléfono: '+registroCC[i].NumeroFijo;
-                                inciMovil =' | Móvil: '+registroCC[i].NumeroMovil;
-                            }else{
-                            inciEm = 'Email: '+registroCC[i].EmailAddress;
-                            inciTel = ' | Teléfono: '+registroCC[i].DirectPhoneNumber;
-                            inciMovil =' | Móvil: '+registroCC[i].CompanyMobilePhoneNumber;
+                        if (nombre.value == registroCC[i].CompleteName) {
+                            if (registroCC[i].Observations == undefined) {
+                                inciEm = 'Email: ' + registroCC[i].Email;
+                                inciTel = ' | Teléfono: ' + registroCC[i].NumeroFijo;
+                                inciMovil = ' | Móvil: ' + registroCC[i].NumeroMovil;
+                            } else {
+                                inciEm = 'Email: ' + registroCC[i].EmailAddress;
+                                inciTel = ' | Teléfono: ' + registroCC[i].DirectPhoneNumber;
+                                inciMovil = ' | Móvil: ' + registroCC[i].CompanyMobilePhoneNumber;
                             }
                         }
-                        
+
                     }
-                    var desc = descripcion + '%0A' + " **Ip:** " + myIP + " **Sistema operativo:** " + OSName+ '%0A' + inciEm + inciTel + inciMovil;
-                    ///--------------------LLAMADA A CREAR CARTA--------------------
+                    var desc = descripcion + '%0A' + " **Ip:** " + myIP + " **Sistema operativo:** " + OSName + '%0A' + inciEm + inciTel + inciMovil;
+                    //llamamos a la función crear carta pasandole las variables necesarias
                     crearCarta(desc, myIP, OSName, fechaTrello, hora);
                 }
             }
@@ -140,10 +140,8 @@ function incidenciasCrear() {
             button: "Volver a intentar",
         });
     }
-    //--------------------OBTENER SO--------------------
-
 }
-///--------------------CREAR CARTA--------------------
+//POST a trello creando una carta
 function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
     var h = "";
     var data = null;
@@ -154,10 +152,11 @@ function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
     xhr.send(data);
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
+            //recogemos el id de la carta creada
             var dt = this.responseText;
             h = JSON.parse(dt).id;
             spiner.style.cssText = 'display:block';
-            //------------LLAMADA A FUNCIONES PARA RELLENAR LA CARTA -------------
+            //llamada a las funciones para rellenar la carta
             selecLabel(h);
             if (archivos.length > 0) {
                 adjuntos(h, name);
@@ -166,7 +165,7 @@ function crearCarta(desc, myIP, OSName, fechaTrello, hora) {
         }
     });
 }
-///--------------------MOSTRAR MENSAJE EN CASO DE QUE ESTÉ MARCADO EL CHECKBOX--------------------
+//En caso de que el checkbox "importante" esté marcado mostramos mensaje
 var importante = document.getElementById('incidenciasCheck');
 var dpImportante = document.getElementById('dpImportante');
 importante.addEventListener('click', function () {
@@ -176,7 +175,7 @@ importante.addEventListener('click', function () {
         dpImportante.style.cssText = 'display:none';
     }
 }, false)
-///--------------------CREAR LABEL IMPORTANTE--------------------
+//El label se crea si le damos a marcar importante, el label es añadirle el color rojo a la incidencia "Color rojo: 5aaf6396841642c2a8277156"
 function selecLabel(data) {
     var datas = null;
     if (importante.checked == true) {
@@ -185,13 +184,13 @@ function selecLabel(data) {
         checkRQ.send(datas);
     }
 }
-///--------------------CREAR Y ENVIAR LOS ARCHIVOS ADJUNTOS--------------------
+//función para adjuntar archivos a la "carta"
 function adjuntos(data, name) {
     var arrData = [];
     var formData = new FormData();
     formData.append("token", token);
     formData.append("key", appkey);
-    for (let i = 0; i < archivos.length; i++) {
+    for (let i = 0; i < archivos.length; i++) { //recorremos todos los archivos seleccionados y los vamos enviando uno a uno
         formData.append("file", archivos[i]);
         var request = new XMLHttpRequest();
         request.open("POST", "https://api.trello.com/1/cards/" + data + "/attachments?key=" + appkey + "&token=" + token);
@@ -202,7 +201,7 @@ function adjuntos(data, name) {
                 var finalizado = true;
 
                 for (let i = 0; i < arrData.length; i++) {
-                    if (arrData[i].readyState !== this.DONE) {
+                    if (arrData[i].readyState !== this.DONE) { //cuando esté finalizado mensaje de completado
                         finalizado = false;
                     }
                 }
@@ -214,7 +213,7 @@ function adjuntos(data, name) {
                             icon: "success",
                             button: "Cerrar",
                         })
-                        .then(function(value) {
+                        .then(function (value) {
                             swal(location.reload());
                         });
                 }
@@ -222,7 +221,7 @@ function adjuntos(data, name) {
         });
     }
 }
-///--------------------ELIMINAR ADJUNTOS--------------------
+//eliminamos tanto visualmente como del array que contienen los archivos adjuntos
 function eliminar(e) {
     var eliminarPapelera = document.getElementById(e);
     eliminarPapelera.parentElement.remove();
@@ -231,18 +230,16 @@ function eliminar(e) {
 
 }
 
-///--------------------CREAR LOS USUARIOS PREDEFINIDOS--------------------
+//creamos  usuarios predefinidos los cuales estarán etiquetados por defecto
 function usuarioPredefinido(data, name) {
+    var ArrUsu = [usuario1, usuario2]
     var arrRQ = [];
     var datas = null;
     var usuRQ1 = new XMLHttpRequest();
-    usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario1 + "&key=" + appkey + "&token=" + token);
-    usuRQ1.send(datas);
-    var usuRQ2 = new XMLHttpRequest();
-    usuRQ2.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + usuario2 + "&key=" + appkey + "&token=" + token);
-    usuRQ2.send(datas);
-    arrRQ.push(usuRQ1);
-
+    for (let i = 0; i < ArrUsu.length; i++) {
+        usuRQ1.open("POST", "https://api.trello.com/1/cards/" + data + "/idMembers?value=" + ArrUsu[i] + "&key=" + appkeyRRHH + "&token=" + tokenRRHH);
+        usuRQ1.send(datas);
+    }
     usuRQ1.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
             var finalizado = true;
@@ -252,41 +249,21 @@ function usuarioPredefinido(data, name) {
                 }
             }
             if (finalizado == true && archivos.length == 0) {
-                // for (let d = 0; d < registroCC.length; d++) {
-                //     if(registroCC[d].CompleteName == nombre.value){
-                //         var email = registroCC[d].EmailAddress
-                //     }
-                // }
-                // var infoParaEnviar = {
-                //     text: 'Incidencia ' + name,
-                //     correo: email
-                // };
-                // $.ajax({
-                //     type: "POST",
-                //     url: "php/correo.php",
-                //     data: infoParaEnviar,
-                //     dataType: "text",
-                //     asycn: false,
-                //     success: function () {
-                        spiner.style.cssText = 'display:none';
-                        swal({
-                                title: "Completado!",
-                                text: 'Incidencia ' + name,
-                                icon: "success",
-                                button: "Cerrar",
-                            })
-                            .then(function(value){
-                                swal(location.reload());
-                            });
-                    // }
-                // });
-
-
+                spiner.style.cssText = 'display:none';
+                swal({
+                        title: "Completado!",
+                        text: 'Incidencia ' + name,
+                        icon: "success",
+                        button: "Cerrar",
+                    })
+                    .then(function (value) {
+                        swal(location.reload());
+                    });
             }
         }
     });
 }
-///--------------------CREAR ARCHIVOS ADJUNTOS DE MANERA VISIBLE--------------------
+
 var archivos = []
 var rutas = []
 var cont = 0;

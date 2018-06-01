@@ -1,5 +1,7 @@
-function limpiar() {
+function limpiarS() {
     pill.style.cssText = 'display:none;'
+    
+    document.getElementById('Incidencias').style.cssText = 'display:none'
 }
 
 var registro = [];
@@ -16,6 +18,9 @@ function recogerDatos(idSala) {
             var fechas = JSON.parse(this.responseText);
 
             for (let i = 0; i < fechas.length; i++) {
+                if(fechas[i].usuarioEliminar != ''  ){
+                    continue;
+                }
                 registro.push(fechas[i]);
             }
             if (idSala == undefined) {
@@ -25,12 +30,14 @@ function recogerDatos(idSala) {
             }
         }
     };
-    xmlhttp.open("GET", "php/reservas.php", true);
+    xmlhttp.open("GET", "php/reservas.php?_=" + new Date().getTime(), true);// new Date().getTime() lo usamos porque en explorer estaba cacheando la consulta y 
+                                                                            //así modificamos la url consiguiendo que sea otra consulta
     xmlhttp.send();
 }
 var ContReservas = document.getElementById('containerReservas');
 //----Crea Botones según el numero de salas----
 function crearBtns() {
+    document.getElementById('Incidencias').style.cssText = 'display:none'
     var Arbtn = document.getElementsByClassName('salas');
     var unique = [];
     for (let i = 0; i < registro.length; i++) {

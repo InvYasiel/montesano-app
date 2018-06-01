@@ -6,7 +6,9 @@
 h1 {
     text-align: center;
 }
-
+.btn-departamentos{
+    margin: 5px;
+}
 .seleccion {
     margin-bottom: 10px;
 }

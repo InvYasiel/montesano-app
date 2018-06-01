@@ -1,6 +1,17 @@
 var seleccionado = '';
+function random_rgba() {
+
+    var colores = ['#00CB4335', '#002471A3', '#00F39C12', '#005D6D7E', '#0027AE60', '#0076448A', '#007B7D7D', '#00117A65', '#00F4D03F', '#00E59866', '#00AED6F1', '#00D98880', '#0048C9B0', '#0073C6B6', '#00512E5F'];
+    var rand = colores[Math.floor(Math.random() * colores.length)];
+    return rand;
+}
+
+
+
+var colores = ['red', 'orange', 'yellow', 'green', 'blue', 'pink', 'brown'];
+
 function abrirmodal(dia) {
-    
+
     var horaEntrada = document.getElementById('horaEntrada').value = "00:00";
     var horaSalida = document.getElementById('horaSalida').value = "00:00";
     crearEsquema();
@@ -16,7 +27,7 @@ function abrirmodal(dia) {
         diaModal[i].innerHTML = "";
     }
     var hh = document.getElementsByClassName('hh');
-    seleccionado = year + '-' + mes + '-' + diaSolo;
+    seleccionado = year + '/' + mes + '/' + diaSolo;
     var fechaEntrada = seleccionado + ' ' + horaEntrada + ':00';
     var fechaSalida = seleccionado + ' ' + horaSalida + ':00';
     var dd = document.getElementById(fechaEntrada.substring(8, 10) + ' ' + fechaEntrada.substring(6, 7));
@@ -25,25 +36,30 @@ function abrirmodal(dia) {
 
     }
     // ss.innerHTML = 'Reservas para ' + diaSolo + '/' + mes + '/' + year;
-    
-    var tituloMdl =document.getElementById('calendarioModalLabel');
+
+    var tituloMdl = document.getElementById('calendarioModalLabel');
     tituloMdl.innerHTML = '';
-    tituloMdl.innerHTML = 'Reserva para la sala de '+salas[boton-1].nombre + ' el día ' + diaSolo + '/' + mes + '/' + year;
+    tituloMdl.innerHTML = 'Reserva para la sala de ' + salas[boton - 1].nombre + ' el día ' + diaSolo + '/' + mes + '/' + year;
     //---------------------------------DIBUJAR GRAFICO --------------------------------- 
     var tt = 0;
     var selectedSala = document.getElementById("selectedSala").value;
+    
+    
     for (let i = 0; i < registro.length; i++) {
-        if (registro[i].entrada.substring(10, -1) == seleccionado && registro[i].sala == selectedSala) {
+        var cadena = registro[i].entrada.substring(10, -1);
+    var re = /-/g;
+    var resultado = cadena.replace(re, '/');
+        if (resultado == seleccionado && registro[i].sala == selectedSala) {
             var randomrgba = colores[tt];
             tt++
-            if(tt == 10){
+            if (tt == 6) {
                 tt = 0;
             }
             var coderight = registro[i].Usuario.substring(4, 8)
             var codeleft = registro[i].Usuario.substring(0, 4);
             var employeecode = "00" + coderight;
             var employeeName = "";
-            registroCC.forEach(function(e) {
+            registroCC.forEach(function (e) {
                 if (e.EmployeeCode == employeecode && e.CompanyCode == codeleft) {
                     employeeName = e.Name;
                 }
@@ -105,30 +121,32 @@ function abrirmodal(dia) {
     }
     //---------------------------------ABRIMOS MODAL ---------------------------------  
     $("#calendarioModal").modal();
-    
+
 }
 $("#btn-ingresar").click(function () {
     var v = true;
     //---------------------------------AÑADIMOS NUEVA FECHA ---------------------------------  
     var horaEntrada = document.getElementById('horaEntrada').value;
     var horaSalida = document.getElementById('horaSalida').value;
-    if(parseInt(horaEntrada.substring(0,2)) < 8 || parseInt(horaSalida.substring(0,2)) > 23 ) {
-        
+    if (parseInt(horaEntrada.substring(0, 2)) < 8 || parseInt(horaSalida.substring(0, 2)) > 23) {
+
         swal({
-                    title: "Error!",
-                    text: "La fecha de salida seleccionada esta fuera de horario",
-                    icon: "error",
-                    button: "Volver a intentar ",
-                });
-    }else{
+            title: "Error!",
+            text: "La fecha de salida seleccionada esta fuera de horario",
+            icon: "error",
+            button: "Volver a intentar ",
+        });
+    } else {
         var fechaEntrada = seleccionado + ' ' + horaEntrada + ':00';
         var fechaSalida = seleccionado + ' ' + horaSalida + ':00';
+
         var f = new Date();
-        var fActual =f.getFullYear() + "-" + (f.getMonth() +1) + "-" +f.getDate();
-        if(new Date(fActual) < new Date(fechaEntrada)){
+
+        var ee = new Date(fechaEntrada);
+        if (f < ee) {
             var idUsuario = document.getElementById('usuarioElegido').value;
             for (let t = 0; t < registroCC.length; t++) {
-                if (registroCC[t].CompleteName  == idUsuario) {
+                if (registroCC[t].CompleteName == idUsuario) {
                     v = false;
                 }
             }
@@ -139,7 +157,7 @@ $("#btn-ingresar").click(function () {
                 var us = ''
                 var v = true;
                 for (let i = 0; i < registro.length; i++) {
-                    if(parseInt(horaEntrada.substring(0,2))<08 || parseInt(horaEntrada.substring(0,2)) >22 ){
+                    if (parseInt(horaEntrada.substring(0, 2)) < 08 || parseInt(horaEntrada.substring(0, 2)) > 22) {
                         swal({
                             title: "Error!",
                             text: "La fecha de entrada seleccionada esta fuera de horario",
@@ -148,8 +166,8 @@ $("#btn-ingresar").click(function () {
                         });
                         v = false;
                         break;
-                    } 
-                    if(parseInt(horaSalida.substring(0,2))<08 || parseInt(horaSalida.substring(0,2)) >23 ){
+                    }
+                    if (parseInt(horaSalida.substring(0, 2)) < 08 || parseInt(horaSalida.substring(0, 2)) > 23) {
                         swal({
                             title: "Error!",
                             text: "La fecha de salida seleccionada esta fuera de horario",
@@ -158,8 +176,8 @@ $("#btn-ingresar").click(function () {
                         });
                         v = false;
                         break;
-                    } 
-                    
+                    }
+
                     if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) == new Date(registro[i].salida) && registro[i].sala == idSala) {
                         v = true;
                         break;
@@ -207,7 +225,8 @@ $("#btn-ingresar").click(function () {
                         });
                         v = false;
                         break;
-                    }if (new Date(fechaEntrada) == new Date(registro[i].entrada) && new Date(fechaSalida) < new Date(registro[i].salida) && registro[i].sala == idSala) {
+                    }
+                    if (new Date(fechaEntrada) == new Date(registro[i].entrada) && new Date(fechaSalida) < new Date(registro[i].salida) && registro[i].sala == idSala) {
                         swal({
                             title: "Error!",
                             text: "Intervalo de horas ocupado",
@@ -216,7 +235,8 @@ $("#btn-ingresar").click(function () {
                         });
                         v = false;
                         break;
-                    }if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) == new Date(registro[i].salida) && registro[i].sala == idSala) {
+                    }
+                    if (new Date(fechaEntrada) < new Date(registro[i].entrada) && new Date(fechaSalida) == new Date(registro[i].salida) && registro[i].sala == idSala) {
                         swal({
                             title: "Error!",
                             text: "Intervalo de horas ocupado",
@@ -239,7 +259,7 @@ $("#btn-ingresar").click(function () {
                         icon: "error",
                         button: "Volver a intentar",
                     });
-        
+
                     v = false;
                 }
                 if (motivo == '' || motivo == null) {
@@ -272,28 +292,28 @@ $("#btn-ingresar").click(function () {
                     });
                     var dd = document.getElementById(fechaEntrada.substring(8, 10) + ' ' + fechaEntrada.substring(6, 7));
                     $("#calendarioModal").modal("hide");
-                    
+
                     var name = '';
                     var fullcode = us;
                     var coderight = fullcode.substring(4, 8);
                     var employeecode = "00" + coderight;
-                    registroCC.forEach(function(e) {
+                    registroCC.forEach(function (e) {
                         if (e.EmployeeCode == employeecode && e.CompanyCode == fullcode.substring(0, 4)) {
                             name = e.CompleteName;
                         }
                     });
                     var mensaje = "Reserva confirmada para " + name + " desde las " + fechaEntrada.substring(11, 16) + " hasta las " + fechaSalida.substring(11, 16) + " del día " + fechaEntrada.substring(8, 10) + '-' + fechaEntrada.substring(5, 7) + "-" + fechaEntrada.substring(0, 4) + ""
-                    
+
                     swal({
-                        title: "Completado!",
-                        text: mensaje,
-                        icon: "success",
-                        button: "Cerrar",
-                      })
-                      .then(function(value) {
-                        swal(dd.click());
-                      });
-                      
+                            title: "Completado!",
+                            text: mensaje,
+                            icon: "success",
+                            button: "Cerrar",
+                        })
+                        .then(function (value) {
+                            swal(dd.click());
+                        });
+
                 }
             } else {
                 swal({
@@ -302,9 +322,9 @@ $("#btn-ingresar").click(function () {
                     icon: "error",
                     button: "Volver a intentar",
                 });
-        
+
             }
-        }else{
+        } else {
             swal({
                 title: "Error!",
                 text: "El día seleccionado es menor la fecha actual",
@@ -312,15 +332,8 @@ $("#btn-ingresar").click(function () {
                 button: "Volver a intentar",
             });
         }
-        
+
     }
-   
+
 });
 
-function random_rgba() {
-   
-    var colores= ['rgba(203, 67, 53)','rgba(36, 113, 163)','rgba(243, 156, 18)','rgba(93, 109, 126)','rgba(39, 174, 96)','rgba(118, 68, 138)', 'rgba(123, 125, 125)', 'rgba(17, 122, 101)', 'rgba(244, 208, 63)']
-    var rand = colores[Math.floor(Math.random() * colores.length)];
-    return rand;
-}
-var colores= ['rgba(203, 67, 53)','rgba(36, 113, 163)','rgba(243, 156, 18)','rgba(93, 109, 126)','rgba(39, 174, 96)','rgba(118, 68, 138)', 'rgba(123, 125, 125)', 'rgba(17, 122, 101)', 'rgba(244, 208, 63)', 'rgba(229, 152, 102)' , 'rgba(174, 214, 241)' , 'rgba(217, 136, 128)' , 'rgba(72, 201, 176)' , 'rgba(115, 198, 182)' , 'rgba(81, 46, 95)']

@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Montesano</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <link rel="stylesheet" type="text/css" href="clockpicker/dist/bootstrap-clockpicker.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="img/logo.png">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
@@ -25,47 +28,51 @@
             </div>
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-InicidenciasRRHH-tab" data-toggle="pill" href="#pills-InicidenciasRRHH" role="tab" onclick="limpiar()"
-                        aria-controls="pills-InicidenciasRRHH" aria-selected="false">Inicidencias RRHH</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" onclick="limpiar()" aria-controls="pills-home"
-                        aria-selected="true">Incidencias Informática</a>
+                    <a class="nav-link" id="pills-InicidenciasRRHH-tab" data-toggle="pill" href="#incidencias" role="tab" onclick="limpiar()"
+                        aria-controls="pills-InicidenciasRRHH" aria-selected="false">Inicidencias</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" onclick="generarCartas()" aria-controls="pills-Agenda"
                         aria-selected="false">Agenda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-Reserva-tab" onclick="limpiar()" data-toggle="pill" href="#pills-Reserva" role="tab" onclick="limpiar()"
-                        aria-controls="pills-Reserva" aria-selected="false">Reserva de salas</a>
+                    <a class="nav-link" id="pills-Reserva-tab" onclick="limpiarS()" data-toggle="pill" href="#pills-Reserva" role="tab" aria-controls="pills-Reserva"
+                        aria-selected="false">Reserva de salas</a>
                 </li>
             </ul>
 
 
             <div class="tab-content" id="pills-tabContent" style="width: 100%">
                 <br>
+                <!-- incidencias -->
+                <div id="Incidencias" style="display:flex;" role="tabpanel" aria-labelledby="pills-Agenda-tab">
+
+                </div>
+
                 <!-- INCIDENDCIAS -->
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                <div id="INFORMATICAform" style="display:none" aria-labelledby="pills-home-tab">
                     <div class="container">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <h1 class="display-4">Incidencias</h1>
-                                <p class="lead">Utilice el siguiente formulario para crear una incidencia.</p>
+                                <h2>Incidencias Informática</h2>
                                 <br>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-6">
+                            <div class="form-group col-4">
                                 <label for="incidenciasNombre">Nombre (*)</label>
                                 <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombre" oninput="crearNombres()" placeholder="Introduce tu nombre">
                                 <datalist id="personasincidencias">
                                 </datalist>
                             </div>
-                            <div class="form-group col-6">
+                            <div class="form-group col-4">
                                 <label for="incidenciasTitulo">Titulo (*)</label>
                                 <input type="text" class="form-control" id="incidenciasTitulo" placeholder="">
+                            </div>
+                            <div class="form-group col-4" id="contTipoInfo">
+                                <label for="incidenciasTitulo">Tipo de incidencia (*)</label>
+                                <select name="tipo" id="tipoInfo" class="custom-select"></select>
                             </div>
                         </div>
 
@@ -100,27 +107,31 @@
                 </div>
 
                 <!-- INCIDENDCIAS RRHH-->
-                <div class="tab-pane fade" id="pills-InicidenciasRRHH" role="tabpanel" aria-labelledby="pills-InicidenciasRRHH-tab">
+                <div id="RRHHform" style="display:none" aria-labelledby="pills-InicidenciasRRHH-tab">
                     <div class="container">
                         <div class="row">
                             <div class="col-12 text-center">
-                                <h1 class="display-4">Incidencias RRHH</h1>
-                                <p class="lead">Utilice el siguiente formulario para crear una incidencia.</p>
+                                <h2>Incidencias RRHH</h2>
                                 <br>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="form-group col-6">
+                            <div class="form-group col-4">
                                 <label for="incidenciasNombreRRHH">Nombre (*)</label>
                                 <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombreRRHH" placeholder="Introduce tu nombre">
                                 <datalist id="personasincidencias">
                                 </datalist>
                             </div>
-                            <div class="form-group col-6">
+
+                            <div class="form-group col-4">
                                 <label for="incidenciasTituloRRHH">Titulo (*)</label>
                                 <input type="text" class="form-control" id="incidenciasTituloRRHH" placeholder="">
                             </div>
+                            <div class="form-group col-4" id="contTipoRRHH">
+                                    <label for="incidenciasTitulo">Tipo de incidencia (*)</label>
+                                   <select name="tipo" id="tipoRH" class="custom-select" ></select>
+                                </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-6">
@@ -281,7 +292,7 @@
                     <div id="extensiones">
                         <label for="ext" style="font-size: 1.3em; ">Extensión</label>
                         <input list="extension" class="form-control mr-sm-2" title="Enter para buscar por extension" data-toggle="tooltip" data-original-title='Enter para buscar'
-                            type="text" placeholder="nº" id="ext" oninput="search(this);" aria-label="Search">
+                            type="text" placeholder="nº" id="ext" oninput="search(this)" aria-label="Search">
                         <datalist id="extension">
                         </datalist>
                     </div>
@@ -392,19 +403,19 @@
                                             <label for="motivoReserva">Motivo de la Reserva (*)</label>
                                             <input type="text" class="form-control" id="motivoReserva" placeholder="Motivo...">
                                         </div>
-                                        
-                                       
+
+
                                         <div class="entrada" style="width: 50%">
-                                            <b for="horaEntrada" >Hora de entrada</b>
+                                            <b for="horaEntrada">Hora de entrada</b>
                                             <input type="time" class="form-control" readonly id="horaEntrada" style="width: 105px;" onchange="calcHora(this.id)" list="personas"
-                                            value="08:00" min="08:00" max="21:00" step="900">
+                                                value="08:00" min="08:00" max="21:00" step="900">
                                         </div>
                                         <div class="salida" style="width: 50%">
-                                            <b for="horaSalida" >Hora de salida</b>
+                                            <b for="horaSalida">Hora de salida</b>
                                             <input type="time" class="form-control" readonly id="horaSalida" style="width: 105px;" onchange="calcHora(this.id)" list="personas"
                                                 value="09:00" min="08:00" max="22:00" step="900">
                                         </div>
-                                        
+
                                     </div>
                                     <br>
                                 </div>
@@ -421,7 +432,8 @@
     </div>
 
     <script src=" https://unpkg.com/sweetalert/dist/sweetalert.min.js "></script>
-
+    <script src="php/reservas.php"></script>
+    <script src="js/incidenciasRI.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -439,9 +451,9 @@
             jQuery('span.' + idname).next().find('span').html(filename);
         });
     </script>
-    <script src="js/insertNew.js"></script>
-    <script src="js/correos.js"></script>
-    <script src="js/clock.js"></script>
+    <script type="application/javascript" src="js/insertNew.js"></script>
+    <script type="application/javascript" src="js/correos.js"></script>
+    <script type="application/javascript" src="js/clock.js"></script>
     <script type="text/javascript" src="clockpicker/assets/js/highlight.min.js"></script>
     <script type="text/javascript">
         hljs.configure({
@@ -449,16 +461,16 @@
         });
         hljs.initHighlightingOnLoad();
     </script>
-
+    <script type="application/javascript" src="js/datosCalendar.js"></script>
     <script type="application/javascript" src="js/incidencias.js"></script>
     <script type="application/javascript" src="js/incidenciasRRHH.js"></script>
-    <script src="js/cartas.js"></script>
+    <script type="application/javascript" src="js/cartas.js"></script>
     <script type="application/javascript" src="js/crearCalendarios.js"></script>
-    <script src="js/datosCalendar.js"></script>
-    <script src="js/modalCalendar.js"></script>
-    <script src="js/admin.js"></script>
-    <script src="js/CC.js"></script>
 
+
+    <script type="application/javascript" src="js/admin.js"></script>
+    <script type="application/javascript" src="js/CC.js"></script>
+    <script type="application/javascript" src="js/modalCalendar.js"></script>
 </body>
 
 

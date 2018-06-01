@@ -3,7 +3,7 @@ var exTMovil = []
 var exTfijo = []
 var exTfijo2 = []
 var extVozIp = []
-
+//función pra recoger los datos de  la BBDD Informática
 function recogerExt() {
 
     if (window.XMLHttpRequest) {
@@ -28,10 +28,10 @@ function recogerExt() {
     xmlhttp.open("GET", "php/extensiones.php", true);
     xmlhttp.send();
 }
-//---------------------------------LLAMADA A CARTAS.PHP---------------------------------  
+
 
 var registroCC = [];
-
+//función pra recoger los datos de  la BBDD A3
 function registroA3() {
     recogerExt();
     if (window.XMLHttpRequest) {
@@ -79,51 +79,43 @@ function registroA3() {
                 }
                 return 0;
             });
-
-            var contenedordatalistagenda = document.getElementById("personasagenda");
             var contenedordatalistincidencias = document.getElementById("personasincidencias");
             var contenedordatalistextensiones = document.getElementById('extension');
 
+//Rellenamos los datlist que muestran los nombres en incidencias y las extensiones en la agenda
             registroCC.forEach(function (e) {
                 var exten = e.Extension;
                 if (exten == "0") {
-
                 } else {
                     var option = document.createElement("option");
                     option.value = exten;
                     option.innerText = exten;
-
                     contenedordatalistextensiones.appendChild(option);
                 }
             });
-
+            
             for (let d = 0; d < exTMovil.length; d++) {
                 var exten = exTMovil[d]
                 if (exten == "0") {
-
                 } else {
                     var option = document.createElement("option");
                     option.value = exten;
                     option.innerText = exten;
-
                     contenedordatalistextensiones.appendChild(option);
                 }
-
             }
+            
             for (let d = 0; d < exTfijo.length; d++) {
                 var exten = exTfijo[d]
                 if (exten == "0") {
-
                 } else {
                     var option = document.createElement("option");
                     option.value = exten;
                     option.innerText = exten;
-
                     contenedordatalistextensiones.appendChild(option);
                 }
-
             }
-
+            
             for (let d = 0; d < exTfijo2.length; d++) {
                 var exten = exTfijo2[d]
                 if (exten == "0") {
@@ -135,23 +127,19 @@ function registroA3() {
 
                     contenedordatalistextensiones.appendChild(option);
                 }
-
             }
-
+            
             for (let d = 0; d < extVozIp.length; d++) {
                 var exten = extVozIp[d]
                 if (exten == "0") {
-
                 } else {
                     var option = document.createElement("option");
                     option.value = exten;
                     option.innerText = exten;
-
                     contenedordatalistextensiones.appendChild(option);
                 }
-
             }
-
+            
             registroCC.forEach(function (e) {
                 var name = e.Name + ' ' + e.SecondName1 + ' ' + e.SecondName2;
                 if(e.SecondName1 == undefined || e.SecondName2 == undefined ){
@@ -163,41 +151,34 @@ function registroA3() {
 
                 contenedordatalistincidencias.appendChild(option);
             });
-
+            
             var filteredEmpresas = [];
-
             registroCC.forEach(function (element) {
                 if (filteredEmpresas.indexOf(element.CompanyName) == -1) {
                     filteredEmpresas.push(element.CompanyName);
                 }
             });
-
+            
             var conentedorempresas = document.getElementById('empresas');
-
             filteredEmpresas.forEach(function (e) {
                 var option = document.createElement("option");
                 option.value = e;
                 option.innerText = e;
-
                 conentedorempresas.appendChild(option);
             });
-
         }
-
     };
     xmlhttp.open("GET", "php/cartas.php", true);
-
     xmlhttp.send();
 }
 
 
 
-
-//---------------------------------GENERAR TODAS LA AGENDA COMO CARTAS---------------------------------  
 var contAgenda = document.getElementById('contagenda');
 var buscador = document.getElementById('buscador');
-
+//función que genera todas las cartas de la agenda
 function generarCartas() {
+    document.getElementById('Incidencias').style.cssText = 'display:none'
     spiner.setAttribute('style', 'display:block');
     setTimeout(function () {
         pill.style.cssText = 'display:flex;'
@@ -209,7 +190,8 @@ function generarCartas() {
     }, 1000);
 }
 
-//---------------------------------FILTRO PARA BUSCAR---------------------------------  
+
+//función para filtrar por extensiones  
 function search() {
     setTimeout(function () {
         contAgenda.innerHTML = '';
@@ -219,18 +201,18 @@ function search() {
         } else {
             for (let i = 0; i < registroCC.length; i++) {
                 var exten = ''
-                var ex = new RegExp(/#\w+:\w+#/g);
+                var ex = new RegExp(/#\w+:\w+#/g); //expresión regular
                 if (registroCC[i].Observations != undefined) {
-                    var texto = registroCC[i].Observations.match(ex);
+                    var texto = registroCC[i].Observations.match(ex); //ejecutamos la expresión regular sobre las Observsiones 
                     if (texto != null) {
                         for (let j = 0; j < texto.length; j++) {
                             if (texto[j] != '') {
-                                exten += ' ' + texto[j].split(':')[1].replace('#', '')
+                                exten += ' ' + texto[j].split(':')[1].replace('#', '') //dividimos la palabra en dos cadenas y nos quedamos con la segunda, ya que la primera sería [0]
                             }
                         }
                     }
                 }
-                if (registroCC[i].Observations == undefined) {
+                if (registroCC[i].Observations == undefined) {//Si no existe Observations esque recibimos los datos de Informática y las extensiones son diferentes
                     if (registroCC[i].Extension.indexOf(extension) >= 0) {
                         carta(i);
                     } else if (extension == registroCC[i].Extension || extension == registroCC[i].extMovil) {
@@ -256,9 +238,9 @@ function search() {
     }, 1000);
 }
 
-//---------------------------------CREACIÓN DE LOS ELEMENTOS ---------------------------------  
-
+//función que crea una carta cada vez que se ejecuta
 function carta(i) {
+    //creamos el elemento
     var card = document.createElement('div');
     card.setAttribute('class', 'card text-white border-dark bg-secondary mb-3');
     card.setAttribute('style', 'width: 330px; max-width: 23rem; margin:5px;  height:auto ;');
@@ -271,7 +253,7 @@ function carta(i) {
     cardBody.setAttribute('id', 'contenidoCarta');
     var titulo = document.createElement('h5');
     titulo.setAttribute('class', 'card-title');
-  
+//si las observations esundefined significa que la información viene desde la BBDD Informática
     if (registroCC[i].Observations == undefined) {
         var exFijo = '(' + registroCC[i].Extension + ') ';
         var exFijo2 = '(' + registroCC[i].Extension2 + ') ';
@@ -282,34 +264,34 @@ function carta(i) {
         var nFijo = registroCC[i].NumeroFijo;
         var nMovil = registroCC[i].NumeroMovil;
         var centro = registroCC[i].Centro;
-        if (exFijo == null || exFijo == '(0) ') {
+        if (registroCC[i].Extension == null || exFijo == '(0) ') {
             exFijo = '';
         }
-        if (exFijo2 == null || exFijo2 == '(0) ') {
+        if (registroCC[i].Extension2 == null || exFijo2 == '(0) ') {
             exFijo2 = '';
         }
-        if (exVozIP == null || exVozIP == '(IP:0) ') {
+        if (registroCC[i].extVozIP == null || exVozIP == '(IP:0) ') {
             exVozIP = '';
         }
-        if (exMovil == null || exMovil == '(0) ') {
+        if (registroCC[i].extMovil == null || exMovil == '(0) ') {
             exMovil = '';
         }
-        if (nFijo == null || nFijo == '0') {
+        if (registroCC[i].NumeroFijo == null || nFijo == '0') {
             nFijo = '';
         }
-        if (nMovil == null || nMovil == '0') {
+        if (registroCC[i].NumeroMovil == null || nMovil == '0') {
             nMovil = '';
         }
         if (registroCC[i].Email == null || registroCC[i].Email == '') {
             email = '';
         }
-        if (centro == null || centro == '0') {
+        if (registroCC[i].Centro == null || centro == '0') {
             centro = '';
         }
         if (centro != '') {
             centro = '<b>Centro: </b>' + registroCC[i].Centro + '</br>';
         }
-        if (registroCC[i].Email2 == '') {
+        if (registroCC[i].Email2 == '' || registroCC[i].Email2 == null ) {
             email2 = ' '
         }
         header.innerHTML = '<b style="width:82%" >' + registroCC[i].Name + '</b>';
@@ -331,7 +313,7 @@ function carta(i) {
             texto.innerHTML += email + email2;
         }
         var t = ''
-        for (let i = 0; i < emailsRRHH.length; i++) {
+        for (let i = 0; i < emailsInfo.length; i++) {
             t += emailsInfo[i].direccion + ';'
         }
         var contpp = document.createElement('div');
@@ -345,7 +327,6 @@ function carta(i) {
         sendEmail.innerHTML = '<i id="cor" title="Sugerir corrección" class="fas fa-user-edit"></i>';
         sendEmail.setAttribute('id', 'email');
 
-
         sendEmail.setAttribute('href', 'mailto:' + t + '?Subject=Sugerir correción%20en%20la%20agenda:%20' + registroCC[i].Name + '&body=Nombre: ' + registroCC[i].Name + '%0D%0ALugar de trabajo: ' + registroCC[i].CompanyName + ' (' + registroCC[i].Centro + ') ' + ' %0D%0AEmail: ' + registroCC[i].Email + '%0D%0AFijo: ' + registroCC[i].NumeroFijo + '%0D%0AExtensiones fijo: (' + registroCC[i].Extension + ') (' + registroCC[i].Extension2 + ') ' + '%0D%0AMovil: ' + registroCC[i].NumeroMovil + '%0D%0AExtensión Movil: ' + registroCC[i].extMovil);
         var editar = document.createElement('div');
         editar.setAttribute('id', 'updateInfo');
@@ -356,8 +337,6 @@ function carta(i) {
         header.appendChild(contpp);
         // texto.appendChild(editar)
     } else {
-
-
         var noMostrar = registroCC[i].Observations.indexOf('#NOMOSTRAR#') >= 0;
         if (noMostrar) {
             return;
@@ -374,7 +353,7 @@ function carta(i) {
         }
         var moExt = '';
         var ex = new RegExp(/#\w+:.+#/g);
-
+        //texto contiene todas las palabras que cumplen la expresión regular.
         var texto = registroCC[i].Observations.match(ex);
         var lugarDeTrabajo = registroCC[i].CompanyName;
         if (texto == null) {
@@ -382,7 +361,7 @@ function carta(i) {
 
         } else {
             for (let j = 0; j < texto.length; j++) {
-
+        //gestionamos lo que buscamos en las observasiones.
                 sufijo = '' + texto[j].split(':')[0].replace('#', '');
                 if (sufijo == 'FIJO2EXT') {
                     exten = '' + texto[j].split(':')[1].replace('#', '');
@@ -405,8 +384,6 @@ function carta(i) {
             }
         }
 
-
-
         var Email = '<i class="far fa-envelope" style="font-size:20px" > </i> <a style="color: #ff4747;"  href=mailto:' + registroCC[i].EmailAddress + '>&nbsp;' + registroCC[i].EmailAddress + '</a></br>';
 
         var FijoEx = '<i class="fas fa-phone" style="font-size:20px" > </i> ' + registroCC[i].DirectPhoneNumber + extFijo1 + extnFijo + '</br>';
@@ -420,7 +397,7 @@ function carta(i) {
         if (registroCC[i].WorkplaceName == '' || registroCC[i].WorkplaceName == '0' || registroCC[i].WorkplaceName == null) {
             lugarDeTrabajo = ''
         }
-        if (registroCC[i].EmailAddress == '' || registroCC[i].EmailAddress == '0' || registroCC[i].EmailAddress == null || registroCC[i].EmailAddress == '.') {
+        if (registroCC[i].EmailAddress == 'prueba@prueba.es' ||registroCC[i].EmailAddress == '' || registroCC[i].EmailAddress == '0' || registroCC[i].EmailAddress == null || registroCC[i].EmailAddress == '.') {
             Email = ''
         }
         if ((extFijo1 == '') && (extnFijo == '') && (registroCC[i].DirectPhoneNumber == '') || (registroCC[i].DirectPhoneNumber == '0')) {
@@ -441,7 +418,6 @@ function carta(i) {
         var t = ''
         for (let i = 0; i < emailsRRHH.length; i++) {
             t += emailsRRHH[i].direccion + ';'
-
         }
 
         texto.innerHTML = lugarDeTrabajo + depart + '</br>' + Email + Email2 + FijoEx + MovilEx + NuFax + Observa;
@@ -466,69 +442,20 @@ function carta(i) {
     card.appendChild(cardBody);
     contAgenda.appendChild(card);
 
-
 }
-
-//---------------------------------CAMBIAR DE EMPRESA ---------------------------------  
-function selEmpresa() {
-    contAgenda.innerHTML = '';
-    var selIndex = document.getElementById("empresas").selectedIndex;
-    var selValue = document.getElementById("empresas").options[selIndex].innerHTML;
-    getDom(selValue);
-}
-
-//---------------------------------BUSCADOR POR EMPRESA ---------------------------------  
-function getDom(valSelect) {
-    var palabra = buscador.value.toUpperCase();
-    empresa = valSelect;
-    if (empresa === 'TODAS' && palabra == "") {
-        generarCartas();
-    }
-    for (let i = 0; i < registroCC.length; i++) {
-        if (empresa == registroCC[i].CompanyName && palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1)) {
-            carta(i);
-        } else if (empresa == registroCC[i].CompanyName && palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName2)) {
-            carta(i);
-        } else if (empresa == registroCC[i].CompanyName && palabra == (registroCC[i].SecondName1 + ' ' + registroCC[i].Name)) {
-            carta(i);
-        } else if (empresa == registroCC[i].CompanyName && palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2)) {
-            carta(i);
-        } else if (empresa == registroCC[i].CompanyName && palabra == (registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + ' ' + registroCC[i].Name)) {
-            carta(i);
-        } else if (empresa == registroCC[i].CompanyName && palabra == '') {
-            carta(i);
-        } else if (empresa == registroCC[i].CompanyName && palabra == registroCC[i].Name) {
-            carta(i);
-        } else if (empresa === 'TODAS' && palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1)) {
-            carta(i);
-        } else if (empresa === 'TODAS' && palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName2)) {
-            carta(i);
-        } else if (empresa === 'TODAS' && palabra == (registroCC[i].SecondName1 + ' ' + registroCC[i].Name)) {
-            carta(i);
-        } else if (empresa === 'TODAS' && palabra == (registroCC[i].Name + ' ' + registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2)) {
-            carta(i);
-        } else if (empresa === 'TODAS' && palabra == (registroCC[i].SecondName1 + ' ' + registroCC[i].SecondName2 + ' ' + registroCC[i].Name)) {
-            carta(i);
-        } else if (empresa === 'TODAS' && palabra == '') {
-            carta(i);
-        } else if (empresa === 'TODAS' && palabra == registroCC[i].Name) {
-            carta(i);
-        }
-    }
-}
-
-//---------------------------------LIMPIAR EL CONTENEDOR DE LA AGENDA ---------------------------------  
 var pill = document.getElementById('pills-Agenda')
-
+var mincidencia = document.getElementById('Incidencias')
 function limpiar() {
-    pill.style.cssText = 'display:none;'
+    mincidencia.style.cssText = 'display:flex'
+    pill.style.cssText = 'display:none'
 }
 
+//function que filtra por empresa y nombre sumando ambas cosas
 function filtradoPorEmpresaYnombre() {
     setTimeout(function () {
         var empresaAcutal = document.getElementById('empresas').value
         var nombreActual = document.getElementById('buscador').value
-        nombreActual = nombreActual.toUpperCase();
+        nombreActual = nombreActual.toUpperCase(); // convertiemos el nombre en mayuscula 
         contAgenda.innerHTML = '';
 
         for (let i = 0; i < registroCC.length; i++) {

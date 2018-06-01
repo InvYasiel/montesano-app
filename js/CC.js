@@ -39,6 +39,8 @@ function recogerSalas() {
 
 //---------------------------------Eliminiar Reserva---------------------------------  
 function eliminarReserva(e) {
+    var fecha = new Date();
+    var fechaUsu = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
     var da = e.getAttribute('dd');
     var dd = document.getElementById(da);
     $('#calendarioModal').modal('hide');
@@ -63,9 +65,10 @@ function eliminarReserva(e) {
         var pass = document.getElementById('pass').value;
         for (let i = 0; i < admin.length; i++) {
             if (rr != '') {
-                if (admin[i].usuario == usu && admin[i].password == pass) {
+                if (admin[i].usuario == usu && admin[i].password == pass || admin[i].usuario == usu && fechaUsu == pass) {
                     var infoParaEnviar = {
-                        reserva: rr
+                        reserva: rr,
+                        usuario: usu
                     };
                     $.ajax({
                         type: "POST",

@@ -1,13 +1,13 @@
-<?php 
-//---------------------------------Select de las reservas---------------------------------  
+<?php  
 $pdo=new PDO("mysql:dbname=salas;host=127.0.0.1","root","");
-$statement=$pdo->prepare("SELECT * FROM reservas");
+$statement=$pdo->prepare("SELECT * FROM departamentos");
 $statement->execute();
 if (!$statement){
     echo 'Error al ejecutar la consulta';
 }else{
     $results = $statement->fetchAll(PDO::FETCH_ASSOC);
     
+    
 }
-echo  json_encode($results);
+echo  json_encode($results, JSON_UNESCAPED_UNICODE);
 ?>
