@@ -37,13 +37,22 @@ function informaciontrello() {
             for (let i = 0; i < usu.length; i++) {
                 infoTrello.push(usu[i]);
             }
+            opciones();
         }
+
     };
     xmlhttp.open("GET", "php/incidencias.php?_=" + new Date().getTime(), true); // new Date().getTime() lo usamos porque en explorer estaba cacheando la consulta y 
     //así modificamos la url consiguiendo que sea otra consulta
     xmlhttp.send();
 }
-
+var pill = document.getElementById('pills-Agenda')
+var mincidencia = document.getElementById('Incidencias')
+function limpiarInci(){
+    document.getElementById('containerReservas').style.cssText ='display:none;'
+    mincidencia.style.cssText = 'display:flex'
+    pill.style.cssText = 'display:none'
+    
+}
 function btn_trello() {
 
     var contDepartamentos = document.getElementById("Incidencias");

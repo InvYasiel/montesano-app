@@ -16,7 +16,7 @@ function recogerExt() {
             var datos = JSON.parse(this.responseText);
 
             for (let i = 0; i < datos.length; i++) {
-                datos[i].CompleteName = datos[i].Name;
+                datos[i].CompleteName = datos[i].Name.toUpperCase();
                 registroCC.push(datos[i]);
                 exTMovil.push(datos[i].extMovil);
                 exTfijo.push(datos[i].Extension);
@@ -63,6 +63,7 @@ function registroA3() {
             registroCC.sort(function (a, b) {
                 var nombreCompletoA = '';
                 var nombreCompletoB = '';
+                
                 nombreCompletoA = a.Name + ' ' + a.SecondName1 + ' ' + a.SecondName2
                 nombreCompletoB = b.Name + ' ' + b.SecondName1 + ' ' + b.SecondName2
                 if (a.SecondName1 == undefined && a.SecondName2 == undefined) {
@@ -443,12 +444,15 @@ function carta(i) {
     contAgenda.appendChild(card);
 
 }
-var pill = document.getElementById('pills-Agenda')
-var mincidencia = document.getElementById('Incidencias')
+
 function limpiar() {
-    mincidencia.style.cssText = 'display:flex'
-    pill.style.cssText = 'display:none'
+    document.getElementById('Incidencias').style.cssText = 'display:none'
+    document.getElementById('INFORMATICAform').style.cssText = 'display:none'
+    document.getElementById('RRHHform').style.cssText = 'display:none'
+    generarCartas();
+     
 }
+
 
 //function que filtra por empresa y nombre sumando ambas cosas
 function filtradoPorEmpresaYnombre() {

@@ -1,6 +1,6 @@
 <?php 
 //---------------------------------Select de las reservas---------------------------------  
-$pdo=new PDO("mysql:dbname=salas;host=127.0.0.1","root","");
+$pdo=new PDO("mysql:dbname=salas;host=127.0.0.1;charset=UTF8","root","");
 $statement=$pdo->prepare("SELECT direccion FROM correos WHERE departamento = 'INFORMATICA'");
 $statement->execute();
 if (!$statement){

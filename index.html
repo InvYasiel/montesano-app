@@ -28,11 +28,11 @@
             </div>
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-InicidenciasRRHH-tab" data-toggle="pill" href="#incidencias" role="tab" onclick="limpiar()"
-                        aria-controls="pills-InicidenciasRRHH" aria-selected="false">Inicidencias</a>
+                    <a class="nav-link" id="pills-InicidenciasRRHH-tab" data-toggle="pill" href="#incidencias" role="tab" onclick="limpiarInci()"
+                        aria-controls="pills-InicidenciasRRHH" aria-selected="false">Incidencias</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" onclick="generarCartas()" aria-controls="pills-Agenda"
+                    <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" onclick="limpiar()" aria-controls="pills-Agenda"
                         aria-selected="false">Agenda</a>
                 </li>
                 <li class="nav-item">
@@ -72,8 +72,11 @@
                             </div>
                             <div class="form-group col-4" id="contTipoInfo">
                                 <label for="incidenciasTitulo">Tipo de incidencia (*)</label>
-                                <select name="tipo" id="tipoInfo" class="custom-select"></select>
-                            </div>
+                                <select name="tipo" id="tipoInfo" class="custom-select" onchange="changeidlistInfo()">
+                                   
+                                </select>
+                                
+                               </div>
                         </div>
 
                         <div class="row">
@@ -129,9 +132,11 @@
                                 <input type="text" class="form-control" id="incidenciasTituloRRHH" placeholder="">
                             </div>
                             <div class="form-group col-4" id="contTipoRRHH">
-                                    <label for="incidenciasTitulo">Tipo de incidencia (*)</label>
-                                   <select name="tipo" id="tipoRH" class="custom-select" ></select>
-                                </div>
+                                <label for="incidenciasTitulo">Tipo de incidencia (*)</label>
+                                <select name="tipo" id="tipoRH" class="custom-select" onchange="changeidlistRRHH()">
+                                     
+                                </select>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="form-group col-6">
@@ -276,30 +281,29 @@
                     </div>
                 </div>
                 <!-- AGENDA -->
-                <div class="tab-pane fade " id="pills-Agenda" role="tabpanel" aria-labelledby="pills-Agenda-tab">
-                    <div id="seleccion">
-                        <label for="empresas" style="font-size: 1.3em;">Empresas </label>
-                        <select class="custom-select" id="empresas" onchange="filtradoPorEmpresaYnombre()">
-                            <option selected value="TODAS">TODAS</option>
-                        </select>
-                    </div>
-                    <div id="nombreabuscar">
-                        <label for="buscador" style="font-size: 1.3em;">Nombre a buscar</label>
-                        <input list="personasagenda" class="form-control mr-sm-2" type="text" placeholder="Enter para buscar" id="buscador" oninput="filtradoPorEmpresaYnombre()"
+                <div class="tab-pane fade" id="pills-Agenda" role="tabpanel" aria-labelledby="pills-Agenda-tab">
+                        <div class="input-group mb-3" id="seleccion">
+                            <div class="input-group-prepend">
+                                <button class="btn btn-outline-secondary" type="button">Empresa</button>
+                            </div>
+                            <select class="custom-select" id="empresas" onchange="filtradoPorEmpresaYnombre()">
+                                <option selected value="TODAS">TODAS</option>
+                            </select>
+                        </div>
+                            <label for="buscador" style="font-size: 1.3em;margin: 10px;">Nombre a buscar</label>
+                            <input list="personasagenda" class="form-control mr-sm-2" type="text" placeholder="Enter para buscar" id="buscador" oninput="filtradoPorEmpresaYnombre()"
+                                aria-label="Search">
+                            <i class="fas fa-plus-circle" title="Añadir personal" style="width: 60px;margin:15px; cursor: pointer" data-toggle="modal" data-target="#ModalInformatica"></i>
+    
+                        <label for="ext" style="font-size: 1.3em; margin: 10px;">Extensión</label>
+                        <input list="extension" class="form-control mr-sm-2" title="Enter para buscar extensión" type="text" placeholder="nº" id="ext" oninput="search(this);"
                             aria-label="Search">
-                        <i class="fas fa-plus-circle" style="width: 60px;margin:15px; cursor: pointer" data-toggle="modal" data-target="#ModalInformatica"></i>
-                    </div>
-                    <div id="extensiones">
-                        <label for="ext" style="font-size: 1.3em; ">Extensión</label>
-                        <input list="extension" class="form-control mr-sm-2" title="Enter para buscar por extension" data-toggle="tooltip" data-original-title='Enter para buscar'
-                            type="text" placeholder="nº" id="ext" oninput="search(this)" aria-label="Search">
                         <datalist id="extension">
                         </datalist>
+                        <div id="contagenda">
+    
+                        </div>
                     </div>
-                    <div id="contagenda">
-
-                    </div>
-                </div>
                 <!-- Modal New Person -->
                 <div class="modal fade" id="ModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -433,7 +437,7 @@
 
     <script src=" https://unpkg.com/sweetalert/dist/sweetalert.min.js "></script>
     <script src="php/reservas.php"></script>
-    <script src="js/incidenciasRI.js"></script>
+    
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -451,6 +455,7 @@
             jQuery('span.' + idname).next().find('span').html(filename);
         });
     </script>
+    
     <script type="application/javascript" src="js/insertNew.js"></script>
     <script type="application/javascript" src="js/correos.js"></script>
     <script type="application/javascript" src="js/clock.js"></script>
@@ -467,7 +472,7 @@
     <script type="application/javascript" src="js/cartas.js"></script>
     <script type="application/javascript" src="js/crearCalendarios.js"></script>
 
-
+    <script src="js/incidenciasRI.js"></script>
     <script type="application/javascript" src="js/admin.js"></script>
     <script type="application/javascript" src="js/CC.js"></script>
     <script type="application/javascript" src="js/modalCalendar.js"></script>

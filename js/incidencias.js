@@ -10,21 +10,87 @@ let archivo = document.getElementById('archivo');
 let grande = document.getElementById('muyGrande');
 
 ///KEYS para conectar con trello
-var appkey = "151bcd104f1742fdcf0b8c2f4a4c8764";
+var appkey = "";
 var secret = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d16";
-
-var token = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
-var idlist = "5890852c1e1dc7fb0bd94521"; //incidencias informática.
+var token = "";
+// var idlist = "5890852c1e1dc7fb0bd94521"; //incidencias informática.
 var usuario1 = "5891c93eb1cfa471ee1fe47c";//bibiana
 var usuario2 = "59a68c4e314350c790512ae9";//borja
+var idlist = ''
+var tipoInfo = document.getElementById("tipoInfo");
+var tipoRH = document.getElementById('tipoRH');
+
+function opciones(){
+    var x = document.getElementById("tipoInfo");
+    var y = document.getElementById('tipoRH');
+    var n = 0
+   var nn = 0
+    for (let i = 0; i < infoTrello.length; i++) {
+        if(infoTrello[i].ID == '1'){
+            var option = document.createElement("option");
+            option.text = infoTrello[i].nombre; 
+            option.setAttribute('value',infoTrello[i].nombre)
+            tipoInfo.appendChild(option);
+            n++
+            if(n == 2){
+                var option = document.createElement("option");
+            option.text = 'Seleccione tipo de incidencia'; 
+            option.setAttribute('slected',true)
+            tipoInfo.appendChild(option);
+            }else{
+                changeidlistInfo();
+            }
+        }
+        
+        if(infoTrello[i].ID == '2'){
+            var option = document.createElement("option");
+           
+            option.text = infoTrello[i].nombre; 
+            option.setAttribute('value',infoTrello[i].nombre)
+            tipoRH.appendChild(option);
+            nn++
+            if(nn == 2){
+                var option = document.createElement("option");
+            option.text = 'Seleccione tipo de incidencia'; 
+            option.setAttribute('selected',true)
+            tipoRH.appendChild(option);
+            }else{
+                changeidlistRRHH()
+            }
+        }
+        // if(n==1){
+        //     document.getElementById('select').remove();
+        // }
+    }
+}
+function changeidlistInfo(){
+    for (let i = 0; i < infoTrello.length; i++) {
+        if(tipoInfo.value == infoTrello[i].nombre){
+            idlist = infoTrello[i].idlist
+            appkey = infoTrello[i].appkey;
+            token= infoTrello[i].token;
+        }
+
+    }
+}
+
 
 //comprovamos que los campos obligatorios están rellenados
 function comprobarCampos() {
     let res = true;
-    if (nombre.value == "" || titulo.value == "") {
+    if (nombre.value == "" || titulo.value == "" || tipoInfo.value == "") {
         swal({
             title: "Error!",
             text: "Rellena los campos obligatorios (*)",
+            icon: "error",
+            button: "Volver a intentar",
+        });
+        res = false;
+    }
+    if(tipoRH.value == 0){
+        swal({
+            title: "Error!",
+            text: "Selecciona un tipo de incidencia(*)",
             icon: "error",
             button: "Volver a intentar",
         });
@@ -180,7 +246,7 @@ function selecLabel(data) {
     var datas = null;
     if (importante.checked == true) {
         var checkRQ = new XMLHttpRequest();
-        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkey + "&token=" + token);
+        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5890850bced82109ff07b701&key=" + appkey + "&token=" + token);
         checkRQ.send(datas);
     }
 }

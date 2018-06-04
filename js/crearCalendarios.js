@@ -1,4 +1,8 @@
 function limpiarS() {
+    document.getElementById('Incidencias').style.cssText = 'display:none'
+    document.getElementById('INFORMATICAform').style.cssText = 'display:none'
+    document.getElementById('RRHHform').style.cssText = 'display:none'
+    document.getElementById('containerReservas').style.cssText ='display:flex;'
     pill.style.cssText = 'display:none;'
     
     document.getElementById('Incidencias').style.cssText = 'display:none'

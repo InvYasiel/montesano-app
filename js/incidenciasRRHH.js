@@ -9,17 +9,32 @@ let grandeRRHH = document.getElementById('muyGrandeRRHH');
 let tel = document.getElementById('incidenciasTelefono');
 let em = document.getElementById('incidenciasEmail');
 ///KEYS para conectar con trello
-var appkeyRRHH = "151bcd104f1742fdcf0b8c2f4a4c8764";
+var appkeyRRHH = "";
 var secretRRHH = "c5a52ad53cef30fb0539bab09df6967178a40d187ef829ae9c93faf700ea6d16";
 
-var tokenRRHH = "ddc55434f6f11fbc1a3379adde4d5f66cd8be4be97d4d90eaca39322af045925";
-var idlistRRHH = "5afecefa968161adb800c49f"; //idlist trello RRHH
-var usuario1RRHH = "58bd34cb10e32d9556f39e0b";//indiscan
-var usuario2RRHH = "5b0408aaa197b0edaddebe50";//Eva
-var usuario3RRHH = "5b056285aab397b19fe0d181";//Ángela
-var usuario4RRHH = "5b03e5bc970c63814808add8";//rrhh
-var usuario5RRHH = "5b05631c0fee976a1b7bbdb9";//Nestor
+var tokenRRHH = "";
+//idlist trello RRHH
+var usuario1RRHH = "58bd34cb10e32d9556f39e0b"; //indiscan
+var usuario2RRHH = "5b0408aaa197b0edaddebe50"; //Eva
+var usuario3RRHH = "5b056285aab397b19fe0d181"; //Ángela
+var usuario4RRHH = "5b03e5bc970c63814808add8"; //rrhh
+var usuario5RRHH = "5b05631c0fee976a1b7bbdb9"; //Nestor
 /* Los comentarios sobre el uso de las funciones de este fichero están en incidencias.js*/
+var idlistRRHH = "";
+var tipoRH = document.getElementById('tipoRH');
+
+function changeidlistRRHH() {
+    for (let i = 0; i < infoTrello.length; i++) {
+        if(tipoRH.value == infoTrello[i].nombre){
+            idlistRRHH = infoTrello[i].idlist;
+            appkeyRRHH = infoTrello[i].appkey;
+            tokenRRHH= infoTrello[i].token;
+        }
+
+    }
+}
+
+// var idlistRRHH = "5b067ff69359e25f1290eb0e";
 
 function comprobarCamposRRHH() {
     let res = true;
@@ -32,24 +47,33 @@ function comprobarCamposRRHH() {
         });
         res = false;
     }
+    if(tipoRH.value == 0){
+        swal({
+            title: "Error!",
+            text: "Selecciona un tipo de incidencia(*)",
+            icon: "error",
+            button: "Volver a intentar",
+        });
+        res = false;
+    }
     return res;
 }
 
 function incidenciasLimpiar() {
     swal({
-        title: "¿Deseas limpiar la incidencia?",
-        text: "Se borrarán todos los campos",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-      })
-      .then(function (willDelete){
-        if (willDelete) {
-            location.reload()
-        } else {
-          swal("Continue con su incidencia");
-        }
-      });
+            title: "¿Deseas limpiar la incidencia?",
+            text: "Se borrarán todos los campos",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then(function (willDelete) {
+            if (willDelete) {
+                location.reload()
+            } else {
+                swal("Continue con su incidencia");
+            }
+        });
 }
 
 function getBrowserInfoRRHH() {
@@ -72,7 +96,7 @@ function getBrowserInfoRRHH() {
 
 function incidenciasCrearRRHH() {
     for (let t = 0; t < registroCC.length; t++) {
-        if (registroCC[t].Name +' '+registroCC[t].SecondName1+' '+registroCC[t].SecondName2 == nombreRRHH.value) {
+        if (registroCC[t].Name + ' ' + registroCC[t].SecondName1 + ' ' + registroCC[t].SecondName2 == nombreRRHH.value) {
             var tnameRRHH = false
         }
     }
@@ -80,7 +104,7 @@ function incidenciasCrearRRHH() {
         var OSName = "Desconocido";
         if (navigator.appVersion.indexOf("Win") != -1) OSName = "Windows ";
         if (navigator.appVersion.indexOf("Linux") != -1) OSName = "Linux ";
-       
+
         var fecha = new Date();
         var fechaTrello = fecha.getFullYear() + ("0" + (fecha.getMonth() + 1)).slice(-2) + ("0" + fecha.getDate()).slice(-2);
         var hora = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
@@ -89,10 +113,10 @@ function incidenciasCrearRRHH() {
         var es_ie = navigator.userAgent.indexOf("MSIE") > -1;
         if (getBrowserInfoRRHH() == 'IE 11' || getBrowserInfoRRHH() == 'Edge 16') {
             let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-            var desc = descripcionRRHH + '\n' +" **Email:** "+ em.value+ " **Teléfono: **"+tel.value+  " **Sistema operativo:** " + OSName;
+            var desc = descripcionRRHH + '\n' + " **Email:** " + em.value + " **Teléfono: **" + tel.value + " **Sistema operativo:** " + OSName;
             crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
-        } else { 
-           
+        } else {
+
             window.RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection; //compatibility for Firefox and chrome
             var pc = new RTCPeerConnection({
                     iceServers: []
@@ -108,8 +132,8 @@ function incidenciasCrearRRHH() {
                         pc.onicecandidate = noop;
                     }
                     let descripcionRRHH = document.getElementById("incidenciasDescripcionRRHH").value;
-                    var desc = descripcionRRHH + ' %0A ' +" **Email:** "+em.value+ " **Teléfono: **"+tel.value+ " Sistema operativo: " + OSName;
-                   
+                    var desc = descripcionRRHH + ' \n ' + " **Email:** " + em.value + " **Teléfono: **" + tel.value + " Sistema operativo: " + OSName;
+
                     crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora);
                 }
             }
@@ -122,19 +146,20 @@ function incidenciasCrearRRHH() {
             button: "Volver a intentar",
         });
     }
-    
+
 
 }
+
 function crearCartaRRHH(desc, myIP, OSName, fechaTrello, hora) {
-  
+
     var h = "";
     var dat = null;
-    var name = fechaTrello + ' ' + hora + ' ' + tituloRRHH.value + " Creado por: " + nombreRRHH.value;
+    var name = fechaTrello + ' ' + hora + ' Tipo: ' + tipoRH.value+' '+tituloRRHH.value + " Creado por: " + nombreRRHH.value;
     var xhr = new XMLHttpRequest();
     desc = encodeURI(desc);
     desc = desc.replace(/\n/g, '%0A');
-    xhr.open("POST", "https://api.trello.com/1/cards?name=" +encodeURI(name) + "&desc=" + desc + "&pos=top&idList=" + idlistRRHH + "&keepFromSource=all&key=" + appkeyRRHH + "&token=" + tokenRRHH);
-    
+    xhr.open("POST", "https://api.trello.com/1/cards?name=" + encodeURI(name) + "&desc=" + desc + "&pos=top&idList=" + idlistRRHH + "&keepFromSource=all&key=" + appkeyRRHH + "&token=" + tokenRRHH);
+
     xhr.send(dat);
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === this.DONE) {
@@ -163,9 +188,9 @@ importanteRRHH.addEventListener('click', function () {
 function selecLabelRRHH(data) {
     var datas = null;
     if (importanteRRHH.checked == true) {
-        var checkRQ = new XMLHttpRequest();
-        checkRQ.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5aaf6396841642c2a8277156&key=" + appkeyRRHH + "&token=" + tokenRRHH);
-        checkRQ.send(datas);
+        var checkRQRRHH = new XMLHttpRequest();
+        checkRQRRHH.open("POST", "https://api.trello.com/1/cards/" + data + "/idLabels?value=5b14e0a80dc603ebf861fc6f&key=" + appkeyRRHH + "&token=" + tokenRRHH);
+        checkRQRRHH.send(datas);
     }
 }
 
@@ -197,7 +222,7 @@ function adjuntosRRHH(data, name) {
                             icon: "success",
                             button: "Cerrar",
                         })
-                        .then(function(value) {
+                        .then(function (value) {
                             swal(location.reload());
                         });
                 }
@@ -216,7 +241,7 @@ function eliminar(e) {
 
 
 function usuarioPredefinidoRRHH(data, name) {
-    var ArrUsuarios = [usuario1RRHH,usuario2RRHH,usuario3RRHH,usuario4RRHH,usuario5RRHH ];
+    var ArrUsuarios = [usuario1RRHH,usuario2RRHH,usuario3RRHH,usuario4RRHH,usuario5RRHH]; 
     var arrRQ = [];
     var datas = null;
     var usuRQ1 = new XMLHttpRequest();
@@ -234,16 +259,16 @@ function usuarioPredefinidoRRHH(data, name) {
                 }
             }
             if (finalizado == true && archivosRRHH.length == 0) {
-                        spiner.style.cssText = 'display:none';
-                        swal({
-                                title: "Completado!",
-                                text: 'Incidencia ' + name,
-                                icon: "success",
-                                button: "Cerrar",
-                            })
-                            .then(function(value){
-                                swal(location.reload());
-                            });
+                spiner.style.cssText = 'display:none';
+                swal({
+                        title: "Completado!",
+                        text: 'Incidencia ' + name,
+                        icon: "success",
+                        button: "Cerrar",
+                    })
+                    .then(function (value) {
+                        swal(location.reload());
+                    });
             }
         }
     });
