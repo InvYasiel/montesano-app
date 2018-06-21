@@ -5,479 +5,71 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Montesano</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <link rel="stylesheet" type="text/css" href="clockpicker/dist/bootstrap-clockpicker.min.css">
-    <link rel="shortcut icon" type="image/x-icon" href="img/logo.png">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/jquery.toast.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/spiner.css">
-    <link href="css/css/fontawesome-all.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/flex.css">
+    <link rel="stylesheet" href="style/style.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+    <title>Generador</title>
 </head>
 
-<body onload="recogerDatos(), limpiar()">
-    <div class="container">
-        <br>
-        <div class="right-tabs clearfix">
-            <div class="navbar-brand">
-                <img src="img/logo.png" style="width: 120px;" alt="">
-            </div>
-            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-InicidenciasRRHH-tab" data-toggle="pill" href="#incidencias" role="tab" onclick="limpiarInci()"
-                        aria-controls="pills-InicidenciasRRHH" aria-selected="false">Incidencias</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-Agenda-tab" data-toggle="pill" href="#pills-Agenda" role="tab" onclick="limpiar()" aria-controls="pills-Agenda"
-                        aria-selected="false">Agenda</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="pills-Reserva-tab" onclick="limpiarS()" data-toggle="pill" href="#pills-Reserva" role="tab" aria-controls="pills-Reserva"
-                        aria-selected="false">Reserva de salas</a>
-                </li>
-            </ul>
+<body style="background-color: rgb(75, 66, 42);">
+    <div id="form" style="color:white;font-size:1.4em;text-align:center; margin: 0 auto; width:50%; padding:25px; ">
 
+        <form>
+            <h2 style="text-align:center">Crear etiquetas</h2>
+            <br>
 
-            <div class="tab-content" id="pills-tabContent" style="width: 100%">
-                <br>
-                <!-- incidencias -->
-                <div id="Incidencias" style="display:flex;" role="tabpanel" aria-labelledby="pills-Agenda-tab">
-
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="departamento">Departamento: </label>
+                    <select class="custom-select" style="height:50px;" id="departamento">
+                        <option value="" selected>Seleccione departamento</option>
+                    </select>
                 </div>
-
-                <!-- INCIDENDCIAS -->
-                <div id="INFORMATICAform" style="display:none" aria-labelledby="pills-home-tab">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <h2>Incidencias Informática</h2>
-                                <br>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-4">
-                                <label for="incidenciasNombre">Nombre (*)</label>
-                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombre" oninput="crearNombres()" placeholder="Introduce tu nombre">
-                                <datalist id="personasincidencias">
-                                </datalist>
-                            </div>
-                            <div class="form-group col-4">
-                                <label for="incidenciasTitulo">Titulo (*)</label>
-                                <input type="text" class="form-control" id="incidenciasTitulo" placeholder="">
-                            </div>
-                            <div class="form-group col-4" id="contTipoInfo">
-                                <label for="incidenciasTitulo">Tipo de incidencia (*)</label>
-                                <select name="tipo" id="tipoInfo" class="custom-select" onchange="changeidlistInfo()">
-                                   
-                                </select>
-                                
-                               </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-12">
-                                <label for="incidenciasDescripcion">Descripción</label>
-                                <textarea class="form-control" id="incidenciasDescripcion" rows="4" placeholder="Incidencia"></textarea>
-                                <div id="checked">
-                                    <label for="incidenciasCheck" style="font-size: 20px;">Haz click aquí si es urgente &nbsp;</label>
-                                    <input type="checkbox" class="incidenciasCheck" id="incidenciasCheck">
-                                    <b id="dpImportante" style="display:none;"> ¡El departamento le dará prioridad a esta incidencia!</b>
-                                </div>
-                                <div style="color:rgba(170, 0, 0, 0.938)">Los campos (*) son obligatorios</div>
-                                <br>
-                                <div id="archivo">
-                                    <input type="file" id="chooser0" class="chooser" onchange="cambio(this.id)" style="color: transparent" size="10000" />
-                                    <div id="infofile"> Archivos adjuntos: </div>
-                                    <div id="muyGrande"></div>
-                                    <br>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-12" style="text-align: right">
-                                <button type="button" class="btn btn-warning" onclick="incidenciasLimpiar()">Limpiar</button>
-                                <button type="button" class="btn btn-primary" onclick="incidenciasCrear()">Crear</button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-
-                <!-- INCIDENDCIAS RRHH-->
-                <div id="RRHHform" style="display:none" aria-labelledby="pills-InicidenciasRRHH-tab">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <h2>Incidencias RRHH</h2>
-                                <br>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-4">
-                                <label for="incidenciasNombreRRHH">Nombre (*)</label>
-                                <input type="text" list="personasincidencias" class="form-control" id="incidenciasNombreRRHH" placeholder="Introduce tu nombre">
-                                <datalist id="personasincidencias">
-                                </datalist>
-                            </div>
-
-                            <div class="form-group col-4">
-                                <label for="incidenciasTituloRRHH">Titulo (*)</label>
-                                <input type="text" class="form-control" id="incidenciasTituloRRHH" placeholder="">
-                            </div>
-                            <div class="form-group col-4" id="contTipoRRHH">
-                                <label for="incidenciasTitulo">Tipo de incidencia (*)</label>
-                                <select name="tipo" id="tipoRH" class="custom-select" onchange="changeidlistRRHH()">
-                                     
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group col-6">
-                                <label for="incidenciasEmail">Email (*)</label>
-                                <input type="email" class="form-control" id="incidenciasEmail" placeholder="Ejemplo@montesano.es">
-                            </div>
-                            <div class="form-group col-6">
-                                <label for="incidenciasTelefono">Teléfono (*)</label>
-                                <input type="text" class="form-control" id="incidenciasTelefono" placeholder="Introduce tu número de teléfono">
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="form-group col-12">
-                                <label for="incidenciasDescripcion">Descripción</label>
-                                <textarea class="form-control" id="incidenciasDescripcionRRHH" rows="4" placeholder="Incidencia"></textarea>
-                                <div id="checked">
-                                    <label for="incidenciasCheck" style="font-size: 20px;">Haz click aquí si es urgente &nbsp;</label>
-                                    <input type="checkbox" class="incidenciasCheckRRHH" id="incidenciasCheckRRHH">
-                                    <b id="dpImportanteRRHH" style="display:none;"> ¡El departamento le dará prioridad a esta incidencia!</b>
-                                </div>
-                                <div style="color:rgba(170, 0, 0, 0.938)">Los campos (*) son obligatorios</div>
-                                <br>
-
-                                <div id="archivoRRHH">
-                                    <input type="file" id="chooserRRHH0" class="chooser" onchange="cambioRRHH(this.id)" style="color: transparent" size="10000"
-                                    />
-
-                                </div>
-
-                            </div>
-                            <div id="infofileRRHH"> Archivos adjuntos: </div>
-                            <div id="muyGrandeRRHH"></div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-12" style="text-align: right">
-                                <button type="button" class="btn btn-warning" onclick="incidenciasLimpiar()">Limpiar</button>
-                                <button type="button" class="btn btn-primary" onclick="incidenciasCrearRRHH()">Crear</button>
-                            </div>
-
-                        </div>
-                    </div>
-                    <!-- Spinner Carga -->
-                </div>
-                <div id="spiner">
-                    <div class="row">
-                        <div id="loader">
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="lading"></div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal admin -->
-                <div class="modal fade" id="ModalAdmin" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Solo administradores</h5>
-                                <button type="button" class="close" data-dismiss="modal" id='cerrarAd' aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group mx-sm-3 mb-2">
-                                    <label for="usu" class="sr-only">Usuario</label>
-                                    <input type="text" class="form-control" id="usu" placeholder="Usuario">
-                                </div>
-                                <div class="form-group mx-sm-3 mb-2">
-                                    <label for="pass" class="sr-only">Contraseña</label>
-                                    <input type="password" class="form-control" id="pass" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" id='cerrarAdmin' data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id='borrarAdmin'>Eliminar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal Infor Admin -->
-                <div class="modal fade" id="ModalInformatica" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Solo administradores de Informatica</h5>
-                                <button type="button" class="close" data-dismiss="modal" id='cerrarAd' aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group mx-sm-3 mb-2">
-                                    <label for="usu" class="sr-only">Usuario</label>
-                                    <input type="text" class="form-control" id="usuInfo" placeholder="Usuario">
-                                </div>
-                                <div class="form-group mx-sm-3 mb-2">
-                                    <label for="pass" class="sr-only">Contraseña</label>
-                                    <input type="password" class="form-control" id="passInfo" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" id='insertarAdmin' data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id='insertarAdmin' onclick="soloinfo()">Aceptar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal editar Admin -->
-                <div class="modal fade" id="ModalEditar" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Solo administradores de Informatica</h5>
-                                <button type="button" class="close" data-dismiss="modal" id='cerrarAd' aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group mx-sm-3 mb-2">
-                                    <label for="usu" class="sr-only">Usuario</label>
-                                    <input type="text" class="form-control" id="usuEdit" placeholder="Usuario">
-                                </div>
-                                <div class="form-group mx-sm-3 mb-2">
-                                    <label for="pass" class="sr-only">Contraseña</label>
-                                    <input type="password" class="form-control" id="passEdit" placeholder="Password">
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" id='editAdmin' data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id='editAdmin'>Aceptar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- AGENDA -->
-                <div class="tab-pane fade" id="pills-Agenda" role="tabpanel" aria-labelledby="pills-Agenda-tab">
-                        <div class="input-group mb-3" id="seleccion">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" type="button">Empresa</button>
-                            </div>
-                            <select class="custom-select" id="empresas" onchange="filtradoPorEmpresaYnombre()">
-                                <option selected value="TODAS">TODAS</option>
-                            </select>
-                        </div>
-                            <label for="buscador" style="font-size: 1.3em;margin: 10px;">Nombre a buscar</label>
-                            <input list="personasagenda" class="form-control mr-sm-2" type="text" placeholder="Enter para buscar" id="buscador" oninput="filtradoPorEmpresaYnombre()"
-                                aria-label="Search">
-                            <i class="fas fa-plus-circle" title="Añadir personal" style="width: 60px;margin:15px; cursor: pointer" data-toggle="modal" data-target="#ModalInformatica"></i>
-    
-                        <label for="ext" style="font-size: 1.3em; margin: 10px;">Extensión</label>
-                        <input list="extension" class="form-control mr-sm-2" title="Enter para buscar extensión" type="text" placeholder="nº" id="ext" oninput="search(this);"
-                            aria-label="Search">
-                        <datalist id="extension">
-                        </datalist>
-                        <div id="contagenda">
-    
-                        </div>
-                    </div>
-                <!-- Modal New Person -->
-                <div class="modal fade" id="ModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Solo Informatica</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body" style="display:flex; flex-wrap: wrap">
-                                <span style="width: 45%;">Nombre:
-                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newNombre">
-                                </span>
-                                <span style="width: 45%;">Nº Fijo:
-                                    <input type="text" style=" width: 130px; " class="form-control mr-sm-2" id="newFijo">
-                                </span>
-                                <span style="width: 45%;">Extension:
-                                    <input type="number" style=" width: 100px; " class="form-control mr-sm-2" id="newExtension">
-                                </span>
-                                <span style="width: 45%;">Extension2:
-                                    <input type="number" style=" width: 100px; " class="form-control mr-sm-2" id="newExtension2">
-                                </span>
-                                <span style="width: 45%;">Numero de Movil:
-                                    <input type="text" style=" width: 100px; " class="form-control mr-sm-2" id="newNumeroMovil">
-                                </span>
-                                <span style="width: 45%;">Extension Movil:
-                                    <input type="number" style=" width: 130px; " class="form-control mr-sm-2" id="newExtensionMovil">
-                                </span>
-                                <span style="width: 45%;">Extension Voz IP:
-                                    <input type="number" style=" width: 100px; " class="form-control mr-sm-2" id="newExtensionIP">
-                                </span>
-                                <span style="width: 45%;">Email:
-                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newEmail">
-                                </span>
-                                <span style="width: 45%;">Email2:
-                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newEmail2">
-                                </span>
-                                <span style="width: 45%;">Lugar de trabajo:
-                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newLugar">
-                                </span>
-                                <span style="width: 45%;">Centro:
-                                    <input type="text" style=" width: 200px; " class="form-control mr-sm-2" id="newCentro">
-                                </span>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary" onclick="insert()">Insertar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- RESERVAS -->
-                <div class="tab-pane fade" id="pills-Reserva" role="tabpanel" aria-labelledby="pills-Reserva-tab">
-                    <div class="container" id="containerReservas">
-                        <div class="row" id="titleCC">
-                            <div class="col-12 text-left">
-                                <h2 class="display-4" id="tituloSala">Seleccione Sala</h2>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 text-center" id="contendorbotones">
-
-                            </div>
-                        </div>
-                        <br>
-                        <input type="hidden" id="selectedSala" />
-                        <div class="calendar" style="display:none" id="calendar">
-
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <!-- Modal para dias -->
-                <div class="modal fade" id="calendarioModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="calendarioModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog CC" role="document">
-                        <div class="modal-content" id="modalDD">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="calendarioModalLabel">Reservas</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="container" id="containerCC">
-                                <div class="modalCC" id="modalCC">
-                                    <!-- <br>-->
-                                    <b id="actual"></b>
-
-                                    <br>
-                                    <div id="horario">
-                                    </div>
-                                    <div class="row" id='Dform'>
-                                        <div class="form-group col-12" style="height: 15px;">
-                                            <label for="usuarioElegido">Nombre de persona (*)</label>
-                                            <input type="text" class="form-control" id="usuarioElegido" list="personas" required>
-                                            <datalist id="personas">
-                                            </datalist>
-                                        </div>
-                                        <div class="col-12" style="height: 15px;">
-                                            <label for="motivoReserva">Motivo de la Reserva (*)</label>
-                                            <input type="text" class="form-control" id="motivoReserva" placeholder="Motivo...">
-                                        </div>
-
-
-                                        <div class="entrada" style="width: 50%">
-                                            <b for="horaEntrada">Hora de entrada</b>
-                                            <input type="time" class="form-control" readonly id="horaEntrada" style="width: 105px;" onchange="calcHora(this.id)" list="personas"
-                                                value="08:00" min="08:00" max="21:00" step="900">
-                                        </div>
-                                        <div class="salida" style="width: 50%">
-                                            <b for="horaSalida">Hora de salida</b>
-                                            <input type="time" class="form-control" readonly id="horaSalida" style="width: 105px;" onchange="calcHora(this.id)" list="personas"
-                                                value="09:00" min="08:00" max="22:00" step="900">
-                                        </div>
-
-                                    </div>
-                                    <br>
-                                </div>
-                            </div>
-                            <div class="modal-footer" id="footCC">
-                                <button type="button" class="btn btn-secondary" onclick="cerrar()" data-dismiss="modal">Cerrar</button>
-                                <button type="button" class="btn btn-primary" id="btn-ingresar" value="Ingresar">Reservar</button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="form-group  col-md-6">
+                    <label for="sociedad">Sociedad: </label>
+                    <select class="custom-select" style="height:50px;" id="sociedad">
+                        <option value="" selected>Seleccione sociedad</option>
+                    </select>
                 </div>
             </div>
-        </div>
+            <div class="form-row">
+                <div class="form-group col-md-6 ">
+                    <label for="acFijo">Tipo activo fijo: </label>
+                    <select class="custom-select" style="height:50px;" id="acFijo">
+                        <option value="" selected>Seleccione activo fijo</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="anio" style="font-size: 1.2em; width:100%">Año </label>
+                    <input style="width:75px;height:50px;" id="anio" type="number" min="2000" max="2030" placeholder="2000">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="anio" style="font-size: 1.2em; width:100%"> Cantidad </label>
+                    <input style="width:60px;height:50px;" id="cant" type="number" min="0">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <br>
+                    <button type="button" style="font-size:1.1em;" id="crear" onclick="comprobar()" class="btn btn-primary">Generar!</button>
+                </div>
+                <div class="form-group col-md-6">
+                    <br>
+                    <button type="button" style="font-size:1.1em;" id="crear" onclick="limpiar()" class="btn btn-primary">Limpiar impresas</button>
+                </div>
+            </div>
+        </form>
     </div>
-
-    <script src=" https://unpkg.com/sweetalert/dist/sweetalert.min.js "></script>
-    <script src="php/reservas.php"></script>
-    
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-    <script src="js/jquery.toast.min.js"></script>
-    <script src="https://api.trello.com/1/client.js?key=151bcd104f1742fdcf0b8c2f4a4c8764"></script>
-    <script type="text/javascript" src="clockpicker/dist/bootstrap-clockpicker.min.js"></script>
-    <script type="application/javascript">
-        jQuery('input[type=file]').change(function () {
-            var filename = jQuery(this).val().split('\\').pop();
-            var idname = jQuery(this).attr('id');
-            console.log(jQuery(this));
-            console.log(filename);
-            console.log(idname);
-            jQuery('span.' + idname).next().find('span').html(filename);
-        });
-    </script>
-    
-    <script type="application/javascript" src="js/insertNew.js"></script>
-    <script type="application/javascript" src="js/correos.js"></script>
-    <script type="application/javascript" src="js/clock.js"></script>
-    <script type="text/javascript" src="clockpicker/assets/js/highlight.min.js"></script>
-    <script type="text/javascript">
-        hljs.configure({
-            tabReplace: '    '
-        });
-        hljs.initHighlightingOnLoad();
-    </script>
-    <script type="application/javascript" src="js/datosCalendar.js"></script>
-    <script type="application/javascript" src="js/incidencias.js"></script>
-    <script type="application/javascript" src="js/incidenciasRRHH.js"></script>
-    <script type="application/javascript" src="js/cartas.js"></script>
-    <script type="application/javascript" src="js/crearCalendarios.js"></script>
-
-    <script src="js/incidenciasRI.js"></script>
-    <script type="application/javascript" src="js/admin.js"></script>
-    <script type="application/javascript" src="js/CC.js"></script>
-    <script type="application/javascript" src="js/modalCalendar.js"></script>
 </body>
-
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script  src="javascript/select.js"></script>
+<script  src="javascript/insertar.js"></script>
+<script  src="javascript/opciones.js"></script>
+<script  src="javascript/limpiar.js"></script>
 
 </html>

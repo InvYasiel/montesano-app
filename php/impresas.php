@@ -1,8 +1,8 @@
 <?php
 //---------------------------------Consulta Agenda---------------------------------   
 $pdo=new PDO("sqlsrv:Server=172.26.11.13,49188;Database=InventarioAF", "sa", "Monte01!");
-$statement=$pdo->prepare("SELECT [NOMBRE], [LETRA]
-FROM [dbo].[DEPARTAMENTO]");
+$statement=$pdo->prepare("SELECT [IMPRESO]
+FROM [dbo].[ACTIVOFIJOSINASIGNAR]");
 $statement->execute();
 if (!$statement){
     echo 'Error al ejecutar la consulta';
@@ -11,3 +11,4 @@ if (!$statement){
     echo  json_encode($results, JSON_UNESCAPED_UNICODE);
 }
 ?>
+

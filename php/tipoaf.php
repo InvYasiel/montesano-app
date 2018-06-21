@@ -2,7 +2,7 @@
 //---------------------------------Consulta Agenda---------------------------------   
 $pdo=new PDO("sqlsrv:Server=172.26.11.13,49188;Database=InventarioAF", "sa", "Monte01!");
 $statement=$pdo->prepare("SELECT [NOMBRE], [LETRA]
-FROM [dbo].[DEPARTAMENTO]");
+FROM [dbo].[TIPODEACTIVOFIJO]");
 $statement->execute();
 if (!$statement){
     echo 'Error al ejecutar la consulta';
